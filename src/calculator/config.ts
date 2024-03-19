@@ -348,11 +348,11 @@ export const flowConfig: {
 				title: 'Select most common employee type',
 				options: [
 					{
-						key: 'full-time employees',
+						key: 'fulltime',
 						label: 'full-time employees'
 					},
 					{
-						key: 'seasonal/part-time employees',
+						key: 'parttime',
 						label: 'seasonal/part-time employees'
 					}
 				]

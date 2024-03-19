@@ -7,6 +7,7 @@
 	import { calcB2b } from './calculations/calculateB2B.js';
 	import ResultPreview from './ResultPreview.svelte';
 	import { calcB2c } from './calculations/calculateB2C.js';
+	import { calcHr } from './calculations/calculateHr.js';
 
 	const calculatorFormStateStep1 = writable<StepState>(
 		generateBaseStateFromConfig(flowConfig.calcConfigStep1)
@@ -30,6 +31,7 @@
 	$: step2Visible = Object.values($calculatorFormStateStep1).every((item) => item.length > 0);
 
 	$: b2bResult = calcB2b($calculatorFormStateStep3.driver, $calculatorFormStateStep2b2b as any);
+	$: hrResult = calcHr($calculatorFormStateStep3.driver, $calculatorFormStateStep2hr as any);
 	$: b2cResult = calcB2c($calculatorFormStateStep3.driver, $calculatorFormStateStep2b2c as any);
 </script>
 
@@ -46,14 +48,14 @@
 			stepConfig={flowConfig.calcConfigStep2b2b}
 		/>
 		<CalculatorStep
-			id="ds-calc-step-2-hr"
-			state={calculatorFormStateStep2hr}
-			stepConfig={flowConfig.calcConfigStep2hr}
-		/>
-		<CalculatorStep
 			id="ds-calc-step-2-proc"
 			state={calculatorFormStateStep2procurement}
 			stepConfig={flowConfig.calcConfigStep2procurement}
+		/>
+		<CalculatorStep
+			id="ds-calc-step-2-hr"
+			state={calculatorFormStateStep2hr}
+			stepConfig={flowConfig.calcConfigStep2hr}
 		/>
 		<CalculatorStep
 			id="ds-calc-step-2-b2c"
@@ -66,6 +68,7 @@
 			stepConfig={flowConfig.getCalcConfigStep3($calculatorFormStateStep1.businessArea)}
 		/>
 		<ResultPreview title="B2B result" result={b2bResult} />
+		<ResultPreview title="HR result" result={hrResult} />
 		<ResultPreview title="B2C result" result={b2cResult} />
 	</div>
 </div>
