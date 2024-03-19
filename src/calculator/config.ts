@@ -1,74 +1,64 @@
 import type { StepConfig } from './types.js';
 
-const getStep3Options = (area: string) => {
-	switch (area) {
-		case 'B2B':
-			return [
-				{
-					key: 'Drive business growth from faster, more productive selling',
-					label: 'Drive business growth from faster, more productive selling'
-				},
-				{
-					key: 'Reduce risk exposure by mitigating risky clauses',
-					label: 'Reduce risk exposure by mitigating risky clauses'
-				},
-				{
-					key: 'Maximize agreement value and limit leakage',
-					label: 'Maximize agreement value and limit leakage'
-				}
-			];
-		case 'B2C':
-			return [
-				{
-					key: 'Onboard vendors faster to access goods and services sooner',
-					label: 'Onboard vendors faster to access goods and services sooner'
-				},
-				{
-					key: 'Improve operational efficiency to increase capacity',
-					label: 'Improve operational efficiency to increase capacity'
-				},
-				{
-					key: 'Reduce risk exposure by mitigating risky clauses',
-					label: 'Reduce risk exposure by mitigating risky clauses'
-				},
-				{
-					key: 'Maximize value from spend and receive full benefits',
-					label: 'Maximize value from spend and receive full benefits'
-				}
-			];
-		case 'HR':
-			return [
-				{
-					key: 'Onboard new hires faster and easier',
-					label: 'Onboard new hires faster and easier'
-				},
-				{ key: 'Attract and retain top talent', label: 'Attract and retain top talent' },
-				{
-					key: 'Increase staff productivity to expand scope',
-					label: 'Increase staff productivity to expand scope'
-				}
-			];
-		case 'Procurement':
-			return [
-				{
-					key: 'Onboard customers faster and easier',
-					label: 'Onboard customers faster and easier'
-				},
-				{ key: 'Attract and retain more customers', label: 'Attract and retain more customers' },
-				{
-					key: 'Boost staff productivity to improve speed and capacity',
-					label: 'Boost staff productivity to improve speed and capacity'
-				}
-			];
-		default:
-			return [];
+const driverOptions = [
+	{
+		key: 'B2B_1_seller_productivity',
+		label: 'Drive business growth from faster, more productive selling'
+	},
+	{
+		key: 'B2B_2_reduced_risk_exposure',
+		label: 'Reduce risk exposure by mitigating risky clauses'
+	},
+	{
+		key: 'B2B_3_reduced_revenue_leakage',
+		label: 'Maximize agreement value and limit leakage'
+	},
+	{
+		key: 'PROC_1_onboard_vendors',
+		label: 'Onboard vendors faster to access goods and services sooner'
+	},
+	{
+		key: 'PROC_2_improved_productivity',
+		label: 'Improve operational efficiency to increase capacity'
+	},
+	{
+		key: 'PROC_3_reduce_risk',
+		label: 'Reduce risk exposure by mitigating risky clauses'
+	},
+	{
+		key: 'PROC_4_max_value',
+		label: 'Maximize value from spend and receive full benefits'
+	},
+	{
+		key: 'HR_1_faster_onboard',
+		label: 'Onboard new hires faster and easier'
+	},
+	{ key: 'HR_2_attract_retain_talent', label: 'Attract and retain top talent' },
+	{
+		key: 'HR_3_staff_productivity',
+		label: 'Increase staff productivity to expand scope'
+	},
+	{
+		key: 'B2C_1_onboard_customers',
+		label: 'Onboard customers faster and easier'
+	},
+	{ key: 'B2C_2_attract_retain', label: 'Attract and retain more customers' },
+	{
+		key: 'B2C_3_boost_productivity',
+		label: 'Boost staff productivity to improve speed and capacity'
 	}
+] as const;
+
+const getStep3Options = (area: string) => {
+	return driverOptions.filter((item) => item.key.includes(area));
 };
 
 export const flowConfig: {
 	calcConfigStep1: StepConfig;
 	calcConfigStep2b2b: StepConfig;
 	calcConfigStep2hr: StepConfig;
+	calcConfigStep2procurement: StepConfig;
+	calcConfigStep2b2c: StepConfig;
 	getCalcConfigStep3: (areas: string[]) => StepConfig;
 } = {
 	calcConfigStep1: [
@@ -85,7 +75,7 @@ export const flowConfig: {
 				multiselect: true,
 				options: [
 					{ key: 'B2B', label: 'B2B' },
-					{ key: 'Procurement', label: 'Procurement' },
+					{ key: 'PROC', label: 'Procurement' },
 					{ key: 'HR', label: 'HR' },
 					{ key: 'B2C', label: 'B2C' }
 				]
@@ -133,7 +123,7 @@ export const flowConfig: {
 		{
 			type: 'select',
 			data: {
-				key: 'b2b_revenue',
+				key: 'B2B_revenue',
 				placeholder: 'Revenue',
 				title: 'Select your annual B2B revenue',
 				options: [
@@ -179,7 +169,7 @@ export const flowConfig: {
 		{
 			type: 'select',
 			data: {
-				key: 'b2b_agreement_volume',
+				key: 'B2B_agreement_volume',
 				placeholder: 'Agreement volume',
 				title: 'Select your yearly B2B agreement volume',
 				options: [
@@ -229,20 +219,20 @@ export const flowConfig: {
 		{
 			type: 'select',
 			data: {
-				key: 'b2b_process_complexity',
+				key: 'B2B_process_complexity',
 				placeholder: 'Process Complexity',
 				title: 'Select agreement process complexity',
 				options: [
 					{
-						key: 'low complexity process',
+						key: 'low',
 						label: 'low complexity process'
 					},
 					{
-						key: 'medium complexity process',
+						key: 'medium',
 						label: 'medium complexity process'
 					},
 					{
-						key: 'high complexity process',
+						key: 'high',
 						label: 'high complexity process'
 					}
 				]
@@ -257,7 +247,7 @@ export const flowConfig: {
 		{
 			type: 'select',
 			data: {
-				key: 'hr_employee_count',
+				key: 'HR_employee_count',
 				placeholder: 'Employee count',
 				title: 'Select your employee count',
 				options: [
@@ -303,7 +293,7 @@ export const flowConfig: {
 		{
 			type: 'select',
 			data: {
-				key: 'hr_agreement_volume',
+				key: 'HR_agreement_volume',
 				placeholder: 'Employee Agreement Volume',
 				title: 'Select yearly employee agreement volume',
 				options: [
@@ -353,7 +343,7 @@ export const flowConfig: {
 		{
 			type: 'select',
 			data: {
-				key: 'hr_employee_type',
+				key: 'HR_employee_type',
 				placeholder: 'Employee Type',
 				title: 'Select most common employee type',
 				options: [
@@ -369,6 +359,252 @@ export const flowConfig: {
 			}
 		}
 	],
+	calcConfigStep2procurement: [
+		{
+			type: 'text',
+			data: 'Every year, my organization spends'
+		},
+		{
+			type: 'select',
+			data: {
+				key: 'PROC_annual_spend',
+				placeholder: 'Annual Spend',
+				title: 'Select your annual spend',
+
+				options: [
+					{
+						key: '1000000',
+						label: '$1 million'
+					},
+					{
+						key: '10000000',
+						label: '$10 million'
+					},
+					{
+						key: '50000000',
+						label: '$50 million'
+					},
+					{
+						key: '100000000',
+						label: '$100 million'
+					},
+					{
+						key: '250000000',
+						label: '$250 million'
+					},
+					{
+						key: '500000000',
+						label: '$500 million'
+					},
+					{
+						key: '1000000000',
+						label: '$1 billion'
+					},
+					{
+						key: '5000000000',
+						label: '$5 billion'
+					}
+				]
+			}
+		},
+		{
+			type: 'text',
+			data: ', through'
+		},
+		{
+			type: 'select',
+			data: {
+				key: 'PROC_spend_type',
+				placeholder: 'Spend Type',
+				title: 'Select your spend type',
+				options: [
+					{
+						key: 'direct spend',
+						label: 'direct spend'
+					},
+					{
+						key: 'indirect spend',
+						label: 'indirect spend'
+					},
+					{
+						key: 'CapEx spend',
+						label: 'CapEx spend'
+					}
+				]
+			}
+		},
+		{
+			type: 'text',
+			data: ', and completes'
+		},
+		{
+			type: 'select',
+			data: {
+				key: 'PROC_agreement_volume',
+				placeholder: 'Agreement volume',
+				title: 'Select your yearly procurement agreement volume',
+				options: [
+					{
+						key: '1000',
+						label: '1,000 agreements'
+					},
+					{
+						key: '2500',
+						label: '2,500 agreements'
+					},
+					{
+						key: '5000',
+						label: '5,000 agreements'
+					},
+					{
+						key: '10000',
+						label: '10,000 agreements'
+					},
+					{
+						key: '25000',
+						label: '25,000 agreements'
+					},
+					{
+						key: '50000',
+						label: '50,000 agreements'
+					},
+					{
+						key: '100000',
+						label: '100,000 agreements'
+					},
+					{
+						key: '1000000',
+						label: '1,000,000 agreements'
+					},
+					{
+						key: '10000000',
+						label: '10,000,000 agreements'
+					}
+				]
+			}
+		}
+	],
+
+	calcConfigStep2b2c: [
+		{
+			type: 'text',
+			data: 'Every year, my organization collects'
+		},
+		{
+			type: 'select',
+			data: {
+				key: 'B2C_revenue',
+				placeholder: 'Revenue',
+				title: 'Select your annual B2C revenue',
+				options: [
+					{
+						key: '1000000',
+						label: '$1 million'
+					},
+					{
+						key: '10000000',
+						label: '$10 million'
+					},
+					{
+						key: '50000000',
+						label: '$50 million'
+					},
+					{
+						key: '100000000',
+						label: '$100 million'
+					},
+					{
+						key: '250000000',
+						label: '$250 million'
+					},
+					{
+						key: '500000000',
+						label: '$500 million'
+					},
+					{
+						key: '1000000000',
+						label: '$1 billion'
+					},
+					{
+						key: '5000000000',
+						label: '$5 billion'
+					}
+				]
+			}
+		},
+		{
+			type: 'text',
+			data: ', and processes'
+		},
+		{
+			type: 'select',
+			data: {
+				key: 'B2C_agreement_volume',
+				placeholder: 'Agreement volume',
+				title: 'Select your yearly B2C agreement volume',
+				options: [
+					{
+						key: '1000',
+						label: '1,000 agreements'
+					},
+					{
+						key: '2500',
+						label: '2,500 agreements'
+					},
+					{
+						key: '5000',
+						label: '5,000 agreements'
+					},
+					{
+						key: '10000',
+						label: '10,000 agreements'
+					},
+					{
+						key: '25000',
+						label: '25,000 agreements'
+					},
+					{
+						key: '50000',
+						label: '50,000 agreements'
+					},
+					{
+						key: '100000',
+						label: '100,000 agreements'
+					},
+					{
+						key: '1000000',
+						label: '1,000,000 agreements'
+					},
+					{
+						key: '10000000',
+						label: '10,000,000 agreements'
+					}
+				]
+			}
+		},
+		{
+			type: 'text',
+			data: ', primarily collecting'
+		},
+		{
+			type: 'select',
+			data: {
+				key: 'B2C_customer_information',
+				placeholder: 'Customer Information',
+				title: 'Select most common information collected',
+				options: [
+					{
+						key: 'customer signature/consent',
+						label: 'customer signature/consent'
+					},
+					{
+						key: 'customer data and/or verify identity',
+						label: 'customer data and/or verify identity'
+					}
+				]
+			}
+		}
+	],
 
 	getCalcConfigStep3: (areas) => {
 		return [
@@ -379,7 +615,7 @@ export const flowConfig: {
 			{
 				type: 'select',
 				data: {
-					key: 'priorities',
+					key: 'driver',
 					placeholder: 'Your priorities',
 					title: 'Select your Priorities for b2b Sales',
 					multiselect: true,
@@ -390,3 +626,5 @@ export const flowConfig: {
 		];
 	}
 };
+
+export type DriverOption = (typeof driverOptions)[number]['key'];

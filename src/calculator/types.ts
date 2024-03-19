@@ -1,5 +1,7 @@
 export type Steps = 1 | 2 | 3;
 
+export type Option = { key: string; label: string };
+
 export type StoredCalcState = Record<string, Record<string, string[] | null>>;
 export type SelectConfig = {
 	type: 'select';
@@ -21,3 +23,11 @@ export type TextConfig = {
 export type SelectAreaType = 'B2B' | 'Procurement' | 'HR' | 'B2C';
 
 export type StepConfig = (SelectConfig | TextConfig)[];
+
+export type CalculatedResult = {
+	elementId: string;
+	text: string;
+	X: string | null;
+	Y: string | null;
+	Z: [number, number] | null;
+};
