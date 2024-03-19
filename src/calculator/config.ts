@@ -594,11 +594,11 @@ export const flowConfig: {
 				title: 'Select most common information collected',
 				options: [
 					{
-						key: 'customer signature/consent',
+						key: 'signature',
 						label: 'customer signature/consent'
 					},
 					{
-						key: 'customer data and/or verify identity',
+						key: 'identity',
 						label: 'customer data and/or verify identity'
 					}
 				]

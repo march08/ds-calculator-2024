@@ -1,21 +1,10 @@
 // import type { DriverOption } from '../config.js';
-import type { CalculatedResult } from '../types.js';
+
 import { isTruthy } from '../utils/isTruthy.js';
 import { formatNumber, formatPercent } from '../utils/number.js';
+import { tryCalcWrap } from './utils.js';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const tryWrap = <T extends Array<any>>(fn: (...args: T) => CalculatedResult) => {
-	return (...args: T): CalculatedResult | null => {
-		try {
-			return fn(...args);
-		} catch (e) {
-			console.log(e);
-			return null;
-		}
-	};
-};
-
-const calcB2bTat = tryWrap((complexity: string) => {
+const calcB2bTat = tryCalcWrap((complexity: string) => {
 	const base: Record<string, [number, number]> = {
 		low: [9, 19],
 		medium: [20, 60],
@@ -43,7 +32,7 @@ const calcB2bTat = tryWrap((complexity: string) => {
 	};
 });
 
-const calcB2bSellerProductivity = tryWrap((complexity: string, agreementVolume: string) => {
+const calcB2bSellerProductivity = tryCalcWrap((complexity: string, agreementVolume: string) => {
 	const volume = Number(agreementVolume);
 	const base: Record<string, [number, number]> = {
 		low: [2, 6],
@@ -81,7 +70,7 @@ const calcB2bSellerProductivity = tryWrap((complexity: string, agreementVolume: 
 	};
 });
 
-const calcB2bReducedRevenueLeakage = tryWrap((complexity: string, rev: string) => {
+const calcB2bReducedRevenueLeakage = tryCalcWrap((complexity: string, rev: string) => {
 	const revenue = Number(rev);
 	const base: Record<string, [number, number]> = {
 		low: [0.0375, 0.0475],
@@ -122,7 +111,7 @@ const calcB2bReducedRevenueLeakage = tryWrap((complexity: string, rev: string) =
 	};
 });
 
-const calcB2bLegalCapacity = tryWrap((complexity: string) => {
+const calcB2bLegalCapacity = tryCalcWrap((complexity: string) => {
 	const improvement: Record<string, [number, number]> = {
 		low: [0.78, 0.78],
 		medium: [0.78, 0.78],
@@ -140,41 +129,43 @@ const calcB2bLegalCapacity = tryWrap((complexity: string) => {
 	};
 });
 
-const calcB2bReducedLegalProductivity = tryWrap((complexity: string, agreementVolume: string) => {
-	const volume = Number(agreementVolume);
-	const base: Record<string, [number, number]> = {
-		low: [0.5, 2],
-		medium: [4, 8],
-		high: [10, 15]
-	};
+const calcB2bReducedLegalProductivity = tryCalcWrap(
+	(complexity: string, agreementVolume: string) => {
+		const volume = Number(agreementVolume);
+		const base: Record<string, [number, number]> = {
+			low: [0.5, 2],
+			medium: [4, 8],
+			high: [10, 15]
+		};
 
-	const improvement: Record<string, [number, number]> = {
-		low: [0.5, 0.5],
-		medium: [0.5, 0.5],
-		high: [0.5, 0.5]
-	};
+		const improvement: Record<string, [number, number]> = {
+			low: [0.5, 0.5],
+			medium: [0.5, 0.5],
+			high: [0.5, 0.5]
+		};
 
-	const financialConst = 78;
+		const financialConst = 78;
 
-	const X = `${formatPercent(improvement[complexity][0])}`;
+		const X = `${formatPercent(improvement[complexity][0])}`;
 
-	const calcYRange = (index: 0 | 1) =>
-		base[complexity][index] * improvement[complexity][index] * volume;
-	const Y = `${formatNumber(calcYRange(0))}-${formatNumber(calcYRange(1))}`;
+		const calcYRange = (index: 0 | 1) =>
+			base[complexity][index] * improvement[complexity][index] * volume;
+		const Y = `${formatNumber(calcYRange(0))}-${formatNumber(calcYRange(1))}`;
 
-	const calcZRange = (index: 0 | 1) =>
-		base[complexity][index] * improvement[complexity][index] * volume * financialConst;
+		const calcZRange = (index: 0 | 1) =>
+			base[complexity][index] * improvement[complexity][index] * volume * financialConst;
 
-	return {
-		elementId: '__TODO',
-		text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
-		X,
-		Y,
-		Z: [calcZRange(0), calcZRange(1)]
-	};
-});
+		return {
+			elementId: '__TODO',
+			text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
+			X,
+			Y,
+			Z: [calcZRange(0), calcZRange(1)]
+		};
+	}
+);
 
-const calcB2bReducedRiskExposure = tryWrap((complexity: string, agreementVolume: string) => {
+const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVolume: string) => {
 	const volume = Number(agreementVolume);
 	const base: Record<string, [number, number]> = {
 		low: [0.0025, 0.005],

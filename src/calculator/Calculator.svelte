@@ -5,7 +5,8 @@
 	import { generateBaseStateFromConfig, type StepState } from './generateBaseStateFromConfig.js';
 	import CalculatorStep from './CalculatorStep.svelte';
 	import { calcB2b } from './calculations/calculateB2B.js';
-	import { formatUsd } from './utils/number.js';
+	import ResultPreview from './ResultPreview.svelte';
+	import { calcB2c } from './calculations/calculateB2C.js';
 
 	const calculatorFormStateStep1 = writable<StepState>(
 		generateBaseStateFromConfig(flowConfig.calcConfigStep1)
@@ -29,6 +30,7 @@
 	$: step2Visible = Object.values($calculatorFormStateStep1).every((item) => item.length > 0);
 
 	$: b2bResult = calcB2b($calculatorFormStateStep3.driver, $calculatorFormStateStep2b2b as any);
+	$: b2cResult = calcB2c($calculatorFormStateStep3.driver, $calculatorFormStateStep2b2c as any);
 </script>
 
 <div class="ds-calculator">
@@ -63,27 +65,8 @@
 			state={calculatorFormStateStep3}
 			stepConfig={flowConfig.getCalcConfigStep3($calculatorFormStateStep1.businessArea)}
 		/>
-		<div class="result-box">
-			<h3>B2B result</h3>
-			{#each b2bResult as resultItem}
-				<p>{resultItem.text}</p>
-				<ul>
-					<li>X: {resultItem.X}</li>
-					<li>
-						Y:
-						{#if resultItem.Y}
-							{resultItem.Y}
-						{/if}
-					</li>
-					<li>
-						Z:
-						{#if resultItem.Z}
-							{formatUsd(resultItem.Z[0])} - {formatUsd(resultItem.Z[1])}
-						{/if}
-					</li>
-				</ul>
-			{/each}
-		</div>
+		<ResultPreview title="B2B result" result={b2bResult} />
+		<ResultPreview title="B2C result" result={b2cResult} />
 	</div>
 </div>
 
