@@ -110,13 +110,93 @@ const calcB2bReducedRevenueLeakage = tryWrap((complexity: string, rev: string) =
 
 	const X = `${formatPercent(improvement[complexity][0])}-${formatPercent(improvement[complexity][1])}`;
 
-	console.log('revenue', revenue);
 	const calcZRange = (index: 0 | 1) =>
 		baseReducted[index] * improvement[complexity][index] * revenue;
 
 	return {
 		elementId: '__TODO',
 		text: `${X} estimated reduction in revenue leakage by ensuring obligations are enforced, fees are collected, and renewal events are maximized.`,
+		X,
+		Y: null,
+		Z: [calcZRange(0), calcZRange(1)]
+	};
+});
+
+const calcB2bLegalCapacity = tryWrap((complexity: string) => {
+	const improvement: Record<string, [number, number]> = {
+		low: [0.78, 0.78],
+		medium: [0.78, 0.78],
+		high: [0.78, 0.78]
+	};
+
+	const X = `${formatPercent(improvement[complexity][0])}`;
+
+	return {
+		elementId: '__TODO',
+		text: `Up to ${X} of agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
+		X,
+		Y: null,
+		Z: null
+	};
+});
+
+const calcB2bReducedLegalProductivity = tryWrap((complexity: string, agreementVolume: string) => {
+	const volume = Number(agreementVolume);
+	const base: Record<string, [number, number]> = {
+		low: [0.5, 2],
+		medium: [4, 8],
+		high: [10, 15]
+	};
+
+	const improvement: Record<string, [number, number]> = {
+		low: [0.5, 0.5],
+		medium: [0.5, 0.5],
+		high: [0.5, 0.5]
+	};
+
+	const financialConst = 78;
+
+	const X = `${formatPercent(improvement[complexity][0])}`;
+
+	const calcYRange = (index: 0 | 1) =>
+		base[complexity][index] * improvement[complexity][index] * volume;
+	const Y = `${formatNumber(calcYRange(0))}-${formatNumber(calcYRange(1))}`;
+
+	const calcZRange = (index: 0 | 1) =>
+		base[complexity][index] * improvement[complexity][index] * volume * financialConst;
+
+	return {
+		elementId: '__TODO',
+		text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
+		X,
+		Y,
+		Z: [calcZRange(0), calcZRange(1)]
+	};
+});
+
+const calcB2bReducedRiskExposure = tryWrap((complexity: string, agreementVolume: string) => {
+	const volume = Number(agreementVolume);
+	const base: Record<string, [number, number]> = {
+		low: [0.0025, 0.005],
+		medium: [0.005, 0.0075],
+		high: [0.0075, 0.01]
+	};
+	const improvement: Record<string, [number, number]> = {
+		low: [0.05, 0.05],
+		medium: [0.05, 0.05],
+		high: [0.05, 0.05]
+	};
+
+	const financialConst = 100000;
+
+	const X = `${formatPercent(improvement[complexity][0])}`;
+
+	const calcZRange = (index: 0 | 1) =>
+		base[complexity][index] * improvement[complexity][index] * volume * financialConst;
+
+	return {
+		elementId: '__TODO',
+		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
 		X,
 		Y: null,
 		Z: [calcZRange(0), calcZRange(1)]
@@ -146,6 +226,19 @@ export const calcB2b = (
 					calcB2bReducedRevenueLeakage(
 						characteristics.B2B_process_complexity[0],
 						characteristics.B2B_revenue[0]
+					)
+				]
+			: []),
+		...(driverOption.includes('B2B_2_reduced_risk_exposure')
+			? [
+					calcB2bLegalCapacity(characteristics.B2B_process_complexity[0]),
+					calcB2bReducedLegalProductivity(
+						characteristics.B2B_process_complexity[0],
+						characteristics.B2B_agreement_volume[0]
+					),
+					calcB2bReducedRiskExposure(
+						characteristics.B2B_process_complexity[0],
+						characteristics.B2B_agreement_volume[0]
 					)
 				]
 			: [])

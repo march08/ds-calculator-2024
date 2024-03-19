@@ -69,10 +69,17 @@
 				<p>{resultItem.text}</p>
 				<ul>
 					<li>X: {resultItem.X}</li>
-					<li>Y: {resultItem.Y}</li>
 					<li>
-						Z: {resultItem.Z && formatUsd(resultItem.Z[0])} - {resultItem.Z &&
-							formatUsd(resultItem.Z[1])}
+						Y:
+						{#if resultItem.Y}
+							{resultItem.Y}
+						{/if}
+					</li>
+					<li>
+						Z:
+						{#if resultItem.Z}
+							{formatUsd(resultItem.Z[0])} - {formatUsd(resultItem.Z[1])}
+						{/if}
 					</li>
 				</ul>
 			{/each}
