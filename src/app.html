@@ -12,10 +12,41 @@
 				background: #4c00ff;
 				font-family: sans-serif;
 			}
+
+			@font-face {
+				font-family: 'DS Indigo';
+				font-style: medium;
+				font-weight: 400;
+				src: url('/fonts/DSIndigo-Medium.otf');
+			}
+			@font-face {
+				font-family: 'DS Indigo';
+				font-style: normal;
+				font-weight: 400;
+				src: url('/fonts/DSIndigo-Regular.otf');
+			}
+			@font-face {
+				font-family: 'DS Indigo';
+				font-style: bold;
+				font-weight: 600;
+				src: url('/fonts/DSIndigo-Bold.otf');
+			}
+			html,
+			body,
+			select,
+			button,
+			input {
+				font-family: 'DS Indigo';
+			}
 		</style>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
-		<div>%sveltekit.body%</div>
+		<div
+			id="gate-a6428bda-8a1c-4dfc-9866-5232101b2e52"
+			class="gate-a6428bda-8a1c-4dfc-9866-5232101b2e52"
+		>
+			%sveltekit.body%
+		</div>
 	</body>
 </html>

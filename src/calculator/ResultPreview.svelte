@@ -1,13 +1,18 @@
 <script lang="ts">
-	import type { CalculatedResult } from './types.js';
+	import type { CalculatedResult, NumberRange } from './types.js';
+	import { numberRangeToText } from './utils/array.js';
 	import { formatUsd } from './utils/number.js';
 
 	export let title: string;
 	export let result: CalculatedResult[];
+
+	export let financialImpact: NumberRange;
+	export let hourlyImpactImpact: NumberRange;
 </script>
 
 <div class="result-box">
 	<h3>{title}</h3>
+	<hr />
 	{#each result as resultItem}
 		<p>{resultItem.text}</p>
 		<ul>
@@ -19,13 +24,23 @@
 				{/if}
 			</li>
 			<li>
-				Z:
-				{#if resultItem.Z}
-					{formatUsd(resultItem.Z[0])} - {formatUsd(resultItem.Z[1])}
+				Hourly impact:
+				{#if resultItem.hourlyImpact}
+					{numberRangeToText(resultItem.hourlyImpact)}
+				{/if}
+			</li>
+			<li>
+				Financial impact:
+				{#if resultItem.financialImpact}
+					{numberRangeToText(resultItem.financialImpact, formatUsd)}
 				{/if}
 			</li>
 		</ul>
 	{/each}
+	<hr />
+	Total hourly: {numberRangeToText(hourlyImpactImpact)}
+	Total financial: {numberRangeToText(financialImpact)}
+	<hr />
 </div>
 
 <style global>

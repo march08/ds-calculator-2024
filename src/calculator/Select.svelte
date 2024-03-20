@@ -214,15 +214,15 @@
 		outline: none;
 		border: none;
 		padding: 0;
-		font-size: 36px;
 		color: white;
-		line-height: calc(60px + 12px);
+		line-height: var(--question-line-height);
 		&.placeholder {
 			color: #ffffffcc;
 		}
 	}
 
 	.ds-calc-dropdown-content {
+		position: fixed;
 		z-index: 1000;
 		padding: 8px 0;
 		top: calc(100% + 24px);
@@ -267,7 +267,9 @@
 	.ds-calc-select-display-text {
 		transition: 0.2s all;
 		border-bottom: 2px solid rgba(255, 255, 255, 0.25);
-		padding-bottom: 8px;
+		font-size: 36px;
+		letter-spacing: -0.5px;
+		padding-bottom: 6px;
 		&.visible {
 			border-bottom: 4px solid;
 

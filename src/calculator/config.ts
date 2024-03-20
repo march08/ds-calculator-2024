@@ -164,7 +164,11 @@ export const flowConfig: {
 		},
 		{
 			type: 'text',
-			data: ', and processes'
+			data: ','
+		},
+		{
+			type: 'text',
+			data: 'and processes'
 		},
 		{
 			type: 'select',
@@ -288,7 +292,11 @@ export const flowConfig: {
 		},
 		{
 			type: 'text',
-			data: ', and processes'
+			data: ','
+		},
+		{
+			type: 'text',
+			data: 'and processes'
 		},
 		{
 			type: 'select',
@@ -338,7 +346,11 @@ export const flowConfig: {
 		},
 		{
 			type: 'text',
-			data: ', mostly for'
+			data: ','
+		},
+		{
+			type: 'text',
+			data: 'mostly for'
 		},
 		{
 			type: 'select',
@@ -409,7 +421,11 @@ export const flowConfig: {
 		},
 		{
 			type: 'text',
-			data: ', through'
+			data: ','
+		},
+		{
+			type: 'text',
+			data: 'through'
 		},
 		{
 			type: 'select',
@@ -419,15 +435,15 @@ export const flowConfig: {
 				title: 'Select your spend type',
 				options: [
 					{
-						key: 'direct spend',
+						key: 'direct',
 						label: 'direct spend'
 					},
 					{
-						key: 'indirect spend',
+						key: 'indirect',
 						label: 'indirect spend'
 					},
 					{
-						key: 'CapEx spend',
+						key: 'capex',
 						label: 'CapEx spend'
 					}
 				]
@@ -435,7 +451,11 @@ export const flowConfig: {
 		},
 		{
 			type: 'text',
-			data: ', and completes'
+			data: ','
+		},
+		{
+			type: 'text',
+			data: 'and completes'
 		},
 		{
 			type: 'select',
@@ -534,7 +554,11 @@ export const flowConfig: {
 		},
 		{
 			type: 'text',
-			data: ', and processes'
+			data: ','
+		},
+		{
+			type: 'text',
+			data: 'and processes'
 		},
 		{
 			type: 'select',
@@ -584,7 +608,11 @@ export const flowConfig: {
 		},
 		{
 			type: 'text',
-			data: ', primarily collecting'
+			data: ','
+		},
+		{
+			type: 'text',
+			data: 'primarily collecting'
 		},
 		{
 			type: 'select',

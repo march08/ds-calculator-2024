@@ -1,17 +1,19 @@
 // import type { DriverOption } from '../config.js';
 
+import type { NumberRange } from '../types.js';
+import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
 import { formatNumber, formatPercent } from '../utils/number.js';
 import { tryCalcWrap } from './utils.js';
 
 const calcB2bTat = tryCalcWrap((complexity: string) => {
-	const base: Record<string, [number, number]> = {
+	const base: Record<string, NumberRange> = {
 		low: [9, 19],
 		medium: [20, 60],
 		high: [45, 140]
 	};
 
-	const improvement: Record<string, [number, number]> = {
+	const improvement: Record<string, NumberRange> = {
 		low: [0.83, 0.71],
 		medium: [0.83, 0.71],
 		high: [0.83, 0.71]
@@ -28,19 +30,20 @@ const calcB2bTat = tryCalcWrap((complexity: string) => {
 		text: `${X} faster deals, with the potential to reduce the sales cycle from weeks to just ${Y} days.`,
 		X,
 		Y,
-		Z: null
+		financialImpact: null,
+		hourlyImpact: null
 	};
 });
 
 const calcB2bSellerProductivity = tryCalcWrap((complexity: string, agreementVolume: string) => {
 	const volume = Number(agreementVolume);
-	const base: Record<string, [number, number]> = {
+	const base: Record<string, NumberRange> = {
 		low: [2, 6],
 		medium: [6, 10],
 		high: [8, 12]
 	};
 
-	const improvement: Record<string, [number, number]> = {
+	const improvement: Record<string, NumberRange> = {
 		low: [0.25, 0.5],
 		medium: [0.25, 0.5],
 		high: [0.25, 0.5]
@@ -53,9 +56,11 @@ const calcB2bSellerProductivity = tryCalcWrap((complexity: string, agreementVolu
 	};
 
 	const calcYRange = (index: 0 | 1) =>
-		formatNumber(base[complexity][index] * improvement[complexity][index] * volume);
+		base[complexity][index] * improvement[complexity][index] * volume;
 
-	const Y = `${calcYRange(0)}-${calcYRange(1)}`;
+	const hourlyImpact: NumberRange = [calcYRange(0), calcYRange(1)];
+	const Y = numberRangeToText(hourlyImpact);
+
 	const X = `${formatPercent(improvement[complexity][0])}-${formatPercent(improvement[complexity][1])}`;
 
 	const calcZRange = (index: 0 | 1) =>
@@ -65,14 +70,15 @@ const calcB2bSellerProductivity = tryCalcWrap((complexity: string, agreementVolu
 		elementId: '__TODO',
 		text: `${X} more productive sellers, which frees up ${Y} annual hours to accelerate pipeline development, close more deals, defend price points, etc.`,
 		X,
-		Y,
-		Z: [calcZRange(0), calcZRange(1)]
+		Y: null,
+		financialImpact: [calcZRange(0), calcZRange(1)],
+		hourlyImpact
 	};
 });
 
 const calcB2bReducedRevenueLeakage = tryCalcWrap((complexity: string, rev: string) => {
 	const revenue = Number(rev);
-	const base: Record<string, [number, number]> = {
+	const base: Record<string, NumberRange> = {
 		low: [0.0375, 0.0475],
 		medium: [0.0475, 0.0575],
 		high: [0.0575, 0.0675]
@@ -91,7 +97,7 @@ const calcB2bReducedRevenueLeakage = tryCalcWrap((complexity: string, rev: strin
 
 	const baseReducted = getBase();
 
-	const improvement: Record<string, [number, number]> = {
+	const improvement: Record<string, NumberRange> = {
 		low: [0.05, 0.1],
 		medium: [0.05, 0.1],
 		high: [0.05, 0.1]
@@ -107,12 +113,13 @@ const calcB2bReducedRevenueLeakage = tryCalcWrap((complexity: string, rev: strin
 		text: `${X} estimated reduction in revenue leakage by ensuring obligations are enforced, fees are collected, and renewal events are maximized.`,
 		X,
 		Y: null,
-		Z: [calcZRange(0), calcZRange(1)]
+		financialImpact: [calcZRange(0), calcZRange(1)],
+		hourlyImpact: null
 	};
 });
 
 const calcB2bLegalCapacity = tryCalcWrap((complexity: string) => {
-	const improvement: Record<string, [number, number]> = {
+	const improvement: Record<string, NumberRange> = {
 		low: [0.78, 0.78],
 		medium: [0.78, 0.78],
 		high: [0.78, 0.78]
@@ -125,20 +132,21 @@ const calcB2bLegalCapacity = tryCalcWrap((complexity: string) => {
 		text: `Up to ${X} of agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
 		X,
 		Y: null,
-		Z: null
+		financialImpact: null,
+		hourlyImpact: null
 	};
 });
 
 const calcB2bReducedLegalProductivity = tryCalcWrap(
 	(complexity: string, agreementVolume: string) => {
 		const volume = Number(agreementVolume);
-		const base: Record<string, [number, number]> = {
+		const base: Record<string, NumberRange> = {
 			low: [0.5, 2],
 			medium: [4, 8],
 			high: [10, 15]
 		};
 
-		const improvement: Record<string, [number, number]> = {
+		const improvement: Record<string, NumberRange> = {
 			low: [0.5, 0.5],
 			medium: [0.5, 0.5],
 			high: [0.5, 0.5]
@@ -150,7 +158,9 @@ const calcB2bReducedLegalProductivity = tryCalcWrap(
 
 		const calcYRange = (index: 0 | 1) =>
 			base[complexity][index] * improvement[complexity][index] * volume;
-		const Y = `${formatNumber(calcYRange(0))}-${formatNumber(calcYRange(1))}`;
+		const hourlyImpact: NumberRange = [calcYRange(0), calcYRange(1)];
+
+		const Y = numberRangeToText(hourlyImpact);
 
 		const calcZRange = (index: 0 | 1) =>
 			base[complexity][index] * improvement[complexity][index] * volume * financialConst;
@@ -159,20 +169,21 @@ const calcB2bReducedLegalProductivity = tryCalcWrap(
 			elementId: '__TODO',
 			text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
 			X,
-			Y,
-			Z: [calcZRange(0), calcZRange(1)]
+			Y: null,
+			financialImpact: [calcZRange(0), calcZRange(1)],
+			hourlyImpact
 		};
 	}
 );
 
 const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVolume: string) => {
 	const volume = Number(agreementVolume);
-	const base: Record<string, [number, number]> = {
+	const base: Record<string, NumberRange> = {
 		low: [0.0025, 0.005],
 		medium: [0.005, 0.0075],
 		high: [0.0075, 0.01]
 	};
-	const improvement: Record<string, [number, number]> = {
+	const improvement: Record<string, NumberRange> = {
 		low: [0.05, 0.05],
 		medium: [0.05, 0.05],
 		high: [0.05, 0.05]
@@ -190,7 +201,8 @@ const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVol
 		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
 		X,
 		Y: null,
-		Z: [calcZRange(0), calcZRange(1)]
+		financialImpact: [calcZRange(0), calcZRange(1)],
+		hourlyImpact: null
 	};
 });
 
@@ -212,14 +224,6 @@ export const calcB2b = (
 					)
 				]
 			: []),
-		...(driverOption.includes('B2B_3_reduced_revenue_leakage')
-			? [
-					calcB2bReducedRevenueLeakage(
-						characteristics.B2B_process_complexity[0],
-						characteristics.B2B_revenue[0]
-					)
-				]
-			: []),
 		...(driverOption.includes('B2B_2_reduced_risk_exposure')
 			? [
 					calcB2bLegalCapacity(characteristics.B2B_process_complexity[0]),
@@ -230,6 +234,14 @@ export const calcB2b = (
 					calcB2bReducedRiskExposure(
 						characteristics.B2B_process_complexity[0],
 						characteristics.B2B_agreement_volume[0]
+					)
+				]
+			: []),
+		...(driverOption.includes('B2B_3_reduced_revenue_leakage')
+			? [
+					calcB2bReducedRevenueLeakage(
+						characteristics.B2B_process_complexity[0],
+						characteristics.B2B_revenue[0]
 					)
 				]
 			: [])

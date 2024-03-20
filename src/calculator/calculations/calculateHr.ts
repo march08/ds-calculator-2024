@@ -1,15 +1,17 @@
 // import type { DriverOption } from '../config.js';
+import type { NumberRange } from '../types.js';
+import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
 import { formatNumber, formatPercent } from '../utils/number.js';
 import { tryCalcWrap } from './utils.js';
 
 const calcB2cTat = tryCalcWrap((employment: string) => {
-	const base: Record<string, [number, number]> = {
+	const base: Record<string, NumberRange> = {
 		parttime: [7, 26],
 		fulltime: [7, 26]
 	};
 
-	const improvement: Record<string, [number, number]> = {
+	const improvement: Record<string, NumberRange> = {
 		parttime: [0.75, 0.75],
 		fulltime: [0.75, 0.75]
 	};
@@ -25,18 +27,19 @@ const calcB2cTat = tryCalcWrap((employment: string) => {
 		text: `${X} faster candidate onboarding, going from weeks to just ${Y} days`,
 		X,
 		Y,
-		Z: null
+		financialImpact: null,
+		hourlyImpact: null
 	};
 });
 
 const calcHrProductivity = tryCalcWrap((employment: string, agreementVolume: string) => {
 	const volume = Number(agreementVolume);
-	const base: Record<string, [number, number]> = {
+	const base: Record<string, NumberRange> = {
 		parttime: [1.25, 3.5],
 		fulltime: [1.25, 3.5]
 	};
 
-	const improvement: Record<string, [number, number]> = {
+	const improvement: Record<string, NumberRange> = {
 		parttime: [0.32, 0.5],
 		fulltime: [0.32, 0.5]
 	};
@@ -44,9 +47,11 @@ const calcHrProductivity = tryCalcWrap((employment: string, agreementVolume: str
 	const financialConstant = 25;
 
 	const calcYRange = (index: 0 | 1) =>
-		formatNumber(base[employment][index] * improvement[employment][index] * volume);
+		base[employment][index] * improvement[employment][index] * volume;
 
-	const Y = `${calcYRange(0)}-${calcYRange(1)}`;
+	const hourlyImpact: NumberRange = [calcYRange(0), calcYRange(1)];
+
+	const Y = numberRangeToText(hourlyImpact);
 	const X = `${formatPercent(improvement[employment][0])}-${formatPercent(improvement[employment][1])}`;
 
 	const calcZRange = (index: 0 | 1) =>
@@ -56,15 +61,16 @@ const calcHrProductivity = tryCalcWrap((employment: string, agreementVolume: str
 		elementId: '__TODO',
 		text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value HR activities.`,
 		X,
-		Y,
-		Z: [calcZRange(0), calcZRange(1)]
+		Y: null,
+		financialImpact: [calcZRange(0), calcZRange(1)],
+		hourlyImpact
 	};
 });
 
 const calcHrConversionRate = tryCalcWrap((employment: string, agreementVolume: string) => {
 	const volume = Number(agreementVolume);
 
-	const improvement: Record<string, Record<number, [number, number]>> = {
+	const improvement: Record<string, Record<number, NumberRange>> = {
 		parttime: {
 			1000: [7.5 / 100, 8.5 / 100],
 			2500: [6.5 / 100, 7.5 / 100],
@@ -105,7 +111,8 @@ const calcHrConversionRate = tryCalcWrap((employment: string, agreementVolume: s
 		text: `${X} increase in conversion rates by reducing abandonment in the agreement process. Onboard ${Y} additional candidates annually.`,
 		X,
 		Y,
-		Z: null
+		financialImpact: null,
+		hourlyImpact: null
 	};
 });
 

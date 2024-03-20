@@ -29,5 +29,10 @@ export type CalculatedResult = {
 	text: string;
 	X: string | null;
 	Y: string | null;
-	Z: [number, number] | null;
+	// per year
+	financialImpact: [number, number] | null;
+	// per year
+	hourlyImpact: [number, number] | null;
 };
+
+export type NumberRange = [number, number];

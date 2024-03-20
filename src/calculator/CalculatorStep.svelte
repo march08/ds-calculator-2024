@@ -43,15 +43,14 @@
 		font-weight: 400;
 		font-size: 36px;
 
-		line-height: calc(60px + 12px);
-		/* or 43px */
+		line-height: var(--question-line-height);
 		letter-spacing: -0.5px;
 
 		color: #ffffff;
 		& > *,
 		& > span,
 		& > div {
-			margin-right: 12px;
+			margin-right: 16px;
 		}
 	}
 </style>

@@ -1,15 +1,17 @@
 // import type { DriverOption } from '../config.js';
+import type { NumberRange } from '../types.js';
+import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
 import { formatNumber, formatPercent } from '../utils/number.js';
 import { tryCalcWrap } from './utils.js';
 
 const calcB2cTat = tryCalcWrap((customerInformation: string) => {
-	const base: Record<string, [number, number]> = {
+	const base: Record<string, NumberRange> = {
 		signature: [1, 5],
 		identity: [1, 5]
 	};
 
-	const improvement: Record<string, [number, number]> = {
+	const improvement: Record<string, NumberRange> = {
 		signature: [0.75, 0.75],
 		identity: [0.75, 0.75]
 	};
@@ -28,19 +30,20 @@ const calcB2cTat = tryCalcWrap((customerInformation: string) => {
 		text: `${X} faster deals, with the potential to reduce the sales cycle from weeks to just ${Y} days.`,
 		X,
 		Y,
-		Z: null
+		hourlyImpact: null,
+		financialImpact: null
 	};
 });
 
 const calcB2cStaffProductivity = tryCalcWrap(
 	(customerInformation: string, agreementVolume: string) => {
 		const volume = Number(agreementVolume);
-		const base: Record<string, [number, number]> = {
+		const base: Record<string, NumberRange> = {
 			signature: [0.25, 0.75],
 			identity: [0.75, 2]
 		};
 
-		const improvement: Record<string, [number, number]> = {
+		const improvement: Record<string, NumberRange> = {
 			signature: [0.32, 0.5],
 			identity: [0.32, 0.5]
 		};
@@ -48,13 +51,12 @@ const calcB2cStaffProductivity = tryCalcWrap(
 		const financialConstant = 25;
 
 		const calcYRange = (index: 0 | 1) =>
-			formatNumber(
-				base[customerInformation][index] *
-					improvement[customerInformation][index] *
-					financialConstant
-			);
+			base[customerInformation][index] *
+			improvement[customerInformation][index] *
+			financialConstant;
 
-		const Y = `${calcYRange(0)}-${calcYRange(1)}`;
+		const hourlyImpact: NumberRange = [calcYRange(0), calcYRange(1)];
+		const Y = numberRangeToText(hourlyImpact);
 		const X = `${formatPercent(improvement[customerInformation][0])}-${formatPercent(improvement[customerInformation][1])}`;
 
 		const calcZRange = (index: 0 | 1) =>
@@ -67,7 +69,8 @@ const calcB2cStaffProductivity = tryCalcWrap(
 			text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value activities.`,
 			X,
 			Y,
-			Z: [calcZRange(0), calcZRange(1)]
+			financialImpact: [calcZRange(0), calcZRange(1)],
+			hourlyImpact
 		};
 	}
 );
@@ -75,7 +78,7 @@ const calcB2cStaffProductivity = tryCalcWrap(
 const calcB2cConversionRate = tryCalcWrap((customerInformation: string, amount: string) => {
 	const financial = Number(amount);
 
-	const improvement: Record<string, Record<number, [number, number]>> = {
+	const improvement: Record<string, Record<number, NumberRange>> = {
 		signature: {
 			1000000: [0.05, 0.06],
 			10000000: [0.0425, 0.0525],
@@ -99,11 +102,9 @@ const calcB2cConversionRate = tryCalcWrap((customerInformation: string, amount: 
 	};
 
 	const X = `${formatPercent(improvement[customerInformation][financial][0], {
-		maximumFractionDigits: 2,
-		minimumFractionDigits: 2
+		maximumFractionDigits: 1
 	})}-${formatPercent(improvement[customerInformation][financial][1], {
-		maximumFractionDigits: 2,
-		minimumFractionDigits: 2
+		maximumFractionDigits: 1
 	})}`;
 
 	const calcZRange = (index: 0 | 1) =>
@@ -113,7 +114,8 @@ const calcB2cConversionRate = tryCalcWrap((customerInformation: string, amount: 
 		text: `${X} increase in conversion rates by reducing customer abandonment during the agreement process.`,
 		X,
 		Y: null,
-		Z: [calcZRange(0), calcZRange(1)]
+		hourlyImpact: null,
+		financialImpact: [calcZRange(0), calcZRange(1)]
 	};
 });
 
@@ -129,19 +131,19 @@ export const calcB2c = (
 		...(driverOption.includes('B2C_1_onboard_customers')
 			? [calcB2cTat(characteristics.B2C_customer_information[0])]
 			: []),
-		...(driverOption.includes('B2C_3_boost_productivity')
-			? [
-					calcB2cStaffProductivity(
-						characteristics.B2C_customer_information[0],
-						characteristics.B2C_agreement_volume[0]
-					)
-				]
-			: []),
 		...(driverOption.includes('B2C_2_attract_retain')
 			? [
 					calcB2cConversionRate(
 						characteristics.B2C_customer_information[0],
 						characteristics.B2C_revenue[0]
+					)
+				]
+			: []),
+		...(driverOption.includes('B2C_3_boost_productivity')
+			? [
+					calcB2cStaffProductivity(
+						characteristics.B2C_customer_information[0],
+						characteristics.B2C_agreement_volume[0]
 					)
 				]
 			: [])

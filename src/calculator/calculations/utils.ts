@@ -6,7 +6,6 @@ export const tryCalcWrap = <T extends Array<any>>(fn: (...args: T) => Calculated
 		try {
 			return fn(...args);
 		} catch (e) {
-			console.log(e);
 			return null;
 		}
 	};
