@@ -2,6 +2,10 @@ import type { StepConfig } from './types.js';
 
 const driverOptions = [
 	{
+		key: 'B2B',
+		title: 'Select your priorities for B2B sales'
+	},
+	{
 		key: 'B2B_1_seller_productivity',
 		label: 'Drive business growth from faster, more productive selling'
 	},
@@ -12,6 +16,10 @@ const driverOptions = [
 	{
 		key: 'B2B_3_reduced_revenue_leakage',
 		label: 'Maximize agreement value and limit leakage'
+	},
+	{
+		key: 'PROC',
+		title: 'Select your priorities for procurement'
 	},
 	{
 		key: 'PROC_1_onboard_vendors',
@@ -30,6 +38,10 @@ const driverOptions = [
 		label: 'Maximize value from spend and receive full benefits'
 	},
 	{
+		key: 'HR',
+		title: 'Select your priorities for HR'
+	},
+	{
 		key: 'HR_1_faster_onboard',
 		label: 'Onboard new hires faster and easier'
 	},
@@ -37,6 +49,10 @@ const driverOptions = [
 	{
 		key: 'HR_3_staff_productivity',
 		label: 'Increase staff productivity to expand scope'
+	},
+	{
+		key: 'B2C',
+		title: 'Select your priorities for B2C sales'
 	},
 	{
 		key: 'B2C_1_onboard_customers',
@@ -71,9 +87,11 @@ export const flowConfig: {
 			data: {
 				key: 'businessArea',
 				placeholder: 'Your area',
-				title: 'Select your Business Process',
 				multiselect: true,
 				options: [
+					{
+						title: 'Select your Business Process'
+					},
 					{ key: 'B2B', label: 'B2B' },
 					{ key: 'PROC', label: 'Procurement' },
 					{ key: 'HR', label: 'HR' },
@@ -90,8 +108,10 @@ export const flowConfig: {
 			data: {
 				key: 'industry',
 				placeholder: 'Your industry',
-				title: 'Select your Industry',
 				options: [
+					{
+						title: 'Select your Industry'
+					},
 					{ key: 'Automotive', label: 'Automotive' },
 					{ key: 'Business Services', label: 'Business Services' },
 					{ key: 'Construction and Real Estate', label: 'Construction and Real Estate' },
@@ -125,8 +145,10 @@ export const flowConfig: {
 			data: {
 				key: 'B2B_revenue',
 				placeholder: 'Revenue',
-				title: 'Select your annual B2B revenue',
 				options: [
+					{
+						title: 'Select your annual B2B revenue'
+					},
 					{
 						key: '1000000',
 						label: '$1 million'
@@ -175,8 +197,10 @@ export const flowConfig: {
 			data: {
 				key: 'B2B_agreement_volume',
 				placeholder: 'Agreement volume',
-				title: 'Select your yearly B2B agreement volume',
 				options: [
+					{
+						title: 'Select your yearly B2B agreement volume'
+					},
 					{
 						key: '1000',
 						label: '1,000 agreements'
@@ -225,8 +249,11 @@ export const flowConfig: {
 			data: {
 				key: 'B2B_process_complexity',
 				placeholder: 'Process Complexity',
-				title: 'Select agreement process complexity',
+
 				options: [
+					{
+						title: 'Select agreement process complexity'
+					},
 					{
 						key: 'low',
 						label: 'low complexity process'
@@ -253,8 +280,10 @@ export const flowConfig: {
 			data: {
 				key: 'HR_employee_count',
 				placeholder: 'Employee count',
-				title: 'Select your employee count',
 				options: [
+					{
+						title: 'Select your employee count'
+					},
 					{
 						key: '1000',
 						label: '1,000 employees'
@@ -303,8 +332,10 @@ export const flowConfig: {
 			data: {
 				key: 'HR_agreement_volume',
 				placeholder: 'Employee Agreement Volume',
-				title: 'Select yearly employee agreement volume',
 				options: [
+					{
+						title: 'Select yearly employee agreement volume'
+					},
 					{
 						key: '1000',
 						label: '1,000 agreements/year'
@@ -357,8 +388,10 @@ export const flowConfig: {
 			data: {
 				key: 'HR_employee_type',
 				placeholder: 'Employee Type',
-				title: 'Select most common employee type',
 				options: [
+					{
+						title: 'Select most common employee type'
+					},
 					{
 						key: 'fulltime',
 						label: 'full-time employees'
@@ -381,9 +414,11 @@ export const flowConfig: {
 			data: {
 				key: 'PROC_annual_spend',
 				placeholder: 'Annual Spend',
-				title: 'Select your annual spend',
 
 				options: [
+					{
+						title: 'Select your annual spend'
+					},
 					{
 						key: '1000000',
 						label: '$1 million'
@@ -432,8 +467,10 @@ export const flowConfig: {
 			data: {
 				key: 'PROC_spend_type',
 				placeholder: 'Spend Type',
-				title: 'Select your spend type',
 				options: [
+					{
+						title: 'Select your spend type'
+					},
 					{
 						key: 'direct',
 						label: 'direct spend'
@@ -462,8 +499,10 @@ export const flowConfig: {
 			data: {
 				key: 'PROC_agreement_volume',
 				placeholder: 'Agreement volume',
-				title: 'Select your yearly procurement agreement volume',
 				options: [
+					{
+						title: 'Select your yearly procurement agreement volume'
+					},
 					{
 						key: '1000',
 						label: '1,000 agreements'
@@ -515,8 +554,10 @@ export const flowConfig: {
 			data: {
 				key: 'B2C_revenue',
 				placeholder: 'Revenue',
-				title: 'Select your annual B2C revenue',
 				options: [
+					{
+						title: 'Select your annual B2C revenue'
+					},
 					{
 						key: '1000000',
 						label: '$1 million'
@@ -565,8 +606,10 @@ export const flowConfig: {
 			data: {
 				key: 'B2C_agreement_volume',
 				placeholder: 'Agreement volume',
-				title: 'Select your yearly B2C agreement volume',
 				options: [
+					{
+						title: 'Select your yearly B2C agreement volume'
+					},
 					{
 						key: '1000',
 						label: '1,000 agreements'
@@ -619,8 +662,10 @@ export const flowConfig: {
 			data: {
 				key: 'B2C_customer_information',
 				placeholder: 'Customer Information',
-				title: 'Select most common information collected',
 				options: [
+					{
+						title: 'Select most common information collected'
+					},
 					{
 						key: 'signature',
 						label: 'customer signature/consent'
@@ -645,7 +690,6 @@ export const flowConfig: {
 				data: {
 					key: 'driver',
 					placeholder: 'Your priorities',
-					title: 'Select your Priorities for b2b Sales',
 					multiselect: true,
 					multiselectDelimiter: '; ',
 					options: areas.map((area) => getStep3Options(area)).flat()

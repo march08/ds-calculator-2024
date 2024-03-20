@@ -1,10 +1,12 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
 	import Select from './Select.svelte';
-	import type { StepConfig } from './types.js';
-	import type { StepState } from './generateBaseStateFromConfig.js';
+	import type { StepConfig, StoredCalcState } from './types.js';
+
+	import { getContext } from 'svelte';
+	let answerState = getContext<Writable<StoredCalcState>>('answerState');
 	export let stepConfig: StepConfig;
-	export let state: Writable<StepState>;
+	export let stateStep: keyof StoredCalcState;
 	export let id: string;
 </script>
 
@@ -17,13 +19,17 @@
 			<div>
 				<Select
 					{...item.data}
-					value={$state[item.data.key] || []}
+					value={$answerState[stateStep][item.data.key] || []}
 					onChange={(value) => {
-						state.update((prevState) => {
+						answerState.update((prevState) => {
 							if (item.type === 'select') {
 								return {
 									...prevState,
-									[item.data.key]: value
+									[stateStep]: {
+										...prevState[stateStep],
+
+										[item.data.key]: value
+									}
 								};
 							}
 							return prevState;

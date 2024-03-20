@@ -12,6 +12,7 @@ export const formatUsd = (value: number, options?: Intl.NumberFormatOptions) =>
 	Number(value).toLocaleString(undefined, {
 		style: 'currency',
 		currency: 'USD',
+		currencyDisplay: 'narrowSymbol',
 		maximumFractionDigits: 0,
 		...options
 	});

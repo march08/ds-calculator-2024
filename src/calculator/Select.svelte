@@ -2,12 +2,13 @@
 	import { isTruthy } from './utils/isTruthy.js';
 
 	import type { FocusEventHandler } from 'svelte/elements';
+	import { createPopperActions } from 'svelte-popperjs';
+	import type { Option, OptionOrDelimiter } from './types.js';
 
 	export let multiselect: boolean = false;
 	export let value: string[] = [];
 	export let placeholder: string = 'placeholder';
-	export let title: string;
-	export let options: { key: string; label: string }[];
+	export let options: OptionOrDelimiter[];
 	export let onChange: (value: string[]) => void;
 	export let multiselectDelimiter: string = ', ';
 	let isDropdownOpen = false; // default state (dropdown close)
@@ -54,9 +55,14 @@
 	};
 
 	$: select = value.map((val) => options.find((opt) => opt.key === val)).filter(isTruthy);
-	$: displayValue = select.map((item) => item.label).join(multiselectDelimiter);
+	$: displayValue = select
+		.map((item) => 'label' in item && item.label)
+		.filter(isTruthy)
+		.join(multiselectDelimiter);
 
-	import { createPopperActions } from 'svelte-popperjs';
+	let optionsOnly: Option[];
+	$: optionsOnly = options.filter((item) => 'label' in item) as Option[];
+
 	const [popperRef, popperContent] = createPopperActions({
 		placement: 'bottom-start',
 		strategy: 'fixed'
@@ -67,7 +73,7 @@
 </script>
 
 <select multiple bind:value class="dc-calc-hidden">
-	{#each options as option}
+	{#each optionsOnly as option}
 		<option value={option.key}>{option.label}</option>
 	{/each}
 </select>
@@ -87,42 +93,51 @@
 		use:popperContent={extraOpts}
 		class:visible={isDropdownOpen}
 	>
-		<div class="ds-calc-dropdown-content-title">
-			{title}
-		</div>
 		<div class="ds-calc-dropdown-content-items">
-			{#each options as option, index}
-				<button
-					class="ds-calc-dropdown-content-item"
-					class:selected={internalState.includes(option.key)}
-					on:click={() => {
-						handleSelect(option.key);
-					}}
-					>{option.label}
+			{#each options as option}
+				{#if 'key' in option && 'label' in option}
+					<button
+						class="ds-calc-dropdown-content-item"
+						class:selected={internalState.includes(option.key)}
+						on:click={() => {
+							if (option.key) {
+								handleSelect(option.key);
+							}
+						}}
+						>{option.label}
 
-					{#if multiselect}
-						<div class="ds-calc-dropdown-content-item-check">
-							<svg
-								width="16"
-								height="14"
-								viewBox="0 0 16 14"
-								fill="none"
-								xmlns="http://www.w3.org/2000/svg"
-							>
-								<path
-									fill-rule="evenodd"
-									clip-rule="evenodd"
-									d="M15.0834 1.26507L7.25967 13.2936C7.1236 13.5028 6.90317 13.6385 6.65905 13.6632C6.41492 13.688 6.17282 13.5993 5.99936 13.4215L0.916748 8.21204L2.07476 7.02512L6.45109 11.5107L13.7208 0.333984L15.0834 1.26507Z"
-									fill="var(--color-checkmark)"
-								/>
-							</svg>
-						</div>
-					{/if}
-				</button>
+						{#if multiselect}
+							<div class="ds-calc-dropdown-content-item-check">
+								<svg
+									width="16"
+									height="14"
+									viewBox="0 0 16 14"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg"
+								>
+									<path
+										fill-rule="evenodd"
+										clip-rule="evenodd"
+										d="M15.0834 1.26507L7.25967 13.2936C7.1236 13.5028 6.90317 13.6385 6.65905 13.6632C6.41492 13.688 6.17282 13.5993 5.99936 13.4215L0.916748 8.21204L2.07476 7.02512L6.45109 11.5107L13.7208 0.333984L15.0834 1.26507Z"
+										fill="var(--color-checkmark)"
+									/>
+								</svg>
+							</div>
+						{/if}
+					</button>
+				{:else}
+					<div class="ds-calc-dropdown-content-title">
+						{option.title}
+					</div>
+				{/if}
 			{/each}
 		</div>
 		{#if multiselect}
-			<button class="ds-calc-dropdown-confirm" on:click={onConfirm}>Confirm Selection</button>
+			<button
+				class="ds-calc-dropdown-confirm"
+				disabled={internalState.length === 0}
+				on:click={onConfirm}>Confirm Selection</button
+			>
 		{/if}
 	</div>
 </div>
@@ -141,13 +156,20 @@
 		&-content {
 			&-title {
 				display: flex;
-				padding: 16px 24px;
+				padding: 16px 0;
+				margin: 0 12px;
 				font-weight: 600;
 				font-size: 12px;
-				line-height: 150%;
+				line-height: 18px;
 				letter-spacing: 0.8px;
 				text-transform: uppercase;
 				color: rgba(25, 24, 35, 0.6);
+				width: calc(100% - 24px);
+				margin-bottom: -2px;
+				&:not(:first-child) {
+					margin-top: 9px;
+					border-top: 1px solid var(--border-primary);
+				}
 			}
 			&-items {
 				display: flex;
@@ -157,8 +179,8 @@
 				gap: 2px;
 				isolation: isolate;
 
-				max-height: 240px;
-				overflow-y: scroll;
+				max-height: 340px;
+				overflow-y: auto;
 			}
 			&-item {
 				width: 100%;
@@ -176,6 +198,7 @@
 				color: var(--text-secondary);
 				font-weight: 500;
 				font-size: 18px;
+				line-height: 27px;
 
 				.ds-calc-dropdown-content-item-check {
 					border-radius: 2px;
@@ -185,6 +208,9 @@
 					border: 1px solid var(--border-primary);
 					transition: 0.2s all;
 					outline: 2px solid transparent;
+					display: flex;
+					align-items: center;
+					justify-content: center;
 				}
 				&:hover {
 					color: var(--text-primary);
@@ -262,6 +288,10 @@
 		font-size: 16px;
 		line-height: 150%;
 		color: #4c00ff;
+		transition: 0.2s all;
+		&:disabled {
+			color: var(--text-disabled);
+		}
 	}
 
 	.ds-calc-select-display-text {

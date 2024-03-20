@@ -1,15 +1,25 @@
 export type Steps = 1 | 2 | 3;
 
 export type Option = { key: string; label: string };
+export type OptionOrDelimiter = Option | { key?: string; title: string };
 
-export type StoredCalcState = Record<string, Record<string, string[] | null>>;
+export type StoredCalcStateGroup = Record<string, string[]>;
+
+export type StoredCalcState = {
+	first: StoredCalcStateGroup;
+	b2b: StoredCalcStateGroup;
+	proc: StoredCalcStateGroup;
+	hr: StoredCalcStateGroup;
+	b2c: StoredCalcStateGroup;
+	last: StoredCalcStateGroup;
+};
+
 export type SelectConfig = {
 	type: 'select';
 	data: {
 		key: string;
 		placeholder: string;
-		title: string;
-		options: { key: string; label: string }[];
+		options: OptionOrDelimiter[];
 		multiselect?: true;
 		multiselectDelimiter?: string;
 	};
