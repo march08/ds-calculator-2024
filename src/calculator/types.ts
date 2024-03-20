@@ -7,11 +7,15 @@ export type StoredCalcStateGroup = Record<string, string[]>;
 
 export type StoredCalcState = {
 	first: StoredCalcStateGroup;
-	b2b: StoredCalcStateGroup;
-	proc: StoredCalcStateGroup;
-	hr: StoredCalcStateGroup;
-	b2c: StoredCalcStateGroup;
+	B2B: StoredCalcStateGroup;
+	PROC: StoredCalcStateGroup;
+	HR: StoredCalcStateGroup;
+	B2C: StoredCalcStateGroup;
 	last: StoredCalcStateGroup;
+};
+
+export type UIState = {
+	currentFocus: keyof StoredCalcState;
 };
 
 export type SelectConfig = {

@@ -50,7 +50,11 @@
 	};
 
 	const onConfirm = () => {
-		onChange(internalState);
+		const sorted = options
+			.filter((item) => internalState.includes(item.key || ''))
+			.map((item) => item.key)
+			.filter(isTruthy);
+		onChange(sorted);
 		isDropdownOpen = false;
 	};
 
