@@ -13,19 +13,41 @@
 	import { formatUsd } from './utils/number.js';
 	import { calcPROC } from './calculations/calculatePROC.js';
 	import { setContext } from 'svelte';
+	import { generateBaseStateFromConfig } from './generateBaseStateFromConfig.js';
 
-	const calcAnswersState = writable<StoredCalcState>({
-		first: {},
-		b2b: {},
-		proc: {},
-		hr: {},
-		b2c: {},
-		last: {}
-	});
+	const defaultState = {
+		first: generateBaseStateFromConfig(flowConfig.calcConfigStep1),
+		b2b: generateBaseStateFromConfig(flowConfig.calcConfigStep2b2b),
+		proc: generateBaseStateFromConfig(flowConfig.calcConfigStep2procurement),
+		hr: generateBaseStateFromConfig(flowConfig.calcConfigStep2hr),
+		b2c: generateBaseStateFromConfig(flowConfig.calcConfigStep2b2c),
+		last: generateBaseStateFromConfig(flowConfig.calcConfigLast)
+	};
+
+	const visibility = {
+		first: true,
+		b2b: false,
+		proc: false,
+		hr: false,
+		b2c: false,
+		last: false
+	};
+
+	const calcAnswersState = writable<StoredCalcState>(defaultState);
 
 	setContext('answerState', calcAnswersState);
 
 	$: driver = $calcAnswersState.last.driver || [];
+
+	calcAnswersState.subscribe((state) => {
+		if (state.first.businessArea.length > 0) {
+			visibility.last = true;
+		}
+	});
+
+	/**
+	 * calculations
+	 */
 
 	$: b2bResult = calcB2b(driver, $calcAnswersState.b2b as any);
 	$: b2bResult_hourlyImpact = sumRange(b2bResult.map((item) => item.hourlyImpact).filter(isTruthy));
@@ -86,7 +108,10 @@
 		<CalculatorStep
 			id="ds-calc-step-3"
 			stateStep="last"
-			stepConfig={flowConfig.getCalcConfigStep3($calcAnswersState.first.businessArea || [])}
+			filterOptions={(option) => {
+				return !!$calcAnswersState.first.businessArea.find((area) => option.key?.includes(area));
+			}}
+			stepConfig={flowConfig.calcConfigLast}
 		/>
 		<div>
 			<h3>Hourly impact: {numberRangeToText(hourlyImpact)}</h3>

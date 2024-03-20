@@ -1,7 +1,7 @@
 export type Steps = 1 | 2 | 3;
 
-export type Option = { key: string; label: string };
-export type OptionOrDelimiter = Option | { key?: string; title: string };
+export type Option = Readonly<{ key: string; label: string }>;
+export type OptionOrDelimiter = Option | Readonly<{ key?: string; title: string }>;
 
 export type StoredCalcStateGroup = Record<string, string[]>;
 
@@ -19,7 +19,7 @@ export type SelectConfig = {
 	data: {
 		key: string;
 		placeholder: string;
-		options: OptionOrDelimiter[];
+		options: Readonly<OptionOrDelimiter[]>;
 		multiselect?: true;
 		multiselectDelimiter?: string;
 	};
@@ -32,7 +32,7 @@ export type TextConfig = {
 
 export type SelectAreaType = 'B2B' | 'Procurement' | 'HR' | 'B2C';
 
-export type StepConfig = (SelectConfig | TextConfig)[];
+export type StepConfig = Readonly<(SelectConfig | TextConfig)[]>;
 
 export type CalculatedResult = {
 	elementId: string;

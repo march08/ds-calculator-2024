@@ -1,12 +1,14 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
 	import Select from './Select.svelte';
-	import type { StepConfig, StoredCalcState } from './types.js';
+	import type { StepConfig, StoredCalcState, OptionOrDelimiter } from './types.js';
 
 	import { getContext } from 'svelte';
+	import { isTruthy } from './utils/isTruthy.js';
 	let answerState = getContext<Writable<StoredCalcState>>('answerState');
 	export let stepConfig: StepConfig;
 	export let stateStep: keyof StoredCalcState;
+	export let filterOptions: (option: OptionOrDelimiter) => boolean = isTruthy;
 	export let id: string;
 </script>
 
@@ -19,6 +21,7 @@
 			<div>
 				<Select
 					{...item.data}
+					options={item.data.options.filter(filterOptions)}
 					value={$answerState[stateStep][item.data.key] || []}
 					onChange={(value) => {
 						answerState.update((prevState) => {

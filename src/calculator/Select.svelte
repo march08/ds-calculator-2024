@@ -8,7 +8,7 @@
 	export let multiselect: boolean = false;
 	export let value: string[] = [];
 	export let placeholder: string = 'placeholder';
-	export let options: OptionOrDelimiter[];
+	export let options: Readonly<OptionOrDelimiter[]>;
 	export let onChange: (value: string[]) => void;
 	export let multiselectDelimiter: string = ', ';
 	let isDropdownOpen = false; // default state (dropdown close)
@@ -179,7 +179,7 @@
 				gap: 2px;
 				isolation: isolate;
 
-				max-height: 340px;
+				max-height: 350px;
 				overflow-y: auto;
 			}
 			&-item {

@@ -65,18 +65,30 @@ const driverOptions = [
 	}
 ] as const;
 
-const getStep3Options = (area: string) => {
-	return driverOptions.filter((item) => item.key.includes(area));
-};
-
 export const flowConfig: {
 	calcConfigStep1: StepConfig;
 	calcConfigStep2b2b: StepConfig;
 	calcConfigStep2hr: StepConfig;
 	calcConfigStep2procurement: StepConfig;
 	calcConfigStep2b2c: StepConfig;
-	getCalcConfigStep3: (areas: string[]) => StepConfig;
+	calcConfigLast: StepConfig;
 } = {
+	calcConfigLast: [
+		{
+			type: 'text',
+			data: 'Lastly, I want to'
+		},
+		{
+			type: 'select',
+			data: {
+				key: 'driver',
+				placeholder: 'Your priorities',
+				multiselect: true,
+				multiselectDelimiter: '; ',
+				options: driverOptions
+			}
+		}
+	],
 	calcConfigStep1: [
 		{
 			type: 'text',
@@ -677,26 +689,7 @@ export const flowConfig: {
 				]
 			}
 		}
-	],
-
-	getCalcConfigStep3: (areas) => {
-		return [
-			{
-				type: 'text',
-				data: 'Lastly, I want to'
-			},
-			{
-				type: 'select',
-				data: {
-					key: 'driver',
-					placeholder: 'Your priorities',
-					multiselect: true,
-					multiselectDelimiter: '; ',
-					options: areas.map((area) => getStep3Options(area)).flat()
-				}
-			}
-		];
-	}
-};
+	]
+} as const;
 
 export type DriverOption = (typeof driverOptions)[number]['key'];
