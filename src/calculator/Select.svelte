@@ -10,6 +10,7 @@
 	export let placeholder: string = 'placeholder';
 	export let options: Readonly<OptionOrDelimiter[]>;
 	export let onChange: (value: string[]) => void;
+	export let onOpen: () => void;
 	export let multiselectDelimiter: string = ', ';
 	let isDropdownOpen = false; // default state (dropdown close)
 
@@ -25,12 +26,19 @@
 		}
 	};
 
+	$: if (isDropdownOpen) {
+		onOpen();
+	}
+
 	const handleDropdownFocusLoss: FocusEventHandler<HTMLDivElement> = ({
 		relatedTarget,
 		currentTarget
 	}) => {
 		// use "focusout" event to ensure that we can close the dropdown when clicking outside or when we leave the dropdown with the "Tab" button
-		if (relatedTarget instanceof HTMLElement && currentTarget.contains(relatedTarget)) {
+		if (
+			(relatedTarget instanceof HTMLElement && currentTarget.contains(relatedTarget)) ||
+			relatedTarget === currentTarget
+		) {
 			return;
 		}
 		isDropdownOpen = false;
@@ -96,6 +104,7 @@
 		class="ds-calc-dropdown-content"
 		use:popperContent={extraOpts}
 		class:visible={isDropdownOpen}
+		tabindex="-3"
 	>
 		<div class="ds-calc-dropdown-content-items">
 			{#each options as option}
@@ -216,7 +225,8 @@
 					align-items: center;
 					justify-content: center;
 				}
-				&:hover {
+				&:hover,
+				&:focus {
 					color: var(--text-primary);
 					background: var(--bg-secondary);
 					.ds-calc-dropdown-content-item-check {

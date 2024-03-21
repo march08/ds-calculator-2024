@@ -17,30 +17,17 @@
 	let uiState = getContext<Writable<UIState>>('uiState');
 
 	let ref: HTMLDivElement | undefined;
+	$: ref = undefined;
 
 	$: isFocused = $uiState.currentFocus === stateStep;
 
-	$: setFocus = () => {
-		// if (isFocused) {
-		// 	return;
-		// }
-		// console.log('ss', stateStep);
+	$: if (visible && ref) {
 		if (ref) {
 			ref.scrollIntoView({
 				block: 'center',
 				behavior: 'smooth'
 			});
 		}
-		// uiState.update((state) => {
-		// 	return {
-		// 		...state,
-		// 		currentFocus: stateStep
-		// 	};
-		// });
-	};
-
-	$: if (visible && ref) {
-		setTimeout(setFocus, 200);
 	}
 </script>
 
@@ -49,14 +36,13 @@
 {#if visible}
 	<div
 		class="ds-calc-step"
+		tabindex="-1"
+		data-ds-calc-step={stateStep}
 		{id}
 		transition:fade
 		bind:this={ref}
 		role="region"
-		class:focusedui={isFocused || true}
-		on:click={() => {
-			setFocus();
-		}}
+		class:focusedui={isFocused}
 	>
 		{#each stepConfig as item}
 			{#if item.type === 'text'}
@@ -66,6 +52,12 @@
 				<div>
 					<Select
 						{...item.data}
+						onOpen={() => {
+							uiState.update((state) => ({
+								...state,
+								currentFocus: stateStep
+							}));
+						}}
 						options={item.data.options.filter(filterOptions)}
 						value={$answerState[stateStep][item.data.key] || []}
 						onChange={(value) => {

@@ -15,10 +15,9 @@
 	import { setContext } from 'svelte';
 	import { generateBaseStateFromConfig } from './generateBaseStateFromConfig.js';
 	import { arePrevStepsCompleted } from './utils/isSectionFilled.js';
+	import StepsContainer from './utils/components/StepsContainer.svelte';
 
 	let resultRef: HTMLDivElement | undefined;
-	let focusedKey: keyof StoredCalcState;
-	$: focusedKey = 'first';
 
 	const defaultState = {
 		first: generateBaseStateFromConfig(flowConfig.calcConfigStep1),
@@ -58,6 +57,7 @@
 		const areas: (keyof StoredCalcState)[] = ['B2B', 'PROC', 'HR', 'B2C'] as const;
 
 		// reset unused areas
+		// __TODO we need to reset which won't cause subscribe state loop
 		areas.forEach((area: keyof StoredCalcState) => {
 			if (!selectedBusinessAreas.includes(area)) {
 				nextState[area] = defaultState[area];
@@ -105,6 +105,7 @@
 			visibility.last = false;
 		}
 
+		// calcAnswersState.set(nextState);
 		return nextState;
 	});
 
@@ -146,7 +147,7 @@
 </script>
 
 <div class="ds-calculator">
-	<div class="ds-calc-steps-container">
+	<StepsContainer>
 		<CalculatorStep
 			visible={true}
 			id="ds-calc-step-1"
@@ -195,7 +196,7 @@
 				}, 1000);
 			}}
 		/>
-	</div>
+	</StepsContainer>
 	<div class="ds-calc-steps-container" bind:this={resultRef}>
 		<div>
 			<h3>Hourly impact: {numberRangeToText(hourlyImpact)}</h3>
@@ -243,12 +244,5 @@
 			-webkit-appearance: none;
 			appearance: none;
 		}
-	}
-
-	.ds-calc-steps-container {
-		display: flex;
-		flex-direction: column;
-		gap: 33px;
-		padding-bottom: 300px;
 	}
 </style>
