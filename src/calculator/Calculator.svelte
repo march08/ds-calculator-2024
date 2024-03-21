@@ -143,7 +143,31 @@
 	$: allRes = [...b2bResult, ...hrResult, ...b2cResult];
 	let hourlyImpact: NumberRange, financialImpact: NumberRange;
 	$: hourlyImpact = sumRange(allRes.map((item) => item.hourlyImpact).filter(isTruthy));
+	$: hourlyImpactText = numberRangeToText(hourlyImpact);
 	$: financialImpact = sumRange(allRes.map((item) => item.financialImpact).filter(isTruthy));
+	$: financialImpactText = numberRangeToText(financialImpact, formatUsd);
+
+	$: allResText = allRes.map((item) => item.text).join('; ');
+	$: totalImpactText = `Hourly impact: ${hourlyImpactText}, financial impact: ${financialImpactText}`;
+
+	const updateContactFormDescriptionField = () => {
+		if (typeof document !== 'undefined') {
+			const textAreaEl: HTMLTextAreaElement | null = document.querySelector(
+				'#gate-contact-form textarea[name=description]'
+			);
+			console.log(textAreaEl);
+
+			if (textAreaEl) {
+				textAreaEl.value = `FIELD IS DISPLAYED FOR TESTING PURPOSES
+
+${allResText}
+
+${totalImpactText}`;
+			}
+		}
+	};
+
+	$: (totalImpactText || allResText) && updateContactFormDescriptionField();
 </script>
 
 <div class="ds-calculator">
@@ -199,8 +223,8 @@
 	</StepsContainer>
 	<div class="ds-calc-steps-container" bind:this={resultRef}>
 		<div>
-			<h3>Hourly impact: {numberRangeToText(hourlyImpact)}</h3>
-			<h3>Financial impact: {numberRangeToText(financialImpact, formatUsd)}</h3>
+			<h3>Hourly impact: {hourlyImpactText}</h3>
+			<h3>Financial impact: {financialImpactText}</h3>
 		</div>
 		<ResultPreview
 			title="B2B result"
@@ -227,6 +251,27 @@
 			hourlyImpactImpact={b2cResult_hourlyImpact}
 		/>
 	</div>
+	<div class="ds-calc-steps-container">
+		<div id="gate-contact-form" class="gate-a6428bda-8a1c-4dfc-9866-5232101b2e52"></div>
+	</div>
+
+	<script>
+		(function (g, a, t, e, d, c, o) {
+			if (!g[d]) {
+				g.GatedContentObject = d;
+				g[d] =
+					g[d] ||
+					function () {
+						(g[d].q = g[d].q || []).push(arguments);
+					};
+				(c = a.createElement(t)), (o = a.getElementsByTagName(t)[0]);
+				c.async = 1;
+				c.src = e;
+				o.parentNode.insertBefore(c, o);
+			}
+		})(window, document, 'script', 'https://app.gatedcontent.com/scripts/63536885/app.js', 'gcdc');
+		gcdc('loadGates');
+	</script>
 </div>
 
 <style lang="scss" global>

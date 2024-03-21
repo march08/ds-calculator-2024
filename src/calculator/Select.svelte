@@ -270,7 +270,7 @@
 		background: white;
 		border-radius: 16px;
 		pointer-events: none;
-		transition: 0.2s all;
+		transition: 0.2s opacity;
 		opacity: 0;
 		overflow: hidden;
 		width: max-content;
