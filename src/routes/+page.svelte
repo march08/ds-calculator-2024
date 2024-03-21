@@ -13,7 +13,7 @@
 	.container {
 		max-width: 1080px;
 		margin: auto;
-		padding-top: 400px;
-		padding-bottom: 400px;
+		padding-top: 50dvh;
+		padding-bottom: 50dvh;
 	}
 </style>
