@@ -146,11 +146,13 @@
 			{/each}
 		</div>
 		{#if multiselect}
-			<button
-				class="ds-calc-dropdown-confirm"
-				disabled={internalState.length === 0}
-				on:click={onConfirm}>Confirm Selection</button
-			>
+			<div class="ds-calc-dropdown-confirm-container">
+				<button
+					class="ds-calc-dropdown-confirm"
+					disabled={internalState.length === 0}
+					on:click={onConfirm}>Confirm Selection</button
+				>
+			</div>
 		{/if}
 	</div>
 </div>
@@ -169,19 +171,31 @@
 		&-content {
 			&-title {
 				display: flex;
-				padding: 16px 0;
-				margin: 0 12px;
+				padding: 16px 12px;
 				font-weight: 600;
 				font-size: 12px;
 				line-height: 18px;
 				letter-spacing: 0.8px;
 				text-transform: uppercase;
 				color: rgba(25, 24, 35, 0.6);
-				width: calc(100% - 24px);
+				width: 100%;
+				margin-left: -12px;
 				margin-bottom: -2px;
+				position: sticky;
+				top: 0;
+				background: var(--bg-primary);
 				&:not(:first-child) {
+					&:before {
+						content: '';
+						height: 1px;
+						left: 12px;
+						right: 12px;
+						display: block;
+						background: var(--border-primary);
+						position: absolute;
+						top: 0;
+					}
 					margin-top: 9px;
-					border-top: 1px solid var(--border-primary);
 				}
 			}
 			&-items {
@@ -201,6 +215,7 @@
 				flex-direction: row;
 				align-items: flex-start;
 				justify-content: space-between;
+				cursor: pointer;
 
 				padding: 8px 12px;
 				gap: 16px;
@@ -256,6 +271,7 @@
 		padding: 0;
 		color: white;
 		line-height: var(--question-line-height);
+		cursor: pointer;
 		&.placeholder {
 			color: #ffffffcc;
 		}
@@ -264,7 +280,7 @@
 	.ds-calc-dropdown-content {
 		position: fixed;
 		z-index: 1000;
-		padding: 8px 0;
+		padding: 8px 0 0 0;
 		top: calc(100% + 24px);
 		left: 0;
 		background: white;
@@ -281,30 +297,37 @@
 		}
 	}
 
+	.ds-calc-dropdown-confirm-container {
+		border-top: 1px solid rgba(19, 0, 50, 0.15);
+		padding: 8px;
+	}
 	.ds-calc-dropdown-confirm {
 		/* Auto layout */
 		display: flex;
-		flex-direction: row;
-		align-items: flex-start;
-		padding: 16px 24px;
+		align-items: center;
+		padding: 12px 16px;
 
-		height: 56px;
-		width: 100%;
+		height: 48px;
+		width: auto;
 
 		flex-shrink: 0;
 		border: none;
 		outline: none;
 		background: var(--bg-primary);
-		border-top: 1px solid rgba(19, 0, 50, 0.15);
 
 		font-style: normal;
 		font-weight: 500;
 		font-size: 16px;
-		line-height: 150%;
 		color: #4c00ff;
 		transition: 0.2s all;
+		border-radius: 8px;
 		&:disabled {
 			color: var(--text-disabled);
+			pointer-events: none;
+		}
+		&:hover {
+			background: var(--bg-secondary);
+			cursor: pointer;
 		}
 	}
 
