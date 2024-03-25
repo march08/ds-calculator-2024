@@ -2,7 +2,7 @@
 import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
-import { formatNumber, formatPercent } from '../utils/number.js';
+import { formatNumber, formatPercent, nFormatter } from '../utils/number.js';
 import { tryCalcWrap } from './utils.js';
 
 const calcB2cTat = tryCalcWrap((employment: string) => {
@@ -28,7 +28,8 @@ const calcB2cTat = tryCalcWrap((employment: string) => {
 		X,
 		Y,
 		financialImpact: null,
-		hourlyImpact: null
+		hourlyImpact: null,
+		cardMainValue: `${Y} days`
 	};
 });
 
@@ -56,14 +57,17 @@ const calcHrProductivity = tryCalcWrap((employment: string, agreementVolume: str
 
 	const calcZRange = (index: 0 | 1) =>
 		base[employment][index] * improvement[employment][index] * financialConstant * volume;
-	volume;
+
+	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 	return {
 		elementId: 'pie-chart',
 		text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value HR activities.`,
 		X,
 		Y: null,
-		financialImpact: [calcZRange(0), calcZRange(1)],
-		hourlyImpact
+		financialImpact: ZRaw,
+		hourlyImpact,
+		cardMainValue: nFormatter(ZRaw[1]),
+cardMainValueDollars: true
 	};
 });
 
@@ -103,16 +107,17 @@ const calcHrConversionRate = tryCalcWrap((employment: string, agreementVolume: s
 		minimumFractionDigits: 1
 	})}`;
 
-	const calcYRange = (index: 0 | 1) =>
-		formatNumber(improvement[employment][volume][index] * volume);
-	const Y = `${calcYRange(0)}-${calcYRange(1)}`;
+	const calcYRange = (index: 0 | 1) => improvement[employment][volume][index] * volume;
+	const YRaw: NumberRange = [calcYRange(0), calcYRange(1)];
+	const Y = numberRangeToText(YRaw);
 	return {
 		elementId: 'bar-chart',
 		text: `${X} increase in conversion rates by reducing abandonment in the agreement process. Onboard ${Y} additional candidates annually.`,
 		X,
 		Y,
 		financialImpact: null,
-		hourlyImpact: null
+		hourlyImpact: null,
+		cardMainValue: Y
 	};
 });
 

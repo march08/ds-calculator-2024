@@ -3,7 +3,7 @@
 import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
-import { formatNumber, formatPercent } from '../utils/number.js';
+import { formatPercent, nFormatter } from '../utils/number.js';
 import { tryCalcWrap } from './utils.js';
 
 const calcB2bTat = tryCalcWrap((complexity: string) => {
@@ -20,18 +20,23 @@ const calcB2bTat = tryCalcWrap((complexity: string) => {
 	};
 
 	const calcYRange = (index: 0 | 1) =>
-		formatNumber(base[complexity][index] * (1 - improvement[complexity][index]));
+		base[complexity][index] * (1 - improvement[complexity][index]);
 
-	const Y = `${calcYRange(0)}-${calcYRange(1)}`;
-	const X = `${formatPercent(improvement[complexity][1])}-${formatPercent(improvement[complexity][0])}`;
+	const YRaw: NumberRange = [calcYRange(0), calcYRange(1)];
+	const Y = numberRangeToText(YRaw);
+
+	const XRaw: NumberRange = [improvement[complexity][1], improvement[complexity][0]];
+	const X = numberRangeToText(XRaw, formatPercent);
 
 	return {
 		elementId: 'pie-chart',
 		text: `${X} faster deals, with the potential to reduce the sales cycle from weeks to just ${Y} days.`,
 		X,
+		XRaw,
 		Y,
 		financialImpact: null,
-		hourlyImpact: null
+		hourlyImpact: null,
+		cardMainValue: `${Y} days`
 	};
 });
 
@@ -61,7 +66,8 @@ const calcB2bSellerProductivity = tryCalcWrap((complexity: string, agreementVolu
 	const hourlyImpact: NumberRange = [calcYRange(0), calcYRange(1)];
 	const Y = numberRangeToText(hourlyImpact);
 
-	const X = `${formatPercent(improvement[complexity][0])}-${formatPercent(improvement[complexity][1])}`;
+	const XRaw: NumberRange = [improvement[complexity][0], improvement[complexity][1]];
+	const X = numberRangeToText(XRaw, formatPercent);
 
 	const calcZRange = (index: 0 | 1) =>
 		base[complexity][index] * financial[complexity] * improvement[complexity][index] * volume;
@@ -70,9 +76,113 @@ const calcB2bSellerProductivity = tryCalcWrap((complexity: string, agreementVolu
 		elementId: 'calendar',
 		text: `${X} more productive sellers, which frees up ${Y} annual hours to accelerate pipeline development, close more deals, defend price points, etc.`,
 		X,
+		XRaw,
 		Y: null,
 		financialImpact: [calcZRange(0), calcZRange(1)],
-		hourlyImpact
+		hourlyImpact,
+		cardMainValue: nFormatter(calcZRange(1)),
+		cardMainValueDollars: true
+	};
+});
+
+const calcB2bLegalCapacity = tryCalcWrap((complexity: string) => {
+	const improvement: Record<string, NumberRange> = {
+		low: [0.78, 0.78],
+		medium: [0.78, 0.78],
+		high: [0.78, 0.78]
+	};
+
+	const XRaw: NumberRange = [improvement[complexity][0], improvement[complexity][1]];
+	const X = numberRangeToText(XRaw, formatPercent);
+
+	return {
+		elementId: 'pie-chart',
+		text: `Up to ${X} of agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
+		X,
+		XRaw,
+		Y: null,
+		financialImpact: null,
+		hourlyImpact: null,
+		cardMainValue: formatPercent(XRaw[1])
+	};
+});
+
+const calcB2bReducedLegalProductivity = tryCalcWrap(
+	(complexity: string, agreementVolume: string) => {
+		const volume = Number(agreementVolume);
+		const base: Record<string, NumberRange> = {
+			low: [0.5, 2],
+			medium: [4, 8],
+			high: [10, 15]
+		};
+
+		const improvement: Record<string, NumberRange> = {
+			low: [0.5, 0.5],
+			medium: [0.5, 0.5],
+			high: [0.5, 0.5]
+		};
+
+		const financialConst = 78;
+
+		const XRaw: NumberRange = [improvement[complexity][0], improvement[complexity][1]];
+		const X = numberRangeToText(XRaw, formatPercent);
+
+		const calcYRange = (index: 0 | 1) =>
+			base[complexity][index] * improvement[complexity][index] * volume;
+		const hourlyImpact: NumberRange = [calcYRange(0), calcYRange(1)];
+
+		const Y = numberRangeToText(hourlyImpact);
+
+		const calcZRange = (index: 0 | 1) =>
+			base[complexity][index] * improvement[complexity][index] * volume * financialConst;
+		const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
+
+		return {
+			elementId: 'calendar',
+			text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
+			X,
+			XRaw,
+			Y: null,
+			financialImpact: [calcZRange(0), calcZRange(1)],
+			hourlyImpact,
+			cardMainValue: nFormatter(ZRaw[1]),
+			cardMainValueDollars: true
+		};
+	}
+);
+
+const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVolume: string) => {
+	const volume = Number(agreementVolume);
+	const base: Record<string, NumberRange> = {
+		low: [0.0025, 0.005],
+		medium: [0.005, 0.0075],
+		high: [0.0075, 0.01]
+	};
+	const improvement: Record<string, NumberRange> = {
+		low: [0.05, 0.05],
+		medium: [0.05, 0.05],
+		high: [0.05, 0.05]
+	};
+
+	const financialConst = 100000;
+
+	const XRaw: NumberRange = [improvement[complexity][0], improvement[complexity][1]];
+	const X = numberRangeToText(XRaw, formatPercent);
+
+	const calcZRange = (index: 0 | 1) =>
+		base[complexity][index] * improvement[complexity][index] * volume * financialConst;
+	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
+
+	return {
+		elementId: 'bar-chart',
+		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
+		X,
+		XRaw,
+		Y: null,
+		financialImpact: ZRaw,
+		hourlyImpact: null,
+		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValueDollars: true
 	};
 });
 
@@ -103,106 +213,24 @@ const calcB2bReducedRevenueLeakage = tryCalcWrap((complexity: string, rev: strin
 		high: [0.05, 0.1]
 	};
 
-	const X = `${formatPercent(improvement[complexity][0])}-${formatPercent(improvement[complexity][1])}`;
+	const XRaw: NumberRange = [improvement[complexity][0], improvement[complexity][1]];
+	const X = numberRangeToText(XRaw, formatPercent);
 
 	const calcZRange = (index: 0 | 1) =>
 		baseReducted[index] * improvement[complexity][index] * revenue;
+
+	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 
 	return {
 		elementId: 'bar-chart',
 		text: `${X} estimated reduction in revenue leakage by ensuring obligations are enforced, fees are collected, and renewal events are maximized.`,
 		X,
+		XRaw,
 		Y: null,
-		financialImpact: [calcZRange(0), calcZRange(1)],
-		hourlyImpact: null
-	};
-});
-
-const calcB2bLegalCapacity = tryCalcWrap((complexity: string) => {
-	const improvement: Record<string, NumberRange> = {
-		low: [0.78, 0.78],
-		medium: [0.78, 0.78],
-		high: [0.78, 0.78]
-	};
-
-	const X = `${formatPercent(improvement[complexity][0])}`;
-
-	return {
-		elementId: 'pie-chart',
-		text: `Up to ${X} of agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
-		X,
-		Y: null,
-		financialImpact: null,
-		hourlyImpact: null
-	};
-});
-
-const calcB2bReducedLegalProductivity = tryCalcWrap(
-	(complexity: string, agreementVolume: string) => {
-		const volume = Number(agreementVolume);
-		const base: Record<string, NumberRange> = {
-			low: [0.5, 2],
-			medium: [4, 8],
-			high: [10, 15]
-		};
-
-		const improvement: Record<string, NumberRange> = {
-			low: [0.5, 0.5],
-			medium: [0.5, 0.5],
-			high: [0.5, 0.5]
-		};
-
-		const financialConst = 78;
-
-		const X = `${formatPercent(improvement[complexity][0])}`;
-
-		const calcYRange = (index: 0 | 1) =>
-			base[complexity][index] * improvement[complexity][index] * volume;
-		const hourlyImpact: NumberRange = [calcYRange(0), calcYRange(1)];
-
-		const Y = numberRangeToText(hourlyImpact);
-
-		const calcZRange = (index: 0 | 1) =>
-			base[complexity][index] * improvement[complexity][index] * volume * financialConst;
-
-		return {
-			elementId: 'calendar',
-			text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
-			X,
-			Y: null,
-			financialImpact: [calcZRange(0), calcZRange(1)],
-			hourlyImpact
-		};
-	}
-);
-
-const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVolume: string) => {
-	const volume = Number(agreementVolume);
-	const base: Record<string, NumberRange> = {
-		low: [0.0025, 0.005],
-		medium: [0.005, 0.0075],
-		high: [0.0075, 0.01]
-	};
-	const improvement: Record<string, NumberRange> = {
-		low: [0.05, 0.05],
-		medium: [0.05, 0.05],
-		high: [0.05, 0.05]
-	};
-
-	const financialConst = 100000;
-
-	const X = `${formatPercent(improvement[complexity][0])}`;
-
-	const calcZRange = (index: 0 | 1) =>
-		base[complexity][index] * improvement[complexity][index] * volume * financialConst;
-
-	return {
-		elementId: 'bar-chart',
-		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
-		X,
-		Y: null,
-		financialImpact: [calcZRange(0), calcZRange(1)],
-		hourlyImpact: null
+		financialImpact: ZRaw,
+		hourlyImpact: null,
+		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValueDollars: true
 	};
 });
 

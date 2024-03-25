@@ -2,7 +2,7 @@
 import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
-import { formatPercent } from '../utils/number.js';
+import { formatPercent, nFormatter } from '../utils/number.js';
 import { tryCalcWrap } from './utils.js';
 
 const calcPROCtat = tryCalcWrap((spendType: string) => {
@@ -32,7 +32,8 @@ const calcPROCtat = tryCalcWrap((spendType: string) => {
 		X,
 		Y,
 		financialImpact: null,
-		hourlyImpact: null
+		hourlyImpact: null,
+		cardMainValue: `${Y} days`
 	};
 });
 
@@ -68,13 +69,17 @@ const calcPROCProductivity = tryCalcWrap((spendType: string, agreementVolume: st
 		return base[spendType][index] * improvement[spendType][index] * volume * financialConstant;
 	};
 
+	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
+
 	return {
 		elementId: 'bar-chart',
 		text: `${X} improvement in staff productivity, freeing up ${Y} annual hours to focus on priorities like vendor management and innovation. `,
 		X,
 		Y,
 		financialImpact: [calcZ(0), calcZ(1)],
-		hourlyImpact
+		hourlyImpact,
+		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValueDollars: true
 	};
 });
 
@@ -93,7 +98,8 @@ const calcPROCLegalCapacity = tryCalcWrap((spendType: string) => {
 		X,
 		Y: null,
 		financialImpact: null,
-		hourlyImpact: null
+		hourlyImpact: null,
+		cardMainValue: X
 	};
 });
 
@@ -128,14 +134,17 @@ const calcPROCLegalProductivity = tryCalcWrap((spendType: string, agreementVolum
 	const calcZ = (index: 0 | 1) => {
 		return base[spendType][index] * improvement[spendType][index] * volume * financialConstant;
 	};
+	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
 
 	return {
 		elementId: 'bar-chart',
 		text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
 		X,
 		Y,
-		financialImpact: [calcZ(0), calcZ(1)],
-		hourlyImpact
+		financialImpact: ZRaw,
+		hourlyImpact,
+		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValueDollars: true
 	};
 });
 
@@ -163,14 +172,17 @@ const calcPROCReduceRisk = tryCalcWrap((spendType: string, agreementVolume: stri
 	const calcZ = (index: 0 | 1) => {
 		return base[spendType][index] * improvement[spendType][index] * volume * financialConstant;
 	};
+	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
 
 	return {
 		elementId: 'bar-chart',
 		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
 		X,
 		Y: null,
-		financialImpact: [calcZ(0), calcZ(1)],
-		hourlyImpact: null
+		financialImpact: ZRaw,
+		hourlyImpact: null,
+		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValueDollars: true
 	};
 });
 
@@ -224,14 +236,17 @@ const calcPROCReduceSavingsLeakage = tryCalcWrap((spendType: string, spendAmount
 	const calcZ = (index: 0 | 1) => {
 		return amount * base[spendType][amount][index] * improvement[spendType][index];
 	};
+	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
 
 	return {
 		elementId: 'pie-chart',
 		text: `${X} estimated reduction in savings leakage by ensuring obligations are enforced, rebates/penalties are collected, and renewals are maximized.`,
 		X,
 		Y: null,
-		financialImpact: [calcZ(0), calcZ(1)],
-		hourlyImpact: null
+		financialImpact: ZRaw,
+		hourlyImpact: null,
+		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValueDollars: true
 	};
 });
 

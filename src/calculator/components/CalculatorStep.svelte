@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
-	import Select from './Select.svelte.js';
+	import Select from './Select.svelte';
 	import type { StepConfig, StoredCalcState, OptionOrDelimiter, UIState } from '../types.js';
 
 	import { getContext } from 'svelte';
@@ -15,7 +15,7 @@
 
 	let answerState = getContext<Writable<StoredCalcState>>('answerState');
 	let uiState = getContext<Writable<UIState>>('uiState');
-
+	//
 	let ref: HTMLDivElement | undefined;
 	$: ref = undefined;
 

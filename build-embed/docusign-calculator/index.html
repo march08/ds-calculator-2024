@@ -18,10 +18,52 @@
 				padding-top: 400px;
 				padding-bottom: 400px;
 			}
+
+			.card {
+				background: white;
+				color: black;
+			}
+
+			.cards {
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr;
+				gap: 20px;
+			}
 		</style>
 	</head>
 	<body>
-		<div id="testtt" class="container"></div>
+		<div class="cards">
+			<div data-ds-result-card-style="bar-light">
+				bar-light
+				<span class="card-big-number"> 123 </span>
+				<span class="card-text"> This is a text </span>
+			</div>
+			<div data-ds-result-card-style="bar-light">
+				bar-light
+				<span class="card-big-number"> 123 </span>
+				<span class="card-text"> This is a text </span>
+			</div>
+			<div data-ds-result-card-style="bar-light">
+				bar-light
+				<span class="card-big-number"> 123 </span>
+				<span class="card-text"> This is a text </span>
+			</div>
+			<div data-ds-result-card-style="bar-light">
+				bar-light
+				<span class="card-big-number"> 123 </span>
+				<span class="card-text"> This is a text </span>
+			</div>
+			<div data-ds-result-card-style="bar-light">
+				bar-light
+				<span class="card-big-number"> 123 </span>
+				<span class="card-text"> This is a text </span>
+			</div>
+			<div data-ds-result-card-style="bar-light">
+				bar-light
+				<span class="card-big-number"> 123 </span>
+				<span class="card-text"> This is a text </span>
+			</div>
+		</div>
 		<script src="./embed.js"></script>
 		<script>
 			DocusignCalculator.initialize({

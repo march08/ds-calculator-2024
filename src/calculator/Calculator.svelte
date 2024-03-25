@@ -15,7 +15,9 @@
 	import { setContext } from 'svelte';
 	import { arePrevStepsCompleted } from './utils/isSectionFilled.js';
 	import StepsContainer from './components/StepsContainer.svelte';
-	import { getSubmissionStore } from './submissionStore.js';
+	import { getSubmissionStore } from './stores/submissionStore.js';
+	import { sortCalculatedResult } from './utils/sortCalculatedResult.js';
+	import { renderResult } from './utils/renderResult.js';
 
 	let resultRef: HTMLDivElement | undefined;
 
@@ -124,7 +126,13 @@
 	);
 
 	let allRes: CalculatedResult[];
-	$: allRes = [...b2bResult, ...hrResult, ...b2cResult];
+	$: allRes = [...b2bResult, ...procResult, ...hrResult, ...b2cResult];
+
+	$: if (allRes.length > 0) {
+		const sorted = sortCalculatedResult(allRes);
+		renderResult(sorted);
+	}
+
 	let hourlyImpact: NumberRange, financialImpact: NumberRange;
 	$: hourlyImpact = sumRange(allRes.map((item) => item.hourlyImpact).filter(isTruthy));
 	$: hourlyImpactText = numberRangeToText(hourlyImpact);

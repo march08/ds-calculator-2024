@@ -1,8 +1,8 @@
 import { writable } from 'svelte/store';
-import type { FlowConfig } from './config.js';
-import { generateBaseStateFromConfig } from './generateBaseStateFromConfig.js';
-import type { StoredCalcState } from './types.js';
-import { storage } from './utils/localStorage.js';
+import type { FlowConfig } from '../config.js';
+import { generateBaseStateFromConfig } from '../utils/generateBaseStateFromConfig.js';
+import type { StoredCalcState } from '../types.js';
+import { storage } from '../utils/localStorage.js';
 
 const LS_KEY = 'ASSESSMENT_FORM_STATE';
 

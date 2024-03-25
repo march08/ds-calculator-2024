@@ -50,5 +50,65 @@
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div>%sveltekit.body%</div>
+
+		<style>
+			.card,
+			.cards > div {
+				background: white;
+				color: black;
+				padding: 2rem;
+			}
+
+			.card.dark,
+			.cards > div.dark {
+				background: #ccc;
+			}
+			.card-big-number {
+				font-size: 2rem;
+			}
+			.card-text {
+				font-size: 1rem;
+			}
+
+			.cards {
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr 1fr;
+				gap: 20px;
+			}
+		</style>
+		<div class="cards" id="result"></div>
+		<div style="height: 300px">asd</div>
+		<div class="cards">
+			<div data-ds-result-card-style="bar-light">
+				bar-light
+				<div class="card-big-number">123</div>
+				<div class="card-text">This is a text</div>
+			</div>
+			<div data-ds-result-card-style="bar-light">
+				bar-light
+				<div class="card-big-number">123</div>
+				<div class="card-text">This is a text</div>
+			</div>
+			<div data-ds-result-card-style="bar-light">
+				bar-light
+				<div class="card-big-number">123</div>
+				<div class="card-text">This is a text</div>
+			</div>
+			<div data-ds-result-card-style="bar-light">
+				bar-light
+				<div class="card-big-number">123</div>
+				<div class="card-text">This is a text</div>
+			</div>
+			<div data-ds-result-card-style="bar-light">
+				bar-light
+				<div class="card-big-number">123</div>
+				<div class="card-text">This is a text</div>
+			</div>
+			<div data-ds-result-card-style="bar-light">
+				bar-light
+				<div class="card-big-number">123</div>
+				<div class="card-text">This is a text</div>
+			</div>
+		</div>
 	</body>
 </html>

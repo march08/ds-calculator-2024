@@ -2,7 +2,7 @@
 import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
-import { formatNumber, formatPercent } from '../utils/number.js';
+import { formatNumber, formatPercent, nFormatter } from '../utils/number.js';
 import { tryCalcWrap } from './utils.js';
 
 const calcB2cTat = tryCalcWrap((customerInformation: string) => {
@@ -31,7 +31,8 @@ const calcB2cTat = tryCalcWrap((customerInformation: string) => {
 		X,
 		Y,
 		hourlyImpact: null,
-		financialImpact: null
+		financialImpact: null,
+		cardMainValue: `${Y} days`
 	};
 });
 
@@ -51,9 +52,7 @@ const calcB2cStaffProductivity = tryCalcWrap(
 		const financialConstant = 25;
 
 		const calcYRange = (index: 0 | 1) =>
-			base[customerInformation][index] *
-			improvement[customerInformation][index] *
-			financialConstant;
+			base[customerInformation][index] * improvement[customerInformation][index] * volume;
 
 		const hourlyImpact: NumberRange = [calcYRange(0), calcYRange(1)];
 		const Y = numberRangeToText(hourlyImpact);
@@ -64,13 +63,17 @@ const calcB2cStaffProductivity = tryCalcWrap(
 			improvement[customerInformation][index] *
 			financialConstant *
 			volume;
+
+		const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 		return {
 			elementId: 'pie-chart',
 			text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value activities.`,
 			X,
 			Y,
-			financialImpact: [calcZRange(0), calcZRange(1)],
-			hourlyImpact
+			financialImpact: ZRaw,
+			hourlyImpact,
+			cardMainValue: nFormatter(ZRaw[1]),
+			cardMainValueDollars: true
 		};
 	}
 );
@@ -109,13 +112,16 @@ const calcB2cConversionRate = tryCalcWrap((customerInformation: string, amount: 
 
 	const calcZRange = (index: 0 | 1) =>
 		improvement[customerInformation][financial][index] * financial;
+	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 	return {
 		elementId: 'bar-chart',
 		text: `${X} increase in conversion rates by reducing customer abandonment during the agreement process.`,
 		X,
 		Y: null,
 		hourlyImpact: null,
-		financialImpact: [calcZRange(0), calcZRange(1)]
+		financialImpact: ZRaw,
+		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValueDollars: true
 	};
 });
 

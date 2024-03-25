@@ -43,6 +43,8 @@ export type CalculatedResult = {
 	text: string;
 	X: string | null;
 	Y: string | null;
+	cardMainValue: string;
+	cardMainValueDollars?: boolean;
 	// per year
 	financialImpact: [number, number] | null;
 	// per year

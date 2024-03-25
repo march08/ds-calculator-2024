@@ -1,4 +1,4 @@
-import type { SelectConfig, StepConfig } from './types.js';
+import type { SelectConfig, StepConfig } from '../types.js';
 
 export type StepState = Record<string, string[]>;
 
