@@ -2,6 +2,7 @@ import type { CalculatedResult } from '../types.js';
 
 export const renderResult = (result: CalculatedResult[]) => {
 	const targetResultContainerEl = document.getElementById('result');
+	console.log('result', result);
 
 	if (!targetResultContainerEl) {
 		return;

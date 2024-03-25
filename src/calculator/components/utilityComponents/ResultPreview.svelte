@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { CalculatedResult, NumberRange } from './types.js';
-	import { numberRangeToText } from './utils/array.js';
-	import { formatUsd } from './utils/number.js';
+	import type { CalculatedResult, NumberRange } from '../../types.js';
+	import { numberRangeToText } from '../../utils/array.js';
+	import { formatUsd } from '../../utils/number.js';
 
 	export let title: string;
 	export let result: CalculatedResult[];

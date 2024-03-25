@@ -3,21 +3,18 @@
 
 	import { writable } from 'svelte/store';
 	import CalculatorStep from './components/CalculatorStep.svelte';
-	import { calcB2b } from './calculations/calculateB2B.js';
-	import ResultPreview from './ResultPreview.svelte';
-	import { calcB2c } from './calculations/calculateB2C.js';
-	import { calcHr } from './calculations/calculateHr.js';
-	import type { UIState, CalculatedResult, NumberRange, StoredCalcState } from './types.js';
+	import type { UIState, NumberRange } from './types.js';
 	import { numberRangeToText, sumRange } from './utils/array.js';
 	import { isTruthy } from './utils/isTruthy.js';
 	import { formatUsd } from './utils/number.js';
-	import { calcPROC } from './calculations/calculatePROC.js';
 	import { setContext } from 'svelte';
-	import { arePrevStepsCompleted } from './utils/isSectionFilled.js';
+	import { isSectionVisible } from './utils/isSectionFilled.js';
 	import StepsContainer from './components/StepsContainer.svelte';
 	import { getSubmissionStore } from './stores/submissionStore.js';
 	import { sortCalculatedResult } from './utils/sortCalculatedResult.js';
 	import { renderResult } from './utils/renderResult.js';
+	import { calculate, type OverallResult } from './calculations/calculate.js';
+	import { updateContactFormDescriptionField } from './externalDomManipulation/updateContactFormDescriptionField.js';
 
 	let resultRef: HTMLDivElement | undefined;
 
@@ -29,137 +26,44 @@
 	});
 	setContext('uiState', uiState);
 
-	$: driver = $submissionFormState.last.driver || [];
-
-	// submissionFormState.subscribe((state) => {
-	// 	const selectedBusinessAreas = state.first.businessArea;
-
-	// 	const nextState: StoredCalcState = {
-	// 		...state
-	// 	};
-
-	// 	const areas: (keyof StoredCalcState)[] = ['B2B', 'PROC', 'HR', 'B2C'] as const;
-
-	// 	// reset unused areas
-	// 	// __TODO we need to reset which won't cause subscribe state loop
-	// 	areas.forEach((area: keyof StoredCalcState) => {
-	// 		if (!selectedBusinessAreas.includes(area)) {
-	// 			nextState[area] = defaultState[area];
-	// 		}
-	// 	});
-
-	// 	// resets drivers
-	// 	let nextDrivers = state.last.driver.filter(
-	// 		(item) => !!areas.find((area) => item.includes(area))
-	// 	);
-
-	// 	nextState.last = {
-	// 		driver: nextDrivers
-	// 	};
-
-	// 	// calcAnswersState.set(nextState);
-	// 	return nextState;
-	// });
-
 	/**
 	 * controlling visibility
 	 */
-	$: selectedBusinessAreas = $submissionFormState.first.businessArea;
 
-	$: visibilityB2B =
-		selectedBusinessAreas.includes('B2B') && arePrevStepsCompleted([], $submissionFormState)
-			? true
-			: false;
-
-	$: visibilityPROC =
-		selectedBusinessAreas.includes('PROC') && arePrevStepsCompleted(['B2B'], $submissionFormState)
-			? true
-			: false;
-
-	$: visibilityHR =
-		selectedBusinessAreas.includes('HR') &&
-		arePrevStepsCompleted(['B2B', 'PROC'], $submissionFormState)
-			? true
-			: false;
-
-	$: visibilityB2C =
-		selectedBusinessAreas.includes('B2C') &&
-		arePrevStepsCompleted(['B2B', 'PROC', 'HR'], $submissionFormState)
-			? true
-			: false;
-
-	$: visibilityLastSection = arePrevStepsCompleted(
-		['B2B', 'PROC', 'HR', 'B2C'],
-		$submissionFormState
-	)
-		? true
-		: false;
+	$: visibilityB2B = isSectionVisible($submissionFormState, [], 'B2B');
+	$: visibilityPROC = isSectionVisible($submissionFormState, ['B2B'], 'PROC');
+	$: visibilityHR = isSectionVisible($submissionFormState, ['B2B', 'PROC'], 'HR');
+	$: visibilityB2C = isSectionVisible($submissionFormState, ['B2B', 'PROC', 'HR'], 'B2C');
+	$: visibilityLastSection = isSectionVisible($submissionFormState, ['B2B', 'PROC', 'HR', 'B2C']);
 
 	/**
-	 * calculations
+	 * result
 	 */
+	let result: OverallResult = {
+		allRes: []
+	} as any;
+	$: result = calculate($submissionFormState);
+	$: resultItems = result.allRes;
 
-	$: b2bResult = calcB2b(driver, $submissionFormState.B2B as any);
-	$: b2bResult_hourlyImpact = sumRange(b2bResult.map((item) => item.hourlyImpact).filter(isTruthy));
-	$: b2bResult_financialImpact = sumRange(
-		b2bResult.map((item) => item.financialImpact).filter(isTruthy)
-	);
-
-	$: hrResult = calcHr(driver, $submissionFormState.HR as any);
-	$: hrResult_hourlyImpact = sumRange(hrResult.map((item) => item.hourlyImpact).filter(isTruthy));
-	$: hrResult_financialImpact = sumRange(
-		hrResult.map((item) => item.financialImpact).filter(isTruthy)
-	);
-
-	$: b2cResult = calcB2c(driver, $submissionFormState.B2C as any);
-	$: b2cResult_hourlyImpact = sumRange(b2cResult.map((item) => item.hourlyImpact).filter(isTruthy));
-	$: b2cResult_financialImpact = sumRange(
-		b2cResult.map((item) => item.financialImpact).filter(isTruthy)
-	);
-
-	$: procResult = calcPROC(driver, $submissionFormState.PROC as any);
-	$: procResult_hourlyImpact = sumRange(
-		procResult.map((item) => item.hourlyImpact).filter(isTruthy)
-	);
-	$: procResult_financialImpact = sumRange(
-		procResult.map((item) => item.financialImpact).filter(isTruthy)
-	);
-
-	let allRes: CalculatedResult[];
-	$: allRes = [...b2bResult, ...procResult, ...hrResult, ...b2cResult];
-
-	$: if (allRes.length > 0) {
-		const sorted = sortCalculatedResult(allRes);
+	$: if (resultItems.length > 0) {
+		const sorted = sortCalculatedResult(resultItems);
 		renderResult(sorted);
 	}
 
 	let hourlyImpact: NumberRange, financialImpact: NumberRange;
-	$: hourlyImpact = sumRange(allRes.map((item) => item.hourlyImpact).filter(isTruthy));
+	$: hourlyImpact = sumRange(resultItems.map((item) => item.hourlyImpact).filter(isTruthy));
 	$: hourlyImpactText = numberRangeToText(hourlyImpact);
-	$: financialImpact = sumRange(allRes.map((item) => item.financialImpact).filter(isTruthy));
+	$: financialImpact = sumRange(resultItems.map((item) => item.financialImpact).filter(isTruthy));
 	$: financialImpactText = numberRangeToText(financialImpact, formatUsd);
 
-	$: allResText = allRes.map((item) => item.text).join('; ');
+	$: allResText = resultItems.map((item) => item.text).join('; ');
 	$: totalImpactText = `Hourly impact: ${hourlyImpactText}, financial impact: ${financialImpactText}`;
 
-	const updateContactFormDescriptionField = () => {
-		if (typeof document !== 'undefined') {
-			const textAreaEl: HTMLTextAreaElement | null = document.querySelector(
-				'#gate-contact-form textarea[name=description]'
-			);
-			console.log(textAreaEl);
-
-			if (textAreaEl) {
-				textAreaEl.value = `FIELD IS DISPLAYED FOR TESTING PURPOSES
-
-${allResText}
-
-${totalImpactText}`;
-			}
-		}
-	};
-
-	$: (totalImpactText || allResText) && updateContactFormDescriptionField();
+	/**
+	 * update contact form description field
+	 */
+	$: (totalImpactText || allResText) &&
+		updateContactFormDescriptionField(allResText, totalImpactText);
 </script>
 
 <div class="ds-calculator">
@@ -213,36 +117,7 @@ ${totalImpactText}`;
 			}}
 		/>
 	</StepsContainer>
-	<div class="ds-calc-steps-container" bind:this={resultRef}>
-		<div>
-			<h3>Hourly impact: {hourlyImpactText}</h3>
-			<h3>Financial impact: {financialImpactText}</h3>
-		</div>
-		<ResultPreview
-			title="B2B result"
-			result={b2bResult}
-			financialImpact={b2bResult_financialImpact}
-			hourlyImpactImpact={b2bResult_hourlyImpact}
-		/>
-		<ResultPreview
-			title="Procurement"
-			result={procResult}
-			financialImpact={procResult_financialImpact}
-			hourlyImpactImpact={procResult_hourlyImpact}
-		/>
-		<ResultPreview
-			title="HR result"
-			result={hrResult}
-			financialImpact={hrResult_financialImpact}
-			hourlyImpactImpact={hrResult_hourlyImpact}
-		/>
-		<ResultPreview
-			title="B2C result"
-			result={b2cResult}
-			financialImpact={b2cResult_financialImpact}
-			hourlyImpactImpact={b2cResult_hourlyImpact}
-		/>
-	</div>
+
 	<div class="ds-calc-steps-container">
 		<div id="gate-contact-form" class="gate-a6428bda-8a1c-4dfc-9866-5232101b2e52"></div>
 	</div>

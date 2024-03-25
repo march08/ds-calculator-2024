@@ -9,15 +9,14 @@ const sort = (input: CalculatedResult[]) => {
 	const from: CalculatedResult[] = [...input];
 
 	while (from.length > 0) {
-		console.log('from length', from.length);
 		const lastAdded = res[res.length - 1] || null;
 		const lastTypeAdded = lastAdded?.elementId || '';
 		// we add first that is not the same as the last added. If there are no items, then add the first one
-		const nextToAddIndex = from.findIndex((item) => item.elementId !== lastTypeAdded) || 0;
+		const foundIndex = from.findIndex((item) => item.elementId !== lastTypeAdded);
+		const nextToAddIndex = foundIndex > -1 ? foundIndex : 0;
 		const nextToAdd = from[nextToAddIndex];
 		from.splice(nextToAddIndex, 1);
-		console.log('from', from);
-		console.log('nextToAdd', nextToAdd);
+
 		res.push(nextToAdd);
 	}
 

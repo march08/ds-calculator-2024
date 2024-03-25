@@ -30,3 +30,16 @@ export const arePrevStepsCompleted = (
 				isAreaOk(state.first.businessArea, businessArea, state[businessArea])
 			);
 };
+
+export const isSectionVisible = (
+	submissionFormState: StoredCalcState,
+	prevSteps: (keyof StoredCalcState)[],
+	thisArea?: string
+) => {
+	const selectedBusinessAreas = submissionFormState.first.businessArea;
+
+	return (thisArea ? selectedBusinessAreas.includes('PROC') : true) &&
+		arePrevStepsCompleted(prevSteps, submissionFormState)
+		? true
+		: false;
+};
