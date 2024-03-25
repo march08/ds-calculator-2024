@@ -26,7 +26,7 @@ const calcB2bTat = tryCalcWrap((complexity: string) => {
 	const X = `${formatPercent(improvement[complexity][1])}-${formatPercent(improvement[complexity][0])}`;
 
 	return {
-		elementId: '__TODO',
+		elementId: 'pie-chart',
 		text: `${X} faster deals, with the potential to reduce the sales cycle from weeks to just ${Y} days.`,
 		X,
 		Y,
@@ -67,7 +67,7 @@ const calcB2bSellerProductivity = tryCalcWrap((complexity: string, agreementVolu
 		base[complexity][index] * financial[complexity] * improvement[complexity][index] * volume;
 
 	return {
-		elementId: '__TODO',
+		elementId: 'calendar',
 		text: `${X} more productive sellers, which frees up ${Y} annual hours to accelerate pipeline development, close more deals, defend price points, etc.`,
 		X,
 		Y: null,
@@ -109,7 +109,7 @@ const calcB2bReducedRevenueLeakage = tryCalcWrap((complexity: string, rev: strin
 		baseReducted[index] * improvement[complexity][index] * revenue;
 
 	return {
-		elementId: '__TODO',
+		elementId: 'bar-chart',
 		text: `${X} estimated reduction in revenue leakage by ensuring obligations are enforced, fees are collected, and renewal events are maximized.`,
 		X,
 		Y: null,
@@ -128,7 +128,7 @@ const calcB2bLegalCapacity = tryCalcWrap((complexity: string) => {
 	const X = `${formatPercent(improvement[complexity][0])}`;
 
 	return {
-		elementId: '__TODO',
+		elementId: 'pie-chart',
 		text: `Up to ${X} of agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
 		X,
 		Y: null,
@@ -166,7 +166,7 @@ const calcB2bReducedLegalProductivity = tryCalcWrap(
 			base[complexity][index] * improvement[complexity][index] * volume * financialConst;
 
 		return {
-			elementId: '__TODO',
+			elementId: 'calendar',
 			text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
 			X,
 			Y: null,
@@ -197,7 +197,7 @@ const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVol
 		base[complexity][index] * improvement[complexity][index] * volume * financialConst;
 
 	return {
-		elementId: '__TODO',
+		elementId: 'bar-chart',
 		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
 		X,
 		Y: null,

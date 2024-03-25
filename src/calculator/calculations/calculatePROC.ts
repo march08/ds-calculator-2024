@@ -27,7 +27,7 @@ const calcPROCtat = tryCalcWrap((spendType: string) => {
 	const Y = numberRangeToText([calcY(0), calcY(1)]);
 
 	return {
-		elementId: '__TODO',
+		elementId: 'calendar',
 		text: `${X} faster vendor onboarding, going from weeks to just ${Y} days.`,
 		X,
 		Y,
@@ -69,7 +69,7 @@ const calcPROCProductivity = tryCalcWrap((spendType: string, agreementVolume: st
 	};
 
 	return {
-		elementId: '__TODO',
+		elementId: 'bar-chart',
 		text: `${X} improvement in staff productivity, freeing up ${Y} annual hours to focus on priorities like vendor management and innovation. `,
 		X,
 		Y,
@@ -88,7 +88,7 @@ const calcPROCLegalCapacity = tryCalcWrap((spendType: string) => {
 	const X = formatPercent(improvement[spendType][0]);
 
 	return {
-		elementId: '__TODO',
+		elementId: 'pie-chart',
 		text: `Up to ${X} of agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
 		X,
 		Y: null,
@@ -130,7 +130,7 @@ const calcPROCLegalProductivity = tryCalcWrap((spendType: string, agreementVolum
 	};
 
 	return {
-		elementId: '__TODO',
+		elementId: 'bar-chart',
 		text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
 		X,
 		Y,
@@ -165,7 +165,7 @@ const calcPROCReduceRisk = tryCalcWrap((spendType: string, agreementVolume: stri
 	};
 
 	return {
-		elementId: '__TODO',
+		elementId: 'bar-chart',
 		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
 		X,
 		Y: null,
@@ -226,7 +226,7 @@ const calcPROCReduceSavingsLeakage = tryCalcWrap((spendType: string, spendAmount
 	};
 
 	return {
-		elementId: '__TODO',
+		elementId: 'pie-chart',
 		text: `${X} estimated reduction in savings leakage by ensuring obligations are enforced, rebates/penalties are collected, and renewals are maximized.`,
 		X,
 		Y: null,
@@ -269,7 +269,11 @@ export const calcPROC = (
 					calcPROCReduceRisk(
 						characteristics.PROC_spend_type[0],
 						characteristics.PROC_agreement_volume[0]
-					),
+					)
+				]
+			: []),
+		...(driverOption.includes('PROC_4_max_value')
+			? [
 					calcPROCReduceSavingsLeakage(
 						characteristics.PROC_spend_type[0],
 						characteristics.PROC_annual_spend[0]

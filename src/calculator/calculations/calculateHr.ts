@@ -23,7 +23,7 @@ const calcB2cTat = tryCalcWrap((employment: string) => {
 	const X = `${formatPercent(improvement[employment][0])}`;
 
 	return {
-		elementId: '__TODO',
+		elementId: 'calendar',
 		text: `${X} faster candidate onboarding, going from weeks to just ${Y} days`,
 		X,
 		Y,
@@ -58,7 +58,7 @@ const calcHrProductivity = tryCalcWrap((employment: string, agreementVolume: str
 		base[employment][index] * improvement[employment][index] * financialConstant * volume;
 	volume;
 	return {
-		elementId: '__TODO',
+		elementId: 'pie-chart',
 		text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value HR activities.`,
 		X,
 		Y: null,
@@ -107,7 +107,7 @@ const calcHrConversionRate = tryCalcWrap((employment: string, agreementVolume: s
 		formatNumber(improvement[employment][volume][index] * volume);
 	const Y = `${calcYRange(0)}-${calcYRange(1)}`;
 	return {
-		elementId: '__TODO',
+		elementId: 'bar-chart',
 		text: `${X} increase in conversion rates by reducing abandonment in the agreement process. Onboard ${Y} additional candidates annually.`,
 		X,
 		Y,
@@ -144,22 +144,5 @@ export const calcHr = (
 					)
 				]
 			: [])
-
-		// ...(driverOption.includes('B2C_3_boost_productivity')
-		// 	? [
-		// 			calcB2cStaffProductivity(
-		// 				characteristics.B2C_customer_information[0],
-		// 				characteristics.B2C_agreement_volume[0]
-		// 			)
-		// 		]
-		// 	: []),
-		// ...(driverOption.includes('B2C_2_attract_retain')
-		// 	? [
-		// 			calcB2cConversionRate(
-		// 				characteristics.B2C_customer_information[0],
-		// 				characteristics.B2C_revenue[0]
-		// 			)
-		// 		]
-		// 	: [])
 	].filter(isTruthy);
 };

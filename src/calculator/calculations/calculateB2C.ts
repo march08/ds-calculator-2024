@@ -26,7 +26,7 @@ const calcB2cTat = tryCalcWrap((customerInformation: string) => {
 	const X = `${formatPercent(improvement[customerInformation][0])}`;
 
 	return {
-		elementId: '__TODO',
+		elementId: 'calendar',
 		text: `${X} faster deals, with the potential to reduce the sales cycle from weeks to just ${Y} days.`,
 		X,
 		Y,
@@ -65,7 +65,7 @@ const calcB2cStaffProductivity = tryCalcWrap(
 			financialConstant *
 			volume;
 		return {
-			elementId: '__TODO',
+			elementId: 'pie-chart',
 			text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value activities.`,
 			X,
 			Y,
@@ -110,7 +110,7 @@ const calcB2cConversionRate = tryCalcWrap((customerInformation: string, amount: 
 	const calcZRange = (index: 0 | 1) =>
 		improvement[customerInformation][financial][index] * financial;
 	return {
-		elementId: '__TODO',
+		elementId: 'bar-chart',
 		text: `${X} increase in conversion rates by reducing customer abandonment during the agreement process.`,
 		X,
 		Y: null,
