@@ -117,28 +117,6 @@
 			}}
 		/>
 	</StepsContainer>
-
-	<div class="ds-calc-steps-container">
-		<div id="gate-contact-form" class="gate-a6428bda-8a1c-4dfc-9866-5232101b2e52"></div>
-	</div>
-
-	<script>
-		(function (g, a, t, e, d, c, o) {
-			if (!g[d]) {
-				g.GatedContentObject = d;
-				g[d] =
-					g[d] ||
-					function () {
-						(g[d].q = g[d].q || []).push(arguments);
-					};
-				(c = a.createElement(t)), (o = a.getElementsByTagName(t)[0]);
-				c.async = 1;
-				c.src = e;
-				o.parentNode.insertBefore(c, o);
-			}
-		})(window, document, 'script', 'https://app.gatedcontent.com/scripts/63536885/app.js', 'gcdc');
-		gcdc('loadGates');
-	</script>
 </div>
 
 <style lang="scss" global>
