@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { isTruthy } from './utils/isTruthy.js';
+	import { isTruthy } from '../utils/isTruthy.js';
 
 	import type { FocusEventHandler } from 'svelte/elements';
 	import { createPopperActions } from 'svelte-popperjs';
-	import type { Option, OptionOrDelimiter } from './types.js';
+	import type { Option, OptionOrDelimiter } from '../types.js';
 
 	export let multiselect: boolean = false;
 	export let value: string[] = [];

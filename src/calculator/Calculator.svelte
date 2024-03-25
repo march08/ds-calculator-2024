@@ -2,7 +2,7 @@
 	import { flowConfig } from './config.js';
 
 	import { writable } from 'svelte/store';
-	import CalculatorStep from './CalculatorStep.svelte';
+	import CalculatorStep from './components/CalculatorStep.svelte';
 	import { calcB2b } from './calculations/calculateB2B.js';
 	import ResultPreview from './ResultPreview.svelte';
 	import { calcB2c } from './calculations/calculateB2C.js';
@@ -13,125 +13,109 @@
 	import { formatUsd } from './utils/number.js';
 	import { calcPROC } from './calculations/calculatePROC.js';
 	import { setContext } from 'svelte';
-	import { generateBaseStateFromConfig } from './generateBaseStateFromConfig.js';
 	import { arePrevStepsCompleted } from './utils/isSectionFilled.js';
-	import StepsContainer from './utils/components/StepsContainer.svelte';
+	import StepsContainer from './components/StepsContainer.svelte';
+	import { getSubmissionStore } from './submissionStore.js';
 
 	let resultRef: HTMLDivElement | undefined;
 
-	const defaultState = {
-		first: generateBaseStateFromConfig(flowConfig.calcConfigStep1),
-		B2B: generateBaseStateFromConfig(flowConfig.calcConfigStep2b2b),
-		PROC: generateBaseStateFromConfig(flowConfig.calcConfigStep2procurement),
-		HR: generateBaseStateFromConfig(flowConfig.calcConfigStep2hr),
-		B2C: generateBaseStateFromConfig(flowConfig.calcConfigStep2b2c),
-		last: generateBaseStateFromConfig(flowConfig.calcConfigLast)
-	};
-
-	const visibility = {
-		first: true,
-		B2B: false,
-		PROC: false,
-		HR: false,
-		B2C: false,
-		last: false
-	};
-
-	const calcAnswersState = writable<StoredCalcState>(defaultState);
-	setContext('answerState', calcAnswersState);
+	const { store: submissionFormState, defaultState } = getSubmissionStore(flowConfig);
+	setContext('answerState', submissionFormState);
 
 	const uiState = writable<UIState>({
 		currentFocus: 'first'
 	});
 	setContext('uiState', uiState);
 
-	$: driver = $calcAnswersState.last.driver || [];
+	$: driver = $submissionFormState.last.driver || [];
 
-	calcAnswersState.subscribe((state) => {
-		const selectedBusinessAreas = state.first.businessArea;
+	// submissionFormState.subscribe((state) => {
+	// 	const selectedBusinessAreas = state.first.businessArea;
 
-		const nextState: StoredCalcState = {
-			...state
-		};
+	// 	const nextState: StoredCalcState = {
+	// 		...state
+	// 	};
 
-		const areas: (keyof StoredCalcState)[] = ['B2B', 'PROC', 'HR', 'B2C'] as const;
+	// 	const areas: (keyof StoredCalcState)[] = ['B2B', 'PROC', 'HR', 'B2C'] as const;
 
-		// reset unused areas
-		// __TODO we need to reset which won't cause subscribe state loop
-		areas.forEach((area: keyof StoredCalcState) => {
-			if (!selectedBusinessAreas.includes(area)) {
-				nextState[area] = defaultState[area];
-			}
-		});
+	// 	// reset unused areas
+	// 	// __TODO we need to reset which won't cause subscribe state loop
+	// 	areas.forEach((area: keyof StoredCalcState) => {
+	// 		if (!selectedBusinessAreas.includes(area)) {
+	// 			nextState[area] = defaultState[area];
+	// 		}
+	// 	});
 
-		// resets drivers
-		let nextDrivers = state.last.driver.filter(
-			(item) => !!areas.find((area) => item.includes(area))
-		);
+	// 	// resets drivers
+	// 	let nextDrivers = state.last.driver.filter(
+	// 		(item) => !!areas.find((area) => item.includes(area))
+	// 	);
 
-		nextState.last = {
-			driver: nextDrivers
-		};
+	// 	nextState.last = {
+	// 		driver: nextDrivers
+	// 	};
 
-		// display or hide sections
+	// 	// calcAnswersState.set(nextState);
+	// 	return nextState;
+	// });
 
-		if (selectedBusinessAreas.includes('B2B') && arePrevStepsCompleted([], state)) {
-			visibility.B2B = true;
-		} else {
-			visibility.B2B = false;
-		}
+	/**
+	 * controlling visibility
+	 */
+	$: selectedBusinessAreas = $submissionFormState.first.businessArea;
 
-		if (selectedBusinessAreas.includes('PROC') && arePrevStepsCompleted(['B2B'], state)) {
-			visibility.PROC = true;
-		} else {
-			visibility.PROC = false;
-		}
-		if (selectedBusinessAreas.includes('HR') && arePrevStepsCompleted(['B2B', 'PROC'], state)) {
-			visibility.HR = true;
-		} else {
-			visibility.HR = false;
-		}
-		if (
-			selectedBusinessAreas.includes('B2C') &&
-			arePrevStepsCompleted(['B2B', 'PROC', 'HR'], state)
-		) {
-			visibility.B2C = true;
-		} else {
-			visibility.B2C = false;
-		}
-		if (arePrevStepsCompleted(['B2B', 'PROC', 'HR', 'B2C'], state)) {
-			visibility.last = true;
-		} else {
-			visibility.last = false;
-		}
+	$: visibilityB2B =
+		selectedBusinessAreas.includes('B2B') && arePrevStepsCompleted([], $submissionFormState)
+			? true
+			: false;
 
-		// calcAnswersState.set(nextState);
-		return nextState;
-	});
+	$: visibilityPROC =
+		selectedBusinessAreas.includes('PROC') && arePrevStepsCompleted(['B2B'], $submissionFormState)
+			? true
+			: false;
+
+	$: visibilityHR =
+		selectedBusinessAreas.includes('HR') &&
+		arePrevStepsCompleted(['B2B', 'PROC'], $submissionFormState)
+			? true
+			: false;
+
+	$: visibilityB2C =
+		selectedBusinessAreas.includes('B2C') &&
+		arePrevStepsCompleted(['B2B', 'PROC', 'HR'], $submissionFormState)
+			? true
+			: false;
+
+	$: visibilityLastSection = arePrevStepsCompleted(
+		['B2B', 'PROC', 'HR', 'B2C'],
+		$submissionFormState
+	)
+		? true
+		: false;
 
 	/**
 	 * calculations
 	 */
 
-	$: b2bResult = calcB2b(driver, $calcAnswersState.B2B as any);
+	$: b2bResult = calcB2b(driver, $submissionFormState.B2B as any);
 	$: b2bResult_hourlyImpact = sumRange(b2bResult.map((item) => item.hourlyImpact).filter(isTruthy));
 	$: b2bResult_financialImpact = sumRange(
 		b2bResult.map((item) => item.financialImpact).filter(isTruthy)
 	);
 
-	$: hrResult = calcHr(driver, $calcAnswersState.HR as any);
+	$: hrResult = calcHr(driver, $submissionFormState.HR as any);
 	$: hrResult_hourlyImpact = sumRange(hrResult.map((item) => item.hourlyImpact).filter(isTruthy));
 	$: hrResult_financialImpact = sumRange(
 		hrResult.map((item) => item.financialImpact).filter(isTruthy)
 	);
 
-	$: b2cResult = calcB2c(driver, $calcAnswersState.B2C as any);
+	$: b2cResult = calcB2c(driver, $submissionFormState.B2C as any);
 	$: b2cResult_hourlyImpact = sumRange(b2cResult.map((item) => item.hourlyImpact).filter(isTruthy));
 	$: b2cResult_financialImpact = sumRange(
 		b2cResult.map((item) => item.financialImpact).filter(isTruthy)
 	);
 
-	$: procResult = calcPROC(driver, $calcAnswersState.PROC as any);
+	$: procResult = calcPROC(driver, $submissionFormState.PROC as any);
 	$: procResult_hourlyImpact = sumRange(
 		procResult.map((item) => item.hourlyImpact).filter(isTruthy)
 	);
@@ -179,35 +163,35 @@ ${totalImpactText}`;
 			stepConfig={flowConfig.calcConfigStep1}
 		/>
 		<CalculatorStep
-			visible={visibility.B2B}
+			visible={visibilityB2B}
 			id="ds-calc-step-2-b2b"
 			stateStep="B2B"
 			stepConfig={flowConfig.calcConfigStep2b2b}
 		/>
 		<CalculatorStep
-			visible={visibility.PROC}
+			visible={visibilityPROC}
 			id="ds-calc-step-2-proc"
 			stateStep="PROC"
 			stepConfig={flowConfig.calcConfigStep2procurement}
 		/>
 		<CalculatorStep
-			visible={visibility.HR}
+			visible={visibilityHR}
 			id="ds-calc-step-2-hr"
 			stateStep="HR"
 			stepConfig={flowConfig.calcConfigStep2hr}
 		/>
 		<CalculatorStep
-			visible={visibility.B2C}
+			visible={visibilityB2C}
 			id="ds-calc-step-2-b2c"
 			stateStep="B2C"
 			stepConfig={flowConfig.calcConfigStep2b2c}
 		/>
 		<CalculatorStep
-			visible={visibility.last}
+			visible={visibilityLastSection}
 			id="ds-calc-step-3"
 			stateStep="last"
 			filterOptions={(option) => {
-				return !!$calcAnswersState.first.businessArea.find((area) => option.key?.includes(area));
+				return !!$submissionFormState.first.businessArea.find((area) => option.key?.includes(area));
 			}}
 			stepConfig={flowConfig.calcConfigLast}
 			onChange={() => {

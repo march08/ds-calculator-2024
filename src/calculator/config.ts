@@ -65,14 +65,15 @@ const driverOptions = [
 	}
 ] as const;
 
-export const flowConfig: {
+export type FlowConfig = {
 	calcConfigStep1: StepConfig;
 	calcConfigStep2b2b: StepConfig;
 	calcConfigStep2hr: StepConfig;
 	calcConfigStep2procurement: StepConfig;
 	calcConfigStep2b2c: StepConfig;
 	calcConfigLast: StepConfig;
-} = {
+};
+export const flowConfig: FlowConfig = {
 	calcConfigLast: [
 		{
 			type: 'text',

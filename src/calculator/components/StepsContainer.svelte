@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { isTruthy } from '../isTruthy.js';
+	import { isTruthy } from '../utils/isTruthy.js';
 	import type { Writable } from 'svelte/store';
-	import type { StoredCalcState, UIState } from '../../types.js';
+	import type { StoredCalcState, UIState } from '../types.js';
 
 	let stepsContainerRef: HTMLDivElement | undefined;
 	let uiState = getContext<Writable<UIState>>('uiState');
