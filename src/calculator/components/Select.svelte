@@ -80,7 +80,7 @@
 		strategy: 'fixed'
 	});
 	const extraOpts = {
-		modifiers: [{ name: 'offset', options: { offset: [0, 8] } }]
+		modifiers: [{ name: 'offset', options: { offset: [0, 12] } }]
 	};
 </script>
 
@@ -282,9 +282,10 @@
 
 	.ds-calc-dropdown-content-wrapper {
 		opacity: 0;
-		z-index: 1000;
+		z-index: 10000;
 		pointer-events: none;
 		visibility: hidden;
+		transition: 0.2s opacity;
 		&.visible {
 			opacity: 1;
 			pointer-events: all;
@@ -354,7 +355,7 @@
 		font-size: var(--assessment-font-size);
 		letter-spacing: var(--assessment-font-letter-spacing);
 		line-height: var(--question-line-height);
-		l &.visible {
+		&.visible {
 			border-bottom: 4px solid;
 
 			border-image-slice: 1;
