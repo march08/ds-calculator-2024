@@ -18,81 +18,120 @@ export const calculate = (submissionFormState: StoredCalcState) => {
 
 	// eslint-disable-next-line
 	const b2bResult = calcB2b(driver, submissionFormState.B2B as any);
-	const b2bResult_hourlyImpact = sumRange(
-		b2bResult.map((item) => item.hourlyImpact).filter(isTruthy)
+	const b2bResult_employeeHoursYear = sumRange(
+		b2bResult.map((item) => item.employeeHoursYear).filter(isTruthy)
 	);
-	const b2bResult_financialImpact = sumRange(
-		b2bResult.map((item) => item.financialImpact).filter(isTruthy)
+	const b2bResult_dollarsYear = sumRange(
+		b2bResult.map((item) => item.dollarsYear).filter(isTruthy)
 	);
 
 	// eslint-disable-next-line
 	const hrResult = calcHr(driver, submissionFormState.HR as any);
-	const hrResult_hourlyImpact = sumRange(
-		hrResult.map((item) => item.hourlyImpact).filter(isTruthy)
+	const hrResult_employeeHoursYear = sumRange(
+		hrResult.map((item) => item.employeeHoursYear).filter(isTruthy)
 	);
-	const hrResult_financialImpact = sumRange(
-		hrResult.map((item) => item.financialImpact).filter(isTruthy)
-	);
+	const hrResult_dollarsYear = sumRange(hrResult.map((item) => item.dollarsYear).filter(isTruthy));
 
 	// eslint-disable-next-line
 	const b2cResult = calcB2c(driver, submissionFormState.B2C as any);
-	const b2cResult_hourlyImpact = sumRange(
-		b2cResult.map((item) => item.hourlyImpact).filter(isTruthy)
+	const b2cResult_employeeHoursYear = sumRange(
+		b2cResult.map((item) => item.employeeHoursYear).filter(isTruthy)
 	);
-	const b2cResult_financialImpact = sumRange(
-		b2cResult.map((item) => item.financialImpact).filter(isTruthy)
+	const b2cResult_dollarsYear = sumRange(
+		b2cResult.map((item) => item.dollarsYear).filter(isTruthy)
 	);
 
 	// eslint-disable-next-line
 	const procResult = calcPROC(driver, submissionFormState.PROC as any);
-	const procResult_hourlyImpact = sumRange(
-		procResult.map((item) => item.hourlyImpact).filter(isTruthy)
+	const procResult_employeeHoursYear = sumRange(
+		procResult.map((item) => item.employeeHoursYear).filter(isTruthy)
 	);
-	const procResult_financialImpact = sumRange(
-		procResult.map((item) => item.financialImpact).filter(isTruthy)
+	const procResult_dollarsYear = sumRange(
+		procResult.map((item) => item.dollarsYear).filter(isTruthy)
 	);
 
 	const allRes = [...b2bResult, ...procResult, ...hrResult, ...b2cResult];
 
-	const hourlyImpact = sumRange(allRes.map((item) => item.hourlyImpact).filter(isTruthy));
-	const hourlyImpactText = numberRangeToText(hourlyImpact);
-	const financialImpact = sumRange(allRes.map((item) => item.financialImpact).filter(isTruthy));
-	const financialImpactText = numberRangeToText(financialImpact, formatUsd);
+	const employeeHoursYear = sumRange(allRes.map((item) => item.employeeHoursYear).filter(isTruthy));
+	const employeeHoursYearText = numberRangeToText(employeeHoursYear);
+
+	const totalDollarsYear = sumRange(allRes.map((item) => item.dollarsYear).filter(isTruthy));
+	const totalDollarsYearText = numberRangeToText(totalDollarsYear, formatUsd);
+
+	const totalEmployeeHoursYear = sumRange(
+		allRes.map((item) => item.employeeHoursYear).filter(isTruthy)
+	);
+	const totalEmployeeHoursYearText = numberRangeToText(totalEmployeeHoursYear);
+
+	const totalOnboardingDaysCandidate = sumRange(
+		allRes.map((item) => item.onboardingDaysCandidate).filter(isTruthy)
+	);
+	const totalOnboardingDaysCandidateText = numberRangeToText(totalOnboardingDaysCandidate);
+
+	const totalOnboardingDaysVendor = sumRange(
+		allRes.map((item) => item.onboardingDaysVendor).filter(isTruthy)
+	);
+	const totalOnboardingDaysVendorText = numberRangeToText(totalOnboardingDaysVendor);
+
+	const totalOnboardingDaysCustomer = sumRange(
+		allRes.map((item) => item.onboardingDaysCustomer).filter(isTruthy)
+	);
+	const totalOnboardingDaysCustomerText = numberRangeToText(totalOnboardingDaysCustomer);
+
+	const totalCandidateYear = sumRange(allRes.map((item) => item.candidatesYear).filter(isTruthy));
+	const totalCandidateYearText = numberRangeToText(totalCandidateYear);
 
 	return {
 		allRes,
-		hourlyImpact,
-		hourlyImpactText,
-		financialImpact,
-		financialImpactText,
-		b2bResult_hourlyImpact,
-		b2bResult_financialImpact,
-		b2cResult_hourlyImpact,
-		b2cResult_financialImpact,
+		employeeHoursYear,
+		employeeHoursYearText,
+		// total dollars
+		totalDollarsYear,
+		totalDollarsYearText,
+		// total employee hours
+		totalEmployeeHoursYear,
+		totalEmployeeHoursYearText,
+		// total candidate onboarding
+		totalOnboardingDaysCandidate,
+		totalOnboardingDaysCandidateText,
+		// total vendor onboarding
+		totalOnboardingDaysVendor,
+		totalOnboardingDaysVendorText,
+		// total vendor customer
+		totalOnboardingDaysCustomer,
+		totalOnboardingDaysCustomerText,
+		// total candidate year
+		totalCandidateYear,
+		totalCandidateYearText,
+
+		b2bResult_employeeHoursYear,
+		b2bResult_dollarsYear,
+		b2cResult_employeeHoursYear,
+		b2cResult_dollarsYear,
 		splitResult: [
 			{
 				title: 'B2B',
 				result: b2bResult,
-				hourlyImpact: b2bResult_hourlyImpact,
-				financialImpact: b2bResult_financialImpact
+				employeeHoursYear: b2bResult_employeeHoursYear,
+				dollarsYear: b2bResult_dollarsYear
 			},
 			{
 				title: 'Procurement',
 				result: procResult,
-				hourlyImpact: procResult_hourlyImpact,
-				financialImpact: procResult_financialImpact
+				employeeHoursYear: procResult_employeeHoursYear,
+				dollarsYear: procResult_dollarsYear
 			},
 			{
 				title: 'HR',
 				result: hrResult,
-				hourlyImpact: hrResult_hourlyImpact,
-				financialImpact: hrResult_financialImpact
+				employeeHoursYear: hrResult_employeeHoursYear,
+				dollarsYear: hrResult_dollarsYear
 			},
 			{
 				title: 'B2C',
 				result: b2cResult,
-				hourlyImpact: b2cResult_hourlyImpact,
-				financialImpact: b2cResult_financialImpact
+				employeeHoursYear: b2cResult_employeeHoursYear,
+				dollarsYear: b2cResult_dollarsYear
 			}
 		]
 	};

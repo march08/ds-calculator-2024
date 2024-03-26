@@ -155,20 +155,24 @@
 		renderResult(sorted);
 	}
 
-	let hourlyImpact: NumberRange, financialImpact: NumberRange;
-	$: hourlyImpact = sumRange(resultItems.map((item) => item.hourlyImpact).filter(isTruthy));
-	$: hourlyImpactText = numberRangeToText(hourlyImpact);
-	$: financialImpact = sumRange(resultItems.map((item) => item.financialImpact).filter(isTruthy));
-	$: financialImpactText = numberRangeToText(financialImpact, formatUsd);
+	let employeeHoursYear: NumberRange, dollarsYear: NumberRange;
+	$: employeeHoursYear = sumRange(
+		resultItems.map((item) => item.employeeHoursYear).filter(isTruthy)
+	);
+	$: employeeHoursYearText = numberRangeToText(employeeHoursYear);
+	$: dollarsYear = sumRange(resultItems.map((item) => item.dollarsYear).filter(isTruthy));
+	$: dollarsYearText = numberRangeToText(dollarsYear, formatUsd);
 
 	$: allResText = resultItems.map((item) => item.text).join('; ');
-	$: totalImpactText = `Hourly impact: ${hourlyImpactText}, financial impact: ${financialImpactText}`;
+	$: totalImpactText = `Hourly impact: ${employeeHoursYearText}, financial impact: ${dollarsYearText}`;
 
 	/**
 	 * update contact form description field
 	 */
 	$: (totalImpactText || allResText) &&
 		updateContactFormDescriptionField(allResText, totalImpactText);
+
+	let displayCalculations = false;
 </script>
 
 <div class="ds-calculator">
@@ -261,7 +265,22 @@
 	</div>
 </div>
 
-<div>
+<div class="result-preview-container" class:visible={displayCalculations}>
+	<div class="result-preview-container-button">
+		<Button
+			onClick={() => {
+				displayCalculations = !displayCalculations;
+			}}>{displayCalculations ? 'Hide' : 'Show'} calculations</Button
+		>
+	</div>
+	<ul>
+		<li>totalDollarsYear: {result.totalDollarsYearText}</li>
+		<li>totalEmployeeHoursYear: {result.totalEmployeeHoursYearText}</li>
+		<li>totalOnboardingDaysVendor: {result.totalOnboardingDaysVendorText}</li>
+		<li>totalOnboardingDaysCandidate: {result.totalOnboardingDaysCandidateText}</li>
+		<li>totalOnboardingDaysCustomer: {result.totalOnboardingDaysCustomerText}</li>
+		<li>totalCandidateYear: {result.totalCandidateYearText}</li>
+	</ul>
 	{#each result.splitResult as resultGroup}
 		<ResultPreview {...resultGroup} />
 	{/each}
@@ -295,6 +314,33 @@
 		input {
 			-webkit-appearance: none;
 			appearance: none;
+		}
+
+		max-width: calc(1080px + 48px);
+		padding-left: 24px;
+		padding-right: 24px;
+		margin: 0 auto;
+	}
+
+	.result-preview-container {
+		.result-preview-container-button {
+			position: sticky;
+			top: 0;
+			background: inherit;
+		}
+		position: fixed;
+		top: 0;
+		right: 0;
+		height: 100%;
+		width: 30vw;
+		height: 98px;
+		overflow: hidden;
+		background: #3f0eb1;
+		padding: 24px;
+		color: white;
+		&.visible {
+			height: 100%;
+			overflow: auto;
 		}
 	}
 </style>

@@ -45,99 +45,103 @@
 			input {
 				font-family: 'DS Indigo';
 			}
+			.allContainer {
+				max-width: calc(1080px + 48px);
+				padding-left: 24px;
+				padding-right: 24px;
+				margin: auto;
+			}
 		</style>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
-		<div>%sveltekit.body%</div>
+		<div class="allContainer">
+			<div>%sveltekit.body%</div>
 
-		<style>
-			.card,
-			.cards > div {
-				background: white;
-				color: black;
-				padding: 2rem;
-			}
-
-			.card.dark,
-			.cards > div.dark {
-				background: #ccc;
-			}
-			.card-big-number {
-				font-size: 2rem;
-			}
-			.card-text {
-				font-size: 1rem;
-			}
-
-			.cards {
-				display: grid;
-				grid-template-columns: 1fr 1fr 1fr;
-				gap: 20px;
-			}
-			@media screen and (max-width: 880px) {
-				.cards {
-					grid-template-columns: 1fr 1fr;
+			<style>
+				.card,
+				.cards > div {
+					background: white;
+					color: black;
+					padding: 2rem;
 				}
-			}
 
-			#result-container {
-				max-width: calc(1080px + 48px);
-				padding-left: 24px;
-				padding-right: 24px;
-				margin: 0 auto;
-				opacity: 0;
-				transition: 0.5s all;
-				transition-delay: 0.4s;
-			}
-			#ui-calc-loader {
-				position: fixed;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				background: #4c00ff;
-				z-index: 1000;
-				color: white;
-				opacity: 0;
-				pointer-events: none;
-				transition: 0.5s all;
-			}
-		</style>
+				.card.dark,
+				.cards > div.dark {
+					background: #ccc;
+				}
+				.card-big-number {
+					font-size: 2rem;
+				}
+				.card-text {
+					font-size: 1rem;
+				}
 
-		<div id="ui-calc-loader">
-			<h3>Calculating</h3>
-		</div>
-		<div id="result-container">
-			<div class="cards" id="result"></div>
-			<div id="gate-contact-form" class="gate-a6428bda-8a1c-4dfc-9866-5232101b2e52"></div>
-
-			<script>
-				(function (g, a, t, e, d, c, o) {
-					if (!g[d]) {
-						g.GatedContentObject = d;
-						g[d] =
-							g[d] ||
-							function () {
-								(g[d].q = g[d].q || []).push(arguments);
-							};
-						(c = a.createElement(t)), (o = a.getElementsByTagName(t)[0]);
-						c.async = 1;
-						c.src = e;
-						o.parentNode.insertBefore(c, o);
+				.cards {
+					display: grid;
+					grid-template-columns: 1fr 1fr 1fr;
+					gap: 20px;
+				}
+				@media screen and (max-width: 880px) {
+					.cards {
+						grid-template-columns: 1fr 1fr;
 					}
-				})(
-					window,
-					document,
-					'script',
-					'https://app.gatedcontent.com/scripts/63536885/app.js',
-					'gcdc'
-				);
-				gcdc('loadGates');
-			</script>
+				}
+
+				#result-container {
+					opacity: 0;
+					transition: 0.5s all;
+					transition-delay: 0.4s;
+				}
+				#ui-calc-loader {
+					position: fixed;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					background: #4c00ff;
+					z-index: 1000;
+					color: white;
+					opacity: 0;
+					pointer-events: none;
+					transition: 0.5s all;
+				}
+			</style>
+
+			<div id="ui-calc-loader">
+				<h3>Calculating</h3>
+			</div>
+			<div id="result-container">
+				<div class="cards" id="result"></div>
+				<div id="gate-contact-form" class="gate-a6428bda-8a1c-4dfc-9866-5232101b2e52"></div>
+
+				<script>
+					(function (g, a, t, e, d, c, o) {
+						if (!g[d]) {
+							g.GatedContentObject = d;
+							g[d] =
+								g[d] ||
+								function () {
+									(g[d].q = g[d].q || []).push(arguments);
+								};
+							(c = a.createElement(t)), (o = a.getElementsByTagName(t)[0]);
+							c.async = 1;
+							c.src = e;
+							o.parentNode.insertBefore(c, o);
+						}
+					})(
+						window,
+						document,
+						'script',
+						'https://app.gatedcontent.com/scripts/63536885/app.js',
+						'gcdc'
+					);
+					gcdc('loadGates');
+				</script>
+			</div>
 		</div>
 	</body>
 </html>

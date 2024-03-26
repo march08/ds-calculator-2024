@@ -4,7 +4,7 @@ import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
 import { formatPercent, nFormatter } from '../utils/number.js';
-import { tryCalcWrap } from './utils.js';
+import { getRange, tryCalcWrap } from './utils.js';
 
 const calcB2bTat = tryCalcWrap((complexity: string) => {
 	const base: Record<string, NumberRange> = {
@@ -18,6 +18,14 @@ const calcB2bTat = tryCalcWrap((complexity: string) => {
 		medium: [0.83, 0.71],
 		high: [0.83, 0.71]
 	};
+
+	/**
+	 *
+	 */
+
+	const calcOnboardingDaysCustomer = (index: 0 | 1) =>
+		base[complexity][index] * improvement[complexity][index];
+	const calcOnboardingDaysCustomerRaw = getRange(calcOnboardingDaysCustomer);
 
 	/**
 	 * X
@@ -39,9 +47,13 @@ const calcB2bTat = tryCalcWrap((complexity: string) => {
 		X,
 		XRaw,
 		Y,
-		financialImpact: null,
-		hourlyImpact: null,
-		cardMainValue: `${Y} days`
+		dollarsYear: null,
+		employeeHoursYear: null,
+		cardMainValue: `${Y} days`,
+		onboardingDaysCustomer: calcOnboardingDaysCustomerRaw,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null,
+		candidatesYear: null
 	};
 });
 
@@ -68,8 +80,8 @@ const calcB2bSellerProductivity = tryCalcWrap((complexity: string, agreementVolu
 	const calcYRange = (index: 0 | 1) =>
 		base[complexity][index] * improvement[complexity][index] * volume;
 
-	const hourlyImpact: NumberRange = [calcYRange(0), calcYRange(1)];
-	const Y = numberRangeToText(hourlyImpact);
+	const employeeHoursYear: NumberRange = [calcYRange(0), calcYRange(1)];
+	const Y = numberRangeToText(employeeHoursYear);
 
 	const XRaw: NumberRange = [improvement[complexity][0], improvement[complexity][1]];
 	const X = numberRangeToText(XRaw, formatPercent);
@@ -83,10 +95,14 @@ const calcB2bSellerProductivity = tryCalcWrap((complexity: string, agreementVolu
 		X,
 		XRaw,
 		Y: null,
-		financialImpact: [calcZRange(0), calcZRange(1)],
-		hourlyImpact,
+		dollarsYear: [calcZRange(0), calcZRange(1)],
+		employeeHoursYear,
 		cardMainValue: nFormatter(calcZRange(1)),
-		cardMainValueDollars: true
+		cardMainValueDollars: true,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null,
+		candidatesYear: null
 	};
 });
 
@@ -106,9 +122,13 @@ const calcB2bLegalCapacity = tryCalcWrap((complexity: string) => {
 		X,
 		XRaw,
 		Y: null,
-		financialImpact: null,
-		hourlyImpact: null,
-		cardMainValue: formatPercent(XRaw[1])
+		dollarsYear: null,
+		employeeHoursYear: null,
+		cardMainValue: formatPercent(XRaw[1]),
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null,
+		candidatesYear: null
 	};
 });
 
@@ -134,9 +154,9 @@ const calcB2bReducedLegalProductivity = tryCalcWrap(
 
 		const calcYRange = (index: 0 | 1) =>
 			base[complexity][index] * improvement[complexity][index] * volume;
-		const hourlyImpact: NumberRange = [calcYRange(0), calcYRange(1)];
+		const employeeHoursYear: NumberRange = [calcYRange(0), calcYRange(1)];
 
-		const Y = numberRangeToText(hourlyImpact);
+		const Y = numberRangeToText(employeeHoursYear);
 
 		const calcZRange = (index: 0 | 1) =>
 			base[complexity][index] * improvement[complexity][index] * volume * financialConst;
@@ -148,10 +168,14 @@ const calcB2bReducedLegalProductivity = tryCalcWrap(
 			X,
 			XRaw,
 			Y: null,
-			financialImpact: [calcZRange(0), calcZRange(1)],
-			hourlyImpact,
+			dollarsYear: [calcZRange(0), calcZRange(1)],
+			employeeHoursYear,
 			cardMainValue: nFormatter(ZRaw[1]),
-			cardMainValueDollars: true
+			cardMainValueDollars: true,
+			onboardingDaysCustomer: null,
+			onboardingDaysCandidate: null,
+			onboardingDaysVendor: null,
+			candidatesYear: null
 		};
 	}
 );
@@ -184,10 +208,14 @@ const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVol
 		X,
 		XRaw,
 		Y: null,
-		financialImpact: ZRaw,
-		hourlyImpact: null,
+		dollarsYear: ZRaw,
+		employeeHoursYear: null,
 		cardMainValue: nFormatter(ZRaw[1]),
-		cardMainValueDollars: true
+		cardMainValueDollars: true,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null,
+		candidatesYear: null
 	};
 });
 
@@ -232,10 +260,14 @@ const calcB2bReducedRevenueLeakage = tryCalcWrap((complexity: string, rev: strin
 		X,
 		XRaw,
 		Y: null,
-		financialImpact: ZRaw,
-		hourlyImpact: null,
+		dollarsYear: ZRaw,
+		employeeHoursYear: null,
 		cardMainValue: nFormatter(ZRaw[1]),
-		cardMainValueDollars: true
+		cardMainValueDollars: true,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null,
+		candidatesYear: null
 	};
 });
 

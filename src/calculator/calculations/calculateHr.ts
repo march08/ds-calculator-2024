@@ -3,7 +3,7 @@ import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
 import { formatNumber, formatPercent, nFormatter } from '../utils/number.js';
-import { tryCalcWrap } from './utils.js';
+import { getRange, tryCalcWrap } from './utils.js';
 
 const calcB2cTat = tryCalcWrap((employment: string) => {
 	const base: Record<string, NumberRange> = {
@@ -22,14 +22,22 @@ const calcB2cTat = tryCalcWrap((employment: string) => {
 	const Y = `${calcYRange(0)}-${calcYRange(1)}`;
 	const X = `${formatPercent(improvement[employment][0])}`;
 
+	const calcOnboardingDaysCandidateRaw = getRange(
+		(index: 0 | 1) => base[employment][index] * improvement[employment][index]
+	);
+
 	return {
 		elementId: 'calendar',
 		text: `${X} faster candidate onboarding, going from weeks to just ${Y} days`,
 		X,
 		Y,
-		financialImpact: null,
-		hourlyImpact: null,
-		cardMainValue: `${Y} days`
+		dollarsYear: null,
+		employeeHoursYear: null,
+		cardMainValue: `${Y} days`,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: calcOnboardingDaysCandidateRaw,
+		onboardingDaysVendor: null,
+		candidatesYear: null
 	};
 });
 
@@ -50,9 +58,9 @@ const calcHrProductivity = tryCalcWrap((employment: string, agreementVolume: str
 	const calcYRange = (index: 0 | 1) =>
 		base[employment][index] * improvement[employment][index] * volume;
 
-	const hourlyImpact: NumberRange = [calcYRange(0), calcYRange(1)];
+	const employeeHoursYear: NumberRange = [calcYRange(0), calcYRange(1)];
 
-	const Y = numberRangeToText(hourlyImpact);
+	const Y = numberRangeToText(employeeHoursYear);
 	const X = `${formatPercent(improvement[employment][0])}-${formatPercent(improvement[employment][1])}`;
 
 	const calcZRange = (index: 0 | 1) =>
@@ -64,10 +72,14 @@ const calcHrProductivity = tryCalcWrap((employment: string, agreementVolume: str
 		text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value HR activities.`,
 		X,
 		Y: null,
-		financialImpact: ZRaw,
-		hourlyImpact,
+		dollarsYear: ZRaw,
+		employeeHoursYear,
 		cardMainValue: nFormatter(ZRaw[1]),
-cardMainValueDollars: true
+		cardMainValueDollars: true,
+		candidatesYear: null,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null
 	};
 });
 
@@ -108,16 +120,20 @@ const calcHrConversionRate = tryCalcWrap((employment: string, agreementVolume: s
 	})}`;
 
 	const calcYRange = (index: 0 | 1) => improvement[employment][volume][index] * volume;
-	const YRaw: NumberRange = [calcYRange(0), calcYRange(1)];
+	const YRaw = getRange(calcYRange);
 	const Y = numberRangeToText(YRaw);
 	return {
 		elementId: 'bar-chart',
 		text: `${X} increase in conversion rates by reducing abandonment in the agreement process. Onboard ${Y} additional candidates annually.`,
 		X,
 		Y,
-		financialImpact: null,
-		hourlyImpact: null,
-		cardMainValue: Y
+		dollarsYear: null,
+		employeeHoursYear: null,
+		cardMainValue: Y,
+		candidatesYear: YRaw,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null
 	};
 });
 

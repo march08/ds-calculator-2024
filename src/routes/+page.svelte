@@ -11,10 +11,6 @@
 		background: #4c00ff;
 	}
 	.container {
-		max-width: calc(1080px + 48px);
-		padding-left: 24px;
-		padding-right: 24px;
-		margin: auto;
 		padding-top: 50dvh;
 		padding-bottom: 20dvh;
 	}

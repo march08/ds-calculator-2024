@@ -6,8 +6,8 @@
 	export let title: string;
 	export let result: CalculatedResult[];
 
-	export let financialImpact: NumberRange;
-	export let hourlyImpact: NumberRange;
+	export let dollarsYear: NumberRange;
+	export let employeeHoursYear: NumberRange;
 </script>
 
 <div class="result-box">
@@ -15,37 +15,75 @@
 	<hr />
 	{#each result as resultItem}
 		<p>{resultItem.text}</p>
-		<ul>
-			<li>X: {resultItem.X}</li>
-			<li>
-				Y:
-				{#if resultItem.Y}
-					{resultItem.Y}
-				{/if}
-			</li>
-			<li>
-				Hourly impact:
-				{#if resultItem.hourlyImpact}
-					{numberRangeToText(resultItem.hourlyImpact)}
-				{/if}
-			</li>
-			<li>
-				Financial impact:
-				{#if resultItem.financialImpact}
-					{numberRangeToText(resultItem.financialImpact, formatUsd)}
-				{/if}
-			</li>
-		</ul>
+		<table>
+			<tr><td>X</td><td>{resultItem.X}</td></tr>
+			<tr>
+				<td> Y: </td>
+				<td>
+					{#if resultItem.Y}
+						{resultItem.Y}
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<td> Employee hours/year: </td>
+				<td>
+					{#if resultItem.employeeHoursYear}
+						{numberRangeToText(resultItem.employeeHoursYear)}
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<td> Dollars/year: </td>
+				<td>
+					{#if resultItem.dollarsYear}
+						{numberRangeToText(resultItem.dollarsYear, formatUsd)}
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<td> Onboarding days/customer: </td>
+				<td>
+					{#if resultItem.onboardingDaysCustomer}
+						{numberRangeToText(resultItem.onboardingDaysCustomer)}
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<td> Onboarding days/vendor: </td>
+				<td>
+					{#if resultItem.onboardingDaysVendor}
+						{numberRangeToText(resultItem.onboardingDaysVendor)}
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<td> Onboarding days/candidate: </td>
+				<td>
+					{#if resultItem.onboardingDaysCandidate}
+						{numberRangeToText(resultItem.onboardingDaysCandidate)}
+					{/if}
+				</td>
+			</tr>
+			<tr>
+				<td> candidates/year: </td>
+				<td>
+					{#if resultItem.candidatesYear}
+						{numberRangeToText(resultItem.candidatesYear)}
+					{/if}
+				</td>
+			</tr>
+		</table>
 	{/each}
 	<hr />
-	Total hourly: {numberRangeToText(hourlyImpact)}
-	Total financial: {numberRangeToText(financialImpact)}
+	Total hourly: {numberRangeToText(employeeHoursYear)}
+	Total financial: {numberRangeToText(dollarsYear)}
 	<hr />
 </div>
 
 <style global>
 	.result-box {
-		font-size: 12px;
+		font-size: 14px;
 		line-height: 20px;
 		color: white;
 	}

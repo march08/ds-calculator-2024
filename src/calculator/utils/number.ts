@@ -18,7 +18,7 @@ export const formatUsd = (value: number, options?: Intl.NumberFormatOptions) =>
 	});
 
 export const nFormatter = (num: number, dollars = false) => {
-	const digits = 0;
+	const digits = 1;
 	const lookup = [
 		{ value: 1, symbol: '' },
 		{ value: 1e3, symbol: 'k' },

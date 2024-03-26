@@ -3,7 +3,7 @@ import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
 import { formatNumber, formatPercent, nFormatter } from '../utils/number.js';
-import { tryCalcWrap } from './utils.js';
+import { getRange, tryCalcWrap } from './utils.js';
 
 const calcB2cTat = tryCalcWrap((customerInformation: string) => {
 	const base: Record<string, NumberRange> = {
@@ -25,14 +25,22 @@ const calcB2cTat = tryCalcWrap((customerInformation: string) => {
 	const Y = `${calcYRange(0, 1)}-${calcYRange(1, 0)}`;
 	const X = `${formatPercent(improvement[customerInformation][0])}`;
 
+	const calcOnboardingDaysCustomerRaw = getRange(
+		(index: 0 | 1) => base[customerInformation][index] * improvement[customerInformation][index]
+	);
+
 	return {
 		elementId: 'calendar',
 		text: `${X} faster deals, with the potential to reduce the sales cycle from weeks to just ${Y} days.`,
 		X,
 		Y,
-		hourlyImpact: null,
-		financialImpact: null,
-		cardMainValue: `${Y} days`
+		employeeHoursYear: null,
+		dollarsYear: null,
+		cardMainValue: `${Y} days`,
+		onboardingDaysCustomer: calcOnboardingDaysCustomerRaw,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null,
+		candidatesYear: null
 	};
 });
 
@@ -54,8 +62,8 @@ const calcB2cStaffProductivity = tryCalcWrap(
 		const calcYRange = (index: 0 | 1) =>
 			base[customerInformation][index] * improvement[customerInformation][index] * volume;
 
-		const hourlyImpact: NumberRange = [calcYRange(0), calcYRange(1)];
-		const Y = numberRangeToText(hourlyImpact);
+		const employeeHoursYear: NumberRange = [calcYRange(0), calcYRange(1)];
+		const Y = numberRangeToText(employeeHoursYear);
 		const X = `${formatPercent(improvement[customerInformation][0])}-${formatPercent(improvement[customerInformation][1])}`;
 
 		const calcZRange = (index: 0 | 1) =>
@@ -70,10 +78,14 @@ const calcB2cStaffProductivity = tryCalcWrap(
 			text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value activities.`,
 			X,
 			Y,
-			financialImpact: ZRaw,
-			hourlyImpact,
+			dollarsYear: ZRaw,
+			employeeHoursYear,
 			cardMainValue: nFormatter(ZRaw[1]),
-			cardMainValueDollars: true
+			cardMainValueDollars: true,
+			onboardingDaysCustomer: null,
+			onboardingDaysCandidate: null,
+			onboardingDaysVendor: null,
+			candidatesYear: null
 		};
 	}
 );
@@ -118,10 +130,14 @@ const calcB2cConversionRate = tryCalcWrap((customerInformation: string, amount: 
 		text: `${X} increase in conversion rates by reducing customer abandonment during the agreement process.`,
 		X,
 		Y: null,
-		hourlyImpact: null,
-		financialImpact: ZRaw,
+		employeeHoursYear: null,
+		dollarsYear: ZRaw,
 		cardMainValue: nFormatter(ZRaw[1]),
-		cardMainValueDollars: true
+		cardMainValueDollars: true,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null,
+		candidatesYear: null
 	};
 });
 

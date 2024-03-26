@@ -49,9 +49,13 @@ export type CalculatedResult = {
 	cardMainValue: string;
 	cardMainValueDollars?: boolean;
 	// per year
-	financialImpact: [number, number] | null;
+	dollarsYear: NumberRange | null;
 	// per year
-	hourlyImpact: [number, number] | null;
+	employeeHoursYear: NumberRange | null;
+	onboardingDaysVendor: NumberRange | null;
+	onboardingDaysCandidate: NumberRange | null;
+	onboardingDaysCustomer: NumberRange | null;
+	candidatesYear: NumberRange | null;
 };
 
 export type NumberRange = [number, number];

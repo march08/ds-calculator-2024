@@ -3,7 +3,7 @@ import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
 import { formatPercent, nFormatter } from '../utils/number.js';
-import { tryCalcWrap } from './utils.js';
+import { getRange, tryCalcWrap } from './utils.js';
 
 const calcPROCtat = tryCalcWrap((spendType: string) => {
 	const base: Record<string, NumberRange> = {
@@ -26,14 +26,22 @@ const calcPROCtat = tryCalcWrap((spendType: string) => {
 
 	const Y = numberRangeToText([calcY(0), calcY(1)]);
 
+	const calcOnboardingDaysVendorRaw = getRange(
+		(index: 0 | 1) => base[spendType][index] * improvement[spendType][index]
+	);
+
 	return {
 		elementId: 'calendar',
 		text: `${X} faster vendor onboarding, going from weeks to just ${Y} days.`,
 		X,
 		Y,
-		financialImpact: null,
-		hourlyImpact: null,
-		cardMainValue: `${Y} days`
+		cardMainValue: `${Y} days`,
+		dollarsYear: null,
+		employeeHoursYear: null,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: calcOnboardingDaysVendorRaw,
+		candidatesYear: null
 	};
 });
 
@@ -62,8 +70,8 @@ const calcPROCProductivity = tryCalcWrap((spendType: string, agreementVolume: st
 		formatPercent
 	);
 
-	const hourlyImpact: NumberRange = [calcY(0), calcY(1)];
-	const Y = numberRangeToText(hourlyImpact);
+	const employeeHoursYear: NumberRange = [calcY(0), calcY(1)];
+	const Y = numberRangeToText(employeeHoursYear);
 
 	const calcZ = (index: 0 | 1) => {
 		return base[spendType][index] * improvement[spendType][index] * volume * financialConstant;
@@ -76,10 +84,14 @@ const calcPROCProductivity = tryCalcWrap((spendType: string, agreementVolume: st
 		text: `${X} improvement in staff productivity, freeing up ${Y} annual hours to focus on priorities like vendor management and innovation. `,
 		X,
 		Y,
-		financialImpact: [calcZ(0), calcZ(1)],
-		hourlyImpact,
+		dollarsYear: [calcZ(0), calcZ(1)],
+		employeeHoursYear,
 		cardMainValue: nFormatter(ZRaw[1]),
-		cardMainValueDollars: true
+		cardMainValueDollars: true,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null,
+		candidatesYear: null
 	};
 });
 
@@ -97,9 +109,13 @@ const calcPROCLegalCapacity = tryCalcWrap((spendType: string) => {
 		text: `Up to ${X} of agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
 		X,
 		Y: null,
-		financialImpact: null,
-		hourlyImpact: null,
-		cardMainValue: X
+		dollarsYear: null,
+		employeeHoursYear: null,
+		cardMainValue: X,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null,
+		candidatesYear: null
 	};
 });
 
@@ -128,8 +144,8 @@ const calcPROCLegalProductivity = tryCalcWrap((spendType: string, agreementVolum
 		formatPercent
 	);
 
-	const hourlyImpact: NumberRange = [calcY(0), calcY(1)];
-	const Y = numberRangeToText(hourlyImpact);
+	const employeeHoursYear: NumberRange = [calcY(0), calcY(1)];
+	const Y = numberRangeToText(employeeHoursYear);
 
 	const calcZ = (index: 0 | 1) => {
 		return base[spendType][index] * improvement[spendType][index] * volume * financialConstant;
@@ -141,10 +157,14 @@ const calcPROCLegalProductivity = tryCalcWrap((spendType: string, agreementVolum
 		text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
 		X,
 		Y,
-		financialImpact: ZRaw,
-		hourlyImpact,
+		dollarsYear: ZRaw,
+		employeeHoursYear,
 		cardMainValue: nFormatter(ZRaw[1]),
-		cardMainValueDollars: true
+		cardMainValueDollars: true,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null,
+		candidatesYear: null
 	};
 });
 
@@ -179,10 +199,14 @@ const calcPROCReduceRisk = tryCalcWrap((spendType: string, agreementVolume: stri
 		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
 		X,
 		Y: null,
-		financialImpact: ZRaw,
-		hourlyImpact: null,
+		dollarsYear: ZRaw,
+		employeeHoursYear: null,
 		cardMainValue: nFormatter(ZRaw[1]),
-		cardMainValueDollars: true
+		cardMainValueDollars: true,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null,
+		candidatesYear: null
 	};
 });
 
@@ -243,10 +267,14 @@ const calcPROCReduceSavingsLeakage = tryCalcWrap((spendType: string, spendAmount
 		text: `${X} estimated reduction in savings leakage by ensuring obligations are enforced, rebates/penalties are collected, and renewals are maximized.`,
 		X,
 		Y: null,
-		financialImpact: ZRaw,
-		hourlyImpact: null,
+		dollarsYear: ZRaw,
+		employeeHoursYear: null,
 		cardMainValue: nFormatter(ZRaw[1]),
-		cardMainValueDollars: true
+		cardMainValueDollars: true,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null,
+		candidatesYear: null
 	};
 });
 
