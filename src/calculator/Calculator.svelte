@@ -87,10 +87,12 @@
 	// $: $submissionFormState && $uiStore.isSubmitted && setResubmitState();
 
 	const transitionToResult = () => {
-		formCtaContainerRef &&
-			formCtaContainerRef.scrollIntoView({
-				block: 'start'
-			});
+		setTimeout(() => {
+			formCtaContainerRef &&
+				formCtaContainerRef.scrollIntoView({
+					block: 'start'
+				});
+		}, 500);
 	};
 
 	/**
@@ -203,14 +205,14 @@
 				}, 1000);
 			}}
 		/>
-		<CtaButtonContainer visible={$uiStore.isResubmitting} isUpdateContainer>
-			<Button disabled={!canManuallyUpdate} onClick={handleManuallyUpdateAssessment}
-				>Update your Results</Button
-			>
-			<a on:click={resetForm}>Reset form (dev only)</a>
-		</CtaButtonContainer>
 	</StepsContainer>
 
+	<CtaButtonContainer visible={$uiStore.isResubmitting} isUpdateContainer>
+		<Button disabled={!canManuallyUpdate} onClick={handleManuallyUpdateAssessment}
+			>Update your Results</Button
+		>
+		<a on:click={resetForm}>Reset form (dev only)</a>
+	</CtaButtonContainer>
 	<div bind:this={formCtaContainerRef}>
 		<CtaButtonContainer visible={$uiStore.isSubmitted} id="ds-calc-cta-container">
 			<Button onClick={handleEditAssessment}>
