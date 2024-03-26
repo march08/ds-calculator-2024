@@ -1,8 +1,8 @@
+import { RESULT_CONTAINER_ID } from '../constants.js';
 import type { CalculatedResult } from '../types.js';
 
 export const renderResult = (result: CalculatedResult[]) => {
-	const targetResultContainerEl = document.getElementById('result');
-	console.log('result', result);
+	const targetResultContainerEl = document.getElementById(RESULT_CONTAINER_ID);
 
 	if (!targetResultContainerEl) {
 		return;

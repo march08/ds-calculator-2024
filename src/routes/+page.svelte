@@ -14,6 +14,6 @@
 		max-width: 1080px;
 		margin: auto;
 		padding-top: 50dvh;
-		padding-bottom: 50dvh;
+		padding-bottom: 20dvh;
 	}
 </style>

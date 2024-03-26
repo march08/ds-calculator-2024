@@ -11,7 +11,7 @@
 	export let filterOptions: (option: OptionOrDelimiter) => boolean = isTruthy;
 	export let id: string;
 	export let visible: boolean;
-	export let onChange: VoidFunction = () => {};
+	export let onChange: (values: string[]) => void = () => {};
 
 	let answerState = getContext<Writable<StoredCalcState>>('answerState');
 	let uiState = getContext<Writable<UIState>>('uiState');
@@ -74,7 +74,7 @@
 								}
 								return prevState;
 							});
-							onChange();
+							onChange(value);
 						}}
 					/>
 				</div>

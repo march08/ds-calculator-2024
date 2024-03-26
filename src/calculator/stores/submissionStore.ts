@@ -31,5 +31,9 @@ export const getSubmissionStore = (config: FlowConfig) => {
 		localStorageState.set(state);
 	});
 
-	return { store, defaultState };
+	const resetStore = () => {
+		store.set(defaultState);
+	};
+
+	return { store, defaultState, resetStore };
 };

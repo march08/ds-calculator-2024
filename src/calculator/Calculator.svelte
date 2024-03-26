@@ -1,4 +1,5 @@
 <script lang="ts">
+	import CtaButtonContainer from './components/CtaButtonContainer.svelte';
 	import { flowConfig } from './config.js';
 
 	import { writable } from 'svelte/store';
@@ -15,16 +16,21 @@
 	import { renderResult } from './utils/renderResult.js';
 	import { calculate, type OverallResult } from './calculations/calculate.js';
 	import { updateContactFormDescriptionField } from './externalDomManipulation/updateContactFormDescriptionField.js';
+	import Button from './components/Button.svelte';
+	import { toggleResult } from './externalDomManipulation/showResult.js';
+	import { getUiStore } from './stores/uiStore.js';
 
-	let resultRef: HTMLDivElement | undefined;
+	let formCtaContainerRef: HTMLDivElement | undefined;
 
-	const { store: submissionFormState, defaultState } = getSubmissionStore(flowConfig);
+	const {
+		store: submissionFormState,
+		defaultState,
+		resetStore: resetSubmissionStore
+	} = getSubmissionStore(flowConfig);
 	setContext('answerState', submissionFormState);
 
-	const uiState = writable<UIState>({
-		currentFocus: 'first'
-	});
-	setContext('uiState', uiState);
+	const { store: uiStore, resetStore: resetUiStore } = getUiStore();
+	setContext('uiState', uiStore);
 
 	/**
 	 * controlling visibility
@@ -36,6 +42,63 @@
 	$: visibilityB2C = isSectionVisible($submissionFormState, ['B2B', 'PROC', 'HR'], 'B2C');
 	$: visibilityLastSection = isSectionVisible($submissionFormState, ['B2B', 'PROC', 'HR', 'B2C']);
 
+	const scrollTopTopOfTheForm = () => {
+		document.getElementById('ds-calc-step-1')?.scrollIntoView({
+			behavior: 'smooth',
+			block: 'center'
+		});
+	};
+
+	const resetForm = () => {
+		resetSubmissionStore();
+		resetUiStore();
+		scrollTopTopOfTheForm();
+	};
+
+	$: setResubmitState = () => {
+		uiStore.set({
+			currentFocus: 'first',
+			isResubmitting: true,
+			isSubmitted: false
+		});
+	};
+
+	$: setSubmitState = () => {
+		uiStore.update((state) => ({
+			...state,
+			isResubmitting: false,
+			isSubmitted: true
+		}));
+	};
+
+	const handleEditAssessment = () => {
+		scrollTopTopOfTheForm();
+		setResubmitState();
+	};
+
+	/**
+	 * if the form has been submitted and user decides to update it
+	 * set the state to being resubmitted
+	 */
+	// $: $submissionFormState && $uiStore.isSubmitted && setResubmitState();
+
+	$: transitionToResult = () => {
+		formCtaContainerRef &&
+			formCtaContainerRef.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start'
+			});
+	};
+
+	$: if ($uiStore.isSubmitted) {
+		toggleResult(true);
+	} else {
+		toggleResult(false);
+	}
+	$: if ($uiStore.isSubmitted) {
+		transitionToResult();
+	}
+
 	/**
 	 * result
 	 */
@@ -44,6 +107,17 @@
 	} as any;
 	$: result = calculate($submissionFormState);
 	$: resultItems = result.allRes;
+
+	$: handleManuallyUpdateAssessment = () => {
+		console.log('handleManuallyUpdateAssessment');
+		if (result.allRes.length > 0) {
+			setSubmitState();
+			transitionToResult();
+		}
+		console.log($uiStore);
+	};
+
+	$: canManuallyUpdate = $uiStore.isResubmitting && result.allRes.length > 0;
 
 	$: if (resultItems.length > 0) {
 		const sorted = sortCalculatedResult(resultItems);
@@ -106,17 +180,47 @@
 				return !!$submissionFormState.first.businessArea.find((area) => option.key?.includes(area));
 			}}
 			stepConfig={flowConfig.calcConfigLast}
-			onChange={() => {
+			onChange={(values) => {
 				setTimeout(() => {
-					if (resultRef) {
-						resultRef.scrollIntoView({
-							behavior: 'smooth'
-						});
+					if (values.length === 0) {
+						return;
+					}
+
+					if (!$uiStore.isResubmitting) {
+						setSubmitState();
 					}
 				}, 1000);
 			}}
 		/>
+		<CtaButtonContainer visible={$uiStore.isResubmitting} isUpdateContainer>
+			<Button disabled={!canManuallyUpdate} onClick={handleManuallyUpdateAssessment}
+				>Update your Results</Button
+			>
+			<a on:click={resetForm}>Reset form (dev only)</a>
+		</CtaButtonContainer>
 	</StepsContainer>
+
+	<div bind:this={formCtaContainerRef}>
+		<CtaButtonContainer visible={$uiStore.isSubmitted} id="ds-calc-cta-container">
+			<Button onClick={handleEditAssessment}>
+				Edit your Assessment
+				<svg
+					width="17"
+					height="16"
+					viewBox="0 0 17 16"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						fill-rule="evenodd"
+						clip-rule="evenodd"
+						d="M4.02856 6.86128L8.02856 2.86128C8.28891 2.60093 8.71102 2.60093 8.97137 2.86128L12.9714 6.86128L12.0286 7.80409L9.16664 4.94216L9.16664 13.3327H7.8333L7.8333 4.94216L4.97137 7.80409L4.02856 6.86128Z"
+						fill="white"
+					/>
+				</svg>
+			</Button>
+		</CtaButtonContainer>
+	</div>
 </div>
 
 <style lang="scss" global>
