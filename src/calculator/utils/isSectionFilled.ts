@@ -38,7 +38,7 @@ export const isSectionVisible = (
 ) => {
 	const selectedBusinessAreas = submissionFormState.first.businessArea;
 
-	return (thisArea ? selectedBusinessAreas.includes('PROC') : true) &&
+	return (thisArea ? selectedBusinessAreas.includes(thisArea) : true) &&
 		arePrevStepsCompleted(prevSteps, submissionFormState)
 		? true
 		: false;
