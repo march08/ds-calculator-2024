@@ -7,7 +7,7 @@
 	export let result: CalculatedResult[];
 
 	export let financialImpact: NumberRange;
-	export let hourlyImpactImpact: NumberRange;
+	export let hourlyImpact: NumberRange;
 </script>
 
 <div class="result-box">
@@ -38,15 +38,15 @@
 		</ul>
 	{/each}
 	<hr />
-	Total hourly: {numberRangeToText(hourlyImpactImpact)}
+	Total hourly: {numberRangeToText(hourlyImpact)}
 	Total financial: {numberRangeToText(financialImpact)}
 	<hr />
 </div>
 
 <style global>
 	.result-box {
-		font-size: 20px;
-		line-height: 40px;
+		font-size: 12px;
+		line-height: 20px;
 		color: white;
 	}
 </style>

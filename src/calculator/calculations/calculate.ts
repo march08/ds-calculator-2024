@@ -53,7 +53,6 @@ export const calculate = (submissionFormState: StoredCalcState) => {
 	);
 
 	const allRes = [...b2bResult, ...procResult, ...hrResult, ...b2cResult];
-	console.log('allRes', allRes);
 
 	const hourlyImpact = sumRange(allRes.map((item) => item.hourlyImpact).filter(isTruthy));
 	const hourlyImpactText = numberRangeToText(hourlyImpact);
@@ -70,9 +69,31 @@ export const calculate = (submissionFormState: StoredCalcState) => {
 		b2bResult_financialImpact,
 		b2cResult_hourlyImpact,
 		b2cResult_financialImpact,
-		procResult_hourlyImpact,
-		procResult_financialImpact,
-		hrResult_hourlyImpact,
-		hrResult_financialImpact
+		splitResult: [
+			{
+				title: 'B2B',
+				result: b2bResult,
+				hourlyImpact: b2bResult_hourlyImpact,
+				financialImpact: b2bResult_financialImpact
+			},
+			{
+				title: 'Procurement',
+				result: procResult,
+				hourlyImpact: procResult_hourlyImpact,
+				financialImpact: procResult_financialImpact
+			},
+			{
+				title: 'HR',
+				result: hrResult,
+				hourlyImpact: hrResult_hourlyImpact,
+				financialImpact: hrResult_financialImpact
+			},
+			{
+				title: 'B2C',
+				result: b2cResult,
+				hourlyImpact: b2cResult_hourlyImpact,
+				financialImpact: b2cResult_financialImpact
+			}
+		]
 	};
 };

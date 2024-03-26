@@ -19,6 +19,7 @@
 	import Button from './components/Button.svelte';
 	import { toggleResult } from './externalDomManipulation/showResult.js';
 	import { getUiStore } from './stores/uiStore.js';
+	import ResultPreview from './components/utilityComponents/ResultPreview.svelte';
 
 	let formCtaContainerRef: HTMLDivElement | undefined;
 
@@ -258,6 +259,12 @@
 			</Button>
 		</CtaButtonContainer>
 	</div>
+</div>
+
+<div>
+	{#each result.splitResult as resultGroup}
+		<ResultPreview {...resultGroup} />
+	{/each}
 </div>
 
 <style lang="scss" global>
