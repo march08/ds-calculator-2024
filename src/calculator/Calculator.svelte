@@ -22,8 +22,11 @@
 
 	let formCtaContainerRef: HTMLDivElement | undefined;
 
-	const { store: submissionFormState, resetStore: resetSubmissionStore } =
-		getSubmissionStore(flowConfig);
+	const {
+		store: submissionFormState,
+		defaultState: defaultSubmissionState,
+		resetStore: resetSubmissionStore
+	} = getSubmissionStore(flowConfig);
 	setContext('answerState', submissionFormState);
 
 	const { store: uiStore, resetStore: resetUiStore } = getUiStore();
@@ -67,6 +70,27 @@
 			isResubmitting: false,
 			isSubmitted: true
 		}));
+	};
+
+	const handleChangeAreas = (values: string[]) => {
+		// reset unused areas
+		submissionFormState.update((state) => {
+			return {
+				...state,
+				B2B: values.includes('B2B') ? state.B2B : defaultSubmissionState.B2B,
+				PROC: values.includes('PROC') ? state.PROC : defaultSubmissionState.PROC,
+				HR: values.includes('HR') ? state.HR : defaultSubmissionState.HR,
+				B2C: values.includes('B2C') ? state.B2C : defaultSubmissionState.B2C,
+				last: {
+					...state.last,
+					driver: state.last.driver.filter((d) => {
+						return values.filter((val) => d.includes(val)).length > 0;
+					})
+				}
+			};
+		});
+
+		handleSelectChange();
 	};
 
 	const handleEditAssessment = () => {
@@ -153,7 +177,7 @@
 			id="ds-calc-step-1"
 			stateStep="first"
 			stepConfig={flowConfig.calcConfigStep1}
-			onChange={handleSelectChange}
+			onChange={handleChangeAreas}
 		/>
 		<CalculatorStep
 			visible={visibilityB2B}
