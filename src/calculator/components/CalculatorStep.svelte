@@ -5,13 +5,16 @@
 
 	import { getContext } from 'svelte';
 	import { isTruthy } from '../utils/isTruthy.js';
-	import { fade } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
+	import { elasticOut } from 'svelte/easing';
 	export let stepConfig: StepConfig;
 	export let stateStep: keyof StoredCalcState;
 	export let filterOptions: (option: OptionOrDelimiter) => boolean = isTruthy;
 	export let id: string;
 	export let visible: boolean;
 	export let onChange: (values: string[]) => void = () => {};
+
+	const TRANSITION_DURATION = 200;
 
 	let answerState = getContext<Writable<StoredCalcState>>('answerState');
 	let uiState = getContext<Writable<UIState>>('uiState');
@@ -29,6 +32,17 @@
 			});
 		}
 	}
+
+	function fadeSlide(node: HTMLElement, { duration }: { duration: number }) {
+		return {
+			duration,
+			css: (t: number) => {
+				return `
+					transform: scale(${0.95 + 0.05 * t});
+					opacity: ${t};`;
+			}
+		};
+	}
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -39,7 +53,7 @@
 		tabindex="-1"
 		data-ds-calc-step={stateStep}
 		{id}
-		transition:fade
+		transition:fadeSlide={{ duration: TRANSITION_DURATION }}
 		bind:this={ref}
 		role="region"
 		class:focusedui={isFocused}
@@ -48,7 +62,7 @@
 			<!-- <span>Hellooooooo09000 idjfaisjdf oijasdoif jaoisdjf oio</span> -->
 			<!-- <span>Hello</span> -->
 			{#if item.type === 'text'}
-				<span>{item.data}</span>
+				<span class="text-item">{item.data}</span>
 			{/if}
 			{#if item.type === 'select'}
 				<span>
@@ -102,10 +116,21 @@
 
 		transition: 0.5s all;
 
-		opacity: 0.5;
+		.text-item,
+		.ds-calc-select-btn,
+		:global(.ds-calc-select-display-text) {
+			opacity: 0.5;
+			transition: 0.2s all;
+		}
 
 		&.focusedui {
-			opacity: 1;
+			.text-item,
+			.ds-calc-select-btn {
+				opacity: 1;
+			}
+			:global(.ds-calc-select-display-text) {
+				opacity: 1;
+			}
 		}
 	}
 </style>
