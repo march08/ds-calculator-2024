@@ -18,6 +18,7 @@ export type UIState = {
 	currentFocus: keyof StoredCalcState;
 	isResubmitting: boolean;
 	isSubmitted: boolean;
+	isInitLoaded: boolean;
 };
 
 export type SelectConfig = {

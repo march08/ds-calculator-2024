@@ -11,7 +11,8 @@ export const getUiStore = () => {
 	const uiDefaultState: UIState = {
 		currentFocus: 'first',
 		isResubmitting: false,
-		isSubmitted: false
+		isSubmitted: false,
+		isInitLoaded: false
 	};
 	const persistedState = localStorageState.get() || {};
 

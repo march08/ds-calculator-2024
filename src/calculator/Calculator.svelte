@@ -22,11 +22,8 @@
 
 	let formCtaContainerRef: HTMLDivElement | undefined;
 
-	const {
-		store: submissionFormState,
-		defaultState,
-		resetStore: resetSubmissionStore
-	} = getSubmissionStore(flowConfig);
+	const { store: submissionFormState, resetStore: resetSubmissionStore } =
+		getSubmissionStore(flowConfig);
 	setContext('answerState', submissionFormState);
 
 	const { store: uiStore, resetStore: resetUiStore } = getUiStore();
@@ -92,7 +89,6 @@
 	const transitionToResult = () => {
 		formCtaContainerRef &&
 			formCtaContainerRef.scrollIntoView({
-				behavior: 'smooth',
 				block: 'start'
 			});
 	};
