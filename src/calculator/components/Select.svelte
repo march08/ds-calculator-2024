@@ -101,59 +101,61 @@
 		</span>
 	</button>
 	<div
-		class="ds-calc-dropdown-content"
+		class="ds-calc-dropdown-content-wrapper"
 		use:popperContent={extraOpts}
 		class:visible={isDropdownOpen}
 		tabindex="-3"
 	>
-		<div class="ds-calc-dropdown-content-items">
-			{#each options as option}
-				{#if 'key' in option && 'label' in option}
-					<button
-						class="ds-calc-dropdown-content-item"
-						class:selected={internalState.includes(option.key)}
-						on:click={() => {
-							if (option.key) {
-								handleSelect(option.key);
-							}
-						}}
-						>{option.label}
+		<div class="ds-calc-dropdown-content">
+			<div class="ds-calc-dropdown-content-items">
+				{#each options as option}
+					{#if 'key' in option && 'label' in option}
+						<button
+							class="ds-calc-dropdown-content-item"
+							class:selected={internalState.includes(option.key)}
+							on:click={() => {
+								if (option.key) {
+									handleSelect(option.key);
+								}
+							}}
+							>{option.label}
 
-						{#if multiselect}
-							<div class="ds-calc-dropdown-content-item-check">
-								<svg
-									width="16"
-									height="14"
-									viewBox="0 0 16 14"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-								>
-									<path
-										fill-rule="evenodd"
-										clip-rule="evenodd"
-										d="M15.0834 1.26507L7.25967 13.2936C7.1236 13.5028 6.90317 13.6385 6.65905 13.6632C6.41492 13.688 6.17282 13.5993 5.99936 13.4215L0.916748 8.21204L2.07476 7.02512L6.45109 11.5107L13.7208 0.333984L15.0834 1.26507Z"
-										fill="var(--color-checkmark)"
-									/>
-								</svg>
-							</div>
-						{/if}
-					</button>
-				{:else}
-					<div class="ds-calc-dropdown-content-title">
-						{option.title}
-					</div>
-				{/if}
-			{/each}
-		</div>
-		{#if multiselect}
-			<div class="ds-calc-dropdown-confirm-container">
-				<button
-					class="ds-calc-dropdown-confirm"
-					disabled={internalState.length === 0}
-					on:click={onConfirm}>Confirm Selection</button
-				>
+							{#if multiselect}
+								<div class="ds-calc-dropdown-content-item-check">
+									<svg
+										width="16"
+										height="14"
+										viewBox="0 0 16 14"
+										fill="none"
+										xmlns="http://www.w3.org/2000/svg"
+									>
+										<path
+											fill-rule="evenodd"
+											clip-rule="evenodd"
+											d="M15.0834 1.26507L7.25967 13.2936C7.1236 13.5028 6.90317 13.6385 6.65905 13.6632C6.41492 13.688 6.17282 13.5993 5.99936 13.4215L0.916748 8.21204L2.07476 7.02512L6.45109 11.5107L13.7208 0.333984L15.0834 1.26507Z"
+											fill="var(--color-checkmark)"
+										/>
+									</svg>
+								</div>
+							{/if}
+						</button>
+					{:else}
+						<div class="ds-calc-dropdown-content-title">
+							{option.title}
+						</div>
+					{/if}
+				{/each}
 			</div>
-		{/if}
+			{#if multiselect}
+				<div class="ds-calc-dropdown-confirm-container">
+					<button
+						class="ds-calc-dropdown-confirm"
+						disabled={internalState.length === 0}
+						on:click={onConfirm}>Confirm Selection</button
+					>
+				</div>
+			{/if}
+		</div>
 	</div>
 </div>
 
@@ -163,7 +165,8 @@
 	}
 	.ds-calc-dropdown {
 		position: relative;
-		display: inline-flex;
+		display: inline;
+		width: min-content;
 		align-items: center;
 		button {
 			text-align: left;
@@ -264,7 +267,7 @@
 		}
 	}
 	.ds-calc-select-btn {
-		display: block;
+		display: inline-block;
 		background: none;
 		outline: none;
 		border: none;
@@ -277,23 +280,37 @@
 		}
 	}
 
-	.ds-calc-dropdown-content {
-		position: fixed;
+	.ds-calc-dropdown-content-wrapper {
+		opacity: 0;
 		z-index: 1000;
+		pointer-events: none;
+		visibility: hidden;
+		&.visible {
+			opacity: 1;
+			pointer-events: all;
+			visibility: visible;
+		}
+		@media screen and (max-width: 479px) {
+			width: calc(100%);
+		}
+	}
+
+	.ds-calc-dropdown-content {
 		padding: 8px 0 0 0;
 		top: calc(100% + 24px);
 		left: 0;
 		background: white;
 		border-radius: 16px;
-		pointer-events: none;
 		transition: 0.2s opacity;
-		opacity: 0;
 		overflow: hidden;
 		width: max-content;
 		max-width: 90vw;
-		&.visible {
-			opacity: 1;
-			pointer-events: all;
+
+		@media screen and (max-width: 479px) {
+			/* transform: translateX(-16px); */
+			margin-left: 12px;
+			width: calc(100% - 24px);
+			max-width: none;
 		}
 	}
 
@@ -334,10 +351,10 @@
 	.ds-calc-select-display-text {
 		transition: 0.2s all;
 		border-bottom: 2px solid rgba(255, 255, 255, 0.25);
-		font-size: 36px;
-		letter-spacing: -0.5px;
-		padding-bottom: 6px;
-		&.visible {
+		font-size: var(--assessment-font-size);
+		letter-spacing: var(--assessment-font-letter-spacing);
+		line-height: var(--question-line-height);
+		l &.visible {
 			border-bottom: 4px solid;
 
 			border-image-slice: 1;

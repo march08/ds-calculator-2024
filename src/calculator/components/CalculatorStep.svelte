@@ -45,11 +45,13 @@
 		class:focusedui={isFocused}
 	>
 		{#each stepConfig as item}
+			<!-- <span>Hellooooooo09000 idjfaisjdf oijasdoif jaoisdjf oio</span> -->
+			<!-- <span>Hello</span> -->
 			{#if item.type === 'text'}
 				<span>{item.data}</span>
 			{/if}
 			{#if item.type === 'select'}
-				<div>
+				<span>
 					<Select
 						{...item.data}
 						onOpen={() => {
@@ -77,7 +79,7 @@
 							onChange(value);
 						}}
 					/>
-				</div>
+				</span>
 			{/if}
 		{/each}
 	</div>
@@ -87,23 +89,21 @@
 	.ds-calc-step {
 		display: flex;
 		flex-wrap: wrap;
+		justify-content: flex-start;
 		font-style: normal;
 		font-weight: 400;
-		font-size: 36px;
+		gap: 0 var(--assessment-step-items-gap);
 
+		font-size: var(--assessment-font-size);
+		letter-spacing: var(--assessment-font-letter-spacing);
 		line-height: var(--question-line-height);
-		letter-spacing: -0.5px;
 
 		color: #ffffff;
-		& > *,
-		& > span,
-		& > div {
-			margin-right: 16px;
-		}
 
 		transition: 0.5s all;
 
 		opacity: 0.5;
+
 		&.focusedui {
 			opacity: 1;
 		}

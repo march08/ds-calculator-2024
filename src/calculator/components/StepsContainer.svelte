@@ -66,7 +66,7 @@
 	.ds-calc-steps-container {
 		display: flex;
 		flex-direction: column;
-		gap: 33px;
+		gap: var(--assessment-step-gap);
 		padding-bottom: 100px;
 	}
 </style>

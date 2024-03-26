@@ -75,9 +75,16 @@
 				grid-template-columns: 1fr 1fr 1fr;
 				gap: 20px;
 			}
+			@media screen and (max-width: 880px) {
+				.cards {
+					grid-template-columns: 1fr 1fr;
+				}
+			}
 
 			#result-container {
-				max-width: 1080px;
+				max-width: calc(1080px + 48px);
+				padding-left: 24px;
+				padding-right: 24px;
 				margin: 0 auto;
 				opacity: 0;
 				transition: 0.5s all;

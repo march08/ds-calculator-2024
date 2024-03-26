@@ -19,14 +19,19 @@ const calcB2bTat = tryCalcWrap((complexity: string) => {
 		high: [0.83, 0.71]
 	};
 
-	const calcYRange = (index: 0 | 1) =>
-		base[complexity][index] * (1 - improvement[complexity][index]);
-
-	const YRaw: NumberRange = [calcYRange(0), calcYRange(1)];
-	const Y = numberRangeToText(YRaw);
-
+	/**
+	 * X
+	 */
 	const XRaw: NumberRange = [improvement[complexity][1], improvement[complexity][0]];
 	const X = numberRangeToText(XRaw, formatPercent);
+
+	/**
+	 * Y
+	 */
+	const calcYRange = (index: 0 | 1) =>
+		base[complexity][index] * (1 - improvement[complexity][index]);
+	const YRaw: NumberRange = [calcYRange(0), calcYRange(1)];
+	const Y = numberRangeToText(YRaw);
 
 	return {
 		elementId: 'pie-chart',

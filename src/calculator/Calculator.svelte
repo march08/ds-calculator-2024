@@ -274,8 +274,22 @@
 		--bg-primary: #fff;
 		--bg-secondary: #f8f3f0;
 		--border-primary: #13003226;
-		--question-line-height: calc(59px + 8px);
 		--text-disabled: #13003240;
+
+		--assessment-font-size: 36px;
+		--assessment-font-letter-spacing: -0.5px;
+		--question-line-height: calc(59px + 8px);
+		--assessment-step-items-gap: 16px;
+		--assessment-step-gap: 33px;
+
+		@media screen and (max-width: 479px) {
+			--assessment-font-size: 24px;
+			--assessment-font-letter-spacing: -0.25px;
+			--question-line-height: calc(38px + 8px);
+			--assessment-step-items-gap: 12px;
+			--assessment-step-gap: 32px;
+		}
+
 		button,
 		select,
 		input {
