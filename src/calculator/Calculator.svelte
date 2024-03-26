@@ -2,7 +2,7 @@
 	import CtaButtonContainer from './components/CtaButtonContainer.svelte';
 	import { flowConfig } from './config.js';
 
-	import { writable } from 'svelte/store';
+	import { derived, writable } from 'svelte/store';
 	import CalculatorStep from './components/CalculatorStep.svelte';
 	import type { UIState, NumberRange } from './types.js';
 	import { numberRangeToText, sumRange } from './utils/array.js';
@@ -55,15 +55,16 @@
 		scrollTopTopOfTheForm();
 	};
 
-	$: setResubmitState = () => {
-		uiStore.set({
-			currentFocus: 'first',
+	const setResubmitState = (startFromTheBeginning: boolean = true) => {
+		uiStore.update((state) => ({
+			...state,
+			currentFocus: startFromTheBeginning ? 'first' : state.currentFocus,
 			isResubmitting: true,
 			isSubmitted: false
-		});
+		}));
 	};
 
-	$: setSubmitState = () => {
+	const setSubmitState = () => {
 		uiStore.update((state) => ({
 			...state,
 			isResubmitting: false,
@@ -76,13 +77,19 @@
 		setResubmitState();
 	};
 
+	$: handleSelectChange = () => {
+		if ($isSubmittedState) {
+			setResubmitState(false);
+		}
+	};
+
 	/**
 	 * if the form has been submitted and user decides to update it
 	 * set the state to being resubmitted
 	 */
 	// $: $submissionFormState && $uiStore.isSubmitted && setResubmitState();
 
-	$: transitionToResult = () => {
+	const transitionToResult = () => {
 		formCtaContainerRef &&
 			formCtaContainerRef.scrollIntoView({
 				behavior: 'smooth',
@@ -90,14 +97,18 @@
 			});
 	};
 
-	$: if ($uiStore.isSubmitted) {
-		toggleResult(true);
-	} else {
-		toggleResult(false);
-	}
-	$: if ($uiStore.isSubmitted) {
-		transitionToResult();
-	}
+	/**
+	 * display results when submitted
+	 */
+	const isSubmittedState = derived(uiStore, (state) => state.isSubmitted);
+	isSubmittedState.subscribe((state) => {
+		if (state) {
+			toggleResult(true);
+			transitionToResult();
+		} else {
+			toggleResult(false);
+		}
+	});
 
 	/**
 	 * result
@@ -109,12 +120,9 @@
 	$: resultItems = result.allRes;
 
 	$: handleManuallyUpdateAssessment = () => {
-		console.log('handleManuallyUpdateAssessment');
 		if (result.allRes.length > 0) {
 			setSubmitState();
-			transitionToResult();
 		}
-		console.log($uiStore);
 	};
 
 	$: canManuallyUpdate = $uiStore.isResubmitting && result.allRes.length > 0;
@@ -147,30 +155,35 @@
 			id="ds-calc-step-1"
 			stateStep="first"
 			stepConfig={flowConfig.calcConfigStep1}
+			onChange={handleSelectChange}
 		/>
 		<CalculatorStep
 			visible={visibilityB2B}
 			id="ds-calc-step-2-b2b"
 			stateStep="B2B"
 			stepConfig={flowConfig.calcConfigStep2b2b}
+			onChange={handleSelectChange}
 		/>
 		<CalculatorStep
 			visible={visibilityPROC}
 			id="ds-calc-step-2-proc"
 			stateStep="PROC"
 			stepConfig={flowConfig.calcConfigStep2procurement}
+			onChange={handleSelectChange}
 		/>
 		<CalculatorStep
 			visible={visibilityHR}
 			id="ds-calc-step-2-hr"
 			stateStep="HR"
 			stepConfig={flowConfig.calcConfigStep2hr}
+			onChange={handleSelectChange}
 		/>
 		<CalculatorStep
 			visible={visibilityB2C}
 			id="ds-calc-step-2-b2c"
 			stateStep="B2C"
 			stepConfig={flowConfig.calcConfigStep2b2c}
+			onChange={handleSelectChange}
 		/>
 		<CalculatorStep
 			visible={visibilityLastSection}
@@ -188,6 +201,8 @@
 
 					if (!$uiStore.isResubmitting) {
 						setSubmitState();
+					} else {
+						handleSelectChange();
 					}
 				}, 1000);
 			}}
