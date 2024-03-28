@@ -9,7 +9,12 @@
 >
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" href="bundle.css" />
+		<!-- <link rel="stylesheet" href="bundle.css" /> -->
+
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/gh/march08/ds-calculator-2024@1/build-embed/docusign-calculator/bundle.css"
+		/>
 		<style>
 			.wf-force-outline-none[tabindex='-1']:focus {
 				outline: none;
@@ -3392,6 +3397,7 @@ End Google Tag Manager -->
 			tileFull();
 			endReveal();
 		</script>
+
 		<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 		<div id="ui-calc-loader">
@@ -3446,8 +3452,10 @@ End Google Tag Manager -->
 		</style>
 
 		<script src="./embed.js"></script>
+
+		<!-- <script src="https://cdn.jsdelivr.net/gh/march08/ds-calculator-2024@1/build-embed/docusign-calculator/embed.js"></script> -->
 		<script>
-			var swiper = new Swiper('#result-swiper', {
+			const swiper = new Swiper('#result-swiper', {
 				slidesPerView: 'auto',
 				spaceBetween: 48,
 				loop: true,
@@ -3464,10 +3472,16 @@ End Google Tag Manager -->
 			DocusignCalculator.initialize({
 				renderTarget: document.getElementById('madlib-form'),
 				targetResultCardsContainerSelector: '.swiper-wrapper',
+				// when user clicks update, or starts updating
+				onFormIsUpdating: () => {
+					// lenis resize with timeout about 3500
+				},
 				onResultCardsUpdate: () => {
-					setTimeout(() => {
-						swiper.update();
-					}, 100);
+					swiper.update();
+				},
+				onCalculateAnimationStart: () => {
+					// trigger lottie animation
+					// after do lenis resize
 				}
 			});
 		</script>

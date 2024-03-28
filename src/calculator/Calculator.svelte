@@ -4,7 +4,7 @@
 
 	import { derived, writable } from 'svelte/store';
 	import CalculatorStep from './components/CalculatorStep.svelte';
-	import type { UIState, NumberRange } from './types.js';
+	import type { NumberRange } from './types.js';
 	import { numberRangeToText, sumRange } from './utils/array.js';
 	import { isTruthy } from './utils/isTruthy.js';
 	import { formatUsd } from './utils/number.js';
@@ -12,7 +12,6 @@
 	import { isSectionVisible } from './utils/isSectionFilled.js';
 	import StepsContainer from './components/StepsContainer.svelte';
 	import { getSubmissionStore } from './stores/submissionStore.js';
-	import { sortCalculatedResult } from './utils/sortCalculatedResult.js';
 	import { renderResultCards } from './externalDomManipulation/renderResultCards.js';
 	import { calculate, type OverallResult } from './calculations/calculate.js';
 	import { updateContactFormDescriptionField } from './externalDomManipulation/updateContactFormDescriptionField.js';
@@ -24,6 +23,8 @@
 
 	export let targetResultCardsContainerSelector: string = '';
 	export let onResultCardsUpdate: VoidFunction = () => {};
+	export let onCalculateAnimationStart: VoidFunction = () => {};
+	export let onToggleResultVisibility: VoidFunction = () => {};
 
 	const {
 		store: submissionFormState,
@@ -119,9 +120,9 @@
 	const isSubmittedState = derived(uiStore, (state) => state.isSubmitted);
 	isSubmittedState.subscribe((state) => {
 		if (state) {
-			toggleResult(true);
+			toggleResult(true, onToggleResultVisibility);
 		} else {
-			toggleResult(false);
+			toggleResult(false, onToggleResultVisibility);
 		}
 	});
 

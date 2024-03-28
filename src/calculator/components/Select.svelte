@@ -106,7 +106,12 @@
 		class:visible={isDropdownOpen}
 		tabindex="-3"
 	>
-		<div class="ds-calc-dropdown-content">
+		<div
+			class="ds-calc-dropdown-content"
+			data-lenis-prevent
+			data-lenis-prevent-wheel
+			data-lenis-prevent-touch
+		>
 			<div class="ds-calc-dropdown-content-items">
 				{#each options as option}
 					{#if 'key' in option && 'label' in option}
