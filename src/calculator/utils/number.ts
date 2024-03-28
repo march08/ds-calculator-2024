@@ -17,17 +17,17 @@ export const formatUsd = (value: number, options?: Intl.NumberFormatOptions) =>
 		...options
 	});
 
+const lookup = [
+	{ value: 1, symbol: '' },
+	{ value: 1e3, symbol: 'k' },
+	{ value: 1e6, symbol: 'M' },
+	{ value: 1e9, symbol: 'G' },
+	{ value: 1e12, symbol: 'T' },
+	{ value: 1e15, symbol: 'P' },
+	{ value: 1e18, symbol: 'E' }
+];
 export const nFormatter = (num: number, dollars = false) => {
-	const digits = 1;
-	const lookup = [
-		{ value: 1, symbol: '' },
-		{ value: 1e3, symbol: 'k' },
-		{ value: 1e6, symbol: 'M' },
-		{ value: 1e9, symbol: 'G' },
-		{ value: 1e12, symbol: 'T' },
-		{ value: 1e15, symbol: 'P' },
-		{ value: 1e18, symbol: 'E' }
-	];
+	const digits = num > 1000000 ? 1 : 0;
 	const regexp = /\.0+$|(?<=\.[0-9]*[1-9])0+$/;
 	const item = lookup.findLast((item) => num >= item.value);
 	return `${dollars ? '$' : ''}${item ? (num / item.value).toFixed(digits).replace(regexp, '').concat(item.symbol) : '0'}`;

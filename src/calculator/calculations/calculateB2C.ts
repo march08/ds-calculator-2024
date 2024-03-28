@@ -74,7 +74,7 @@ const calcB2cStaffProductivity = tryCalcWrap(
 
 		const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 		return {
-			elementId: 'pie-chart',
+			elementId: 'pie',
 			text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value activities.`,
 			X,
 			Y,
@@ -126,7 +126,7 @@ const calcB2cConversionRate = tryCalcWrap((customerInformation: string, amount: 
 		improvement[customerInformation][financial][index] * financial;
 	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 	return {
-		elementId: 'bar-chart',
+		elementId: 'bar',
 		text: `${X} increase in conversion rates by reducing customer abandonment during the agreement process.`,
 		X,
 		Y: null,

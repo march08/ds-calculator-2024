@@ -68,7 +68,7 @@ const calcHrProductivity = tryCalcWrap((employment: string, agreementVolume: str
 
 	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 	return {
-		elementId: 'pie-chart',
+		elementId: 'pie',
 		text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value HR activities.`,
 		X,
 		Y: null,
@@ -123,7 +123,7 @@ const calcHrConversionRate = tryCalcWrap((employment: string, agreementVolume: s
 	const YRaw = getRange(calcYRange);
 	const Y = numberRangeToText(YRaw);
 	return {
-		elementId: 'bar-chart',
+		elementId: 'bar',
 		text: `${X} increase in conversion rates by reducing abandonment in the agreement process. Onboard ${Y} additional candidates annually.`,
 		X,
 		Y,

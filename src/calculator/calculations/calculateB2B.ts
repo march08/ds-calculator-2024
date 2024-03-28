@@ -42,7 +42,7 @@ const calcB2bTat = tryCalcWrap((complexity: string) => {
 	const Y = numberRangeToText(YRaw);
 
 	return {
-		elementId: 'pie-chart',
+		elementId: 'pie',
 		text: `${X} faster deals, with the potential to reduce the sales cycle from weeks to just ${Y} days.`,
 		X,
 		XRaw,
@@ -117,7 +117,7 @@ const calcB2bLegalCapacity = tryCalcWrap((complexity: string) => {
 	const X = numberRangeToText(XRaw, formatPercent);
 
 	return {
-		elementId: 'pie-chart',
+		elementId: 'pie',
 		text: `Up to ${X} of agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
 		X,
 		XRaw,
@@ -203,7 +203,7 @@ const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVol
 	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 
 	return {
-		elementId: 'bar-chart',
+		elementId: 'bar',
 		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
 		X,
 		XRaw,
@@ -255,7 +255,7 @@ const calcB2bReducedRevenueLeakage = tryCalcWrap((complexity: string, rev: strin
 	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 
 	return {
-		elementId: 'bar-chart',
+		elementId: 'bar',
 		text: `${X} estimated reduction in revenue leakage by ensuring obligations are enforced, fees are collected, and renewal events are maximized.`,
 		X,
 		XRaw,

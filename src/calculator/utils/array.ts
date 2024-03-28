@@ -1,4 +1,5 @@
 import type { NumberRange } from '../types.js';
+import { isTruthy } from './isTruthy.js';
 import { formatNumber } from './number.js';
 
 type NumberFormatter = (n: number) => string;
@@ -16,4 +17,11 @@ export const sumRange = (ranges: NumberRange[]): NumberRange => {
 	});
 
 	return res;
+};
+
+export const lastRangeItem = (arr: NumberRange, formatter: NumberFormatter, prep?: string) => {
+	if (arr[1]) {
+		return [prep, formatter(arr[1])].filter(isTruthy).join('');
+	}
+	return null;
 };

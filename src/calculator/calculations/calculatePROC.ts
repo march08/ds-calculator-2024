@@ -80,7 +80,7 @@ const calcPROCProductivity = tryCalcWrap((spendType: string, agreementVolume: st
 	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
 
 	return {
-		elementId: 'bar-chart',
+		elementId: 'bar',
 		text: `${X} improvement in staff productivity, freeing up ${Y} annual hours to focus on priorities like vendor management and innovation. `,
 		X,
 		Y,
@@ -105,7 +105,7 @@ const calcPROCLegalCapacity = tryCalcWrap((spendType: string) => {
 	const X = formatPercent(improvement[spendType][0]);
 
 	return {
-		elementId: 'pie-chart',
+		elementId: 'pie',
 		text: `Up to ${X} of agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
 		X,
 		Y: null,
@@ -153,7 +153,7 @@ const calcPROCLegalProductivity = tryCalcWrap((spendType: string, agreementVolum
 	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
 
 	return {
-		elementId: 'bar-chart',
+		elementId: 'bar',
 		text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
 		X,
 		Y,
@@ -195,7 +195,7 @@ const calcPROCReduceRisk = tryCalcWrap((spendType: string, agreementVolume: stri
 	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
 
 	return {
-		elementId: 'bar-chart',
+		elementId: 'bar',
 		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
 		X,
 		Y: null,
@@ -263,7 +263,7 @@ const calcPROCReduceSavingsLeakage = tryCalcWrap((spendType: string, spendAmount
 	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
 
 	return {
-		elementId: 'pie-chart',
+		elementId: 'pie',
 		text: `${X} estimated reduction in savings leakage by ensuring obligations are enforced, rebates/penalties are collected, and renewals are maximized.`,
 		X,
 		Y: null,

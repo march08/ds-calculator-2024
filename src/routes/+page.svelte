@@ -3,7 +3,7 @@
 </script>
 
 <div class="container">
-	<Calculator />
+	<Calculator targetResultCardsContainerSelector=".swiper-wrapper" />
 </div>
 
 <style global>

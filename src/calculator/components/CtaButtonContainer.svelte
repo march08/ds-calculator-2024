@@ -20,10 +20,18 @@
 		transition: 1s all;
 		transition-delay: 0.75s;
 		&.update {
-			padding-top: 81px;
+			padding-top: 30px;
 		}
 		&.visible {
 			opacity: 1;
 		}
+	}
+
+	#ds-calc-cta-update-container {
+		position: absolute;
+		top: calc(100% + 120px);
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 500;
 	}
 </style>

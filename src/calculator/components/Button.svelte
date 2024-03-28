@@ -8,7 +8,7 @@
 </button>
 
 <style lang="scss" global>
-	.ds-calc-button {
+	.ds-calc-button[type='button'] {
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
@@ -28,6 +28,7 @@
 		color: #ffffff;
 		background: transparent;
 		transition: 0.2s all;
+		text-wrap: nowrap;
 		&:hover:not(:disabled) {
 			border-color: #fff;
 			cursor: pointer;

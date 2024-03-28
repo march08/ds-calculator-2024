@@ -42,7 +42,7 @@ export type SelectAreaType = 'B2B' | 'Procurement' | 'HR' | 'B2C';
 export type StepConfig = Readonly<(SelectConfig | TextConfig)[]>;
 
 export type CalculatedResult = {
-	elementId: 'bar-chart' | 'pie-chart' | 'calendar';
+	elementId: 'bar' | 'pie' | 'calendar';
 	text: string;
 	X: string | null;
 	Y: string | null;

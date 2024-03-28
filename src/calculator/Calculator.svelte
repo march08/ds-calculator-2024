@@ -13,15 +13,17 @@
 	import StepsContainer from './components/StepsContainer.svelte';
 	import { getSubmissionStore } from './stores/submissionStore.js';
 	import { sortCalculatedResult } from './utils/sortCalculatedResult.js';
-	import { renderResult } from './utils/renderResult.js';
+	import { renderResultCards } from './externalDomManipulation/renderResultCards.js';
 	import { calculate, type OverallResult } from './calculations/calculate.js';
 	import { updateContactFormDescriptionField } from './externalDomManipulation/updateContactFormDescriptionField.js';
 	import Button from './components/Button.svelte';
 	import { toggleResult } from './externalDomManipulation/showResult.js';
 	import { getUiStore } from './stores/uiStore.js';
 	import ResultPreview from './components/utilityComponents/ResultPreview.svelte';
+	import { renderOverallResultCards } from './externalDomManipulation/renderOverallResultCards.js';
 
-	let formCtaContainerRef: HTMLDivElement | undefined;
+	export let targetResultCardsContainerSelector: string = '';
+	export let onResultCardsUpdate: VoidFunction = () => {};
 
 	const {
 		store: submissionFormState,
@@ -65,7 +67,7 @@
 		}));
 	};
 
-	const setSubmitState = () => {
+	const setSubmittedState = () => {
 		uiStore.update((state) => ({
 			...state,
 			isResubmitting: false,
@@ -111,15 +113,6 @@
 	 */
 	// $: $submissionFormState && $uiStore.isSubmitted && setResubmitState();
 
-	const transitionToResult = () => {
-		setTimeout(() => {
-			formCtaContainerRef &&
-				formCtaContainerRef.scrollIntoView({
-					block: 'start'
-				});
-		}, 500);
-	};
-
 	/**
 	 * display results when submitted
 	 */
@@ -127,7 +120,6 @@
 	isSubmittedState.subscribe((state) => {
 		if (state) {
 			toggleResult(true);
-			transitionToResult();
 		} else {
 			toggleResult(false);
 		}
@@ -144,15 +136,17 @@
 
 	$: handleManuallyUpdateAssessment = () => {
 		if (result.allRes.length > 0) {
-			setSubmitState();
+			setSubmittedState();
 		}
 	};
 
-	$: canManuallyUpdate = $uiStore.isResubmitting && result.allRes.length > 0;
+	$: canManuallyUpdate =
+		$uiStore.isResubmitting && result.allRes.length > 0 && visibilityLastSection;
 
 	$: if (resultItems.length > 0) {
-		const sorted = sortCalculatedResult(resultItems);
-		renderResult(sorted);
+		renderResultCards(resultItems, targetResultCardsContainerSelector);
+		renderOverallResultCards(result);
+		onResultCardsUpdate();
 	}
 
 	let employeeHoursYear: NumberRange, dollarsYear: NumberRange;
@@ -226,10 +220,10 @@
 						return;
 					}
 
-					if (!$uiStore.isResubmitting) {
-						setSubmitState();
-					} else {
+					if ($uiStore.isSubmitted) {
 						handleSelectChange();
+					} else if (!$uiStore.isResubmitting) {
+						setSubmittedState();
 					}
 				}, 1000);
 			}}
@@ -242,27 +236,25 @@
 		>
 		<a on:click={resetForm}>Reset form (dev only)</a>
 	</CtaButtonContainer>
-	<div bind:this={formCtaContainerRef}>
-		<CtaButtonContainer visible={$uiStore.isSubmitted} id="ds-calc-cta-container">
-			<Button onClick={handleEditAssessment}>
-				Edit your Assessment
-				<svg
-					width="17"
-					height="16"
-					viewBox="0 0 17 16"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-				>
-					<path
-						fill-rule="evenodd"
-						clip-rule="evenodd"
-						d="M4.02856 6.86128L8.02856 2.86128C8.28891 2.60093 8.71102 2.60093 8.97137 2.86128L12.9714 6.86128L12.0286 7.80409L9.16664 4.94216L9.16664 13.3327H7.8333L7.8333 4.94216L4.97137 7.80409L4.02856 6.86128Z"
-						fill="white"
-					/>
-				</svg>
-			</Button>
-		</CtaButtonContainer>
-	</div>
+	<CtaButtonContainer visible={$uiStore.isSubmitted} id="ds-calc-cta-update-container">
+		<Button onClick={handleEditAssessment}>
+			Edit your Assessment
+			<svg
+				width="17"
+				height="16"
+				viewBox="0 0 17 16"
+				fill="none"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				<path
+					fill-rule="evenodd"
+					clip-rule="evenodd"
+					d="M4.02856 6.86128L8.02856 2.86128C8.28891 2.60093 8.71102 2.60093 8.97137 2.86128L12.9714 6.86128L12.0286 7.80409L9.16664 4.94216L9.16664 13.3327H7.8333L7.8333 4.94216L4.97137 7.80409L4.02856 6.86128Z"
+					fill="white"
+				/>
+			</svg>
+		</Button>
+	</CtaButtonContainer>
 </div>
 
 <div class="result-preview-container" class:visible={displayCalculations}>
@@ -286,8 +278,15 @@
 	{/each}
 </div>
 
+<div id="ui-calc-loader">
+	<h3>Calculating</h3>
+</div>
+
 <style lang="scss" global>
 	.ds-calculator {
+		position: relative;
+		z-index: 500;
+
 		--text-primary: #130032;
 		--text-secondary: #191823bf;
 		--bg-primary: #fff;
@@ -315,11 +314,6 @@
 			-webkit-appearance: none;
 			appearance: none;
 		}
-
-		max-width: calc(1080px + 48px);
-		padding-left: 24px;
-		padding-right: 24px;
-		margin: 0 auto;
 	}
 
 	.result-preview-container {
@@ -342,5 +336,22 @@
 			height: 100%;
 			overflow: auto;
 		}
+	}
+
+	#ui-calc-loader {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #4c00ff;
+		z-index: 100000;
+		color: white;
+		opacity: 0;
+		pointer-events: none;
+		transition: 0.5s all;
 	}
 </style>
