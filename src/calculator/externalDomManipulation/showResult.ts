@@ -1,13 +1,17 @@
-export const toggleResult = (visible: boolean, onToggleResultVisibility: VoidFunction) => {
+export const toggleResult = (
+	visible: boolean,
+	onToggleResultVisibility: VoidFunction,
+	onCalculateAnimationStart: VoidFunction
+) => {
 	const resultContainer = document.querySelector('.revealed-results') as HTMLDivElement | undefined;
-	console.log('toggleResult', visible);
 	if (resultContainer) {
 		if (resultContainer.getAttribute('data-ds-initialized') === 'true') {
 			if (visible) {
+				onCalculateAnimationStart();
 				if (resultContainer) {
+					onToggleResultVisibility();
 					setTimeout(() => {
 						resultContainer.style.display = 'block';
-						onToggleResultVisibility();
 					}, 1500);
 				}
 
@@ -16,9 +20,9 @@ export const toggleResult = (visible: boolean, onToggleResultVisibility: VoidFun
 				}, 3000);
 			} else {
 				setTimeout(() => {
+					onToggleResultVisibility();
 					if (resultContainer) {
 						resultContainer.style.display = 'none';
-						onToggleResultVisibility();
 					}
 				}, 2000);
 			}

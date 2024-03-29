@@ -18,8 +18,8 @@
 	import Button from './components/Button.svelte';
 	import { toggleResult } from './externalDomManipulation/showResult.js';
 	import { getUiStore } from './stores/uiStore.js';
-	import ResultPreview from './components/utilityComponents/ResultPreview.svelte';
 	import { renderOverallResultCards } from './externalDomManipulation/renderOverallResultCards.js';
+	import ResultPreviews from './components/utilityComponents/ResultPreviews.svelte';
 
 	export let targetResultCardsContainerSelector: string = '';
 	export let onResultCardsUpdate: VoidFunction = () => {};
@@ -120,9 +120,9 @@
 	const isSubmittedState = derived(uiStore, (state) => state.isSubmitted);
 	isSubmittedState.subscribe((state) => {
 		if (state) {
-			toggleResult(true, onToggleResultVisibility);
+			toggleResult(true, onToggleResultVisibility, onCalculateAnimationStart);
 		} else {
-			toggleResult(false, onToggleResultVisibility);
+			toggleResult(false, onToggleResultVisibility, onCalculateAnimationStart);
 		}
 	});
 
@@ -166,8 +166,6 @@
 	 */
 	$: (totalImpactText || allResText) &&
 		updateContactFormDescriptionField(allResText, totalImpactText);
-
-	let displayCalculations = false;
 </script>
 
 <div class="ds-calculator">
@@ -258,27 +256,7 @@
 	</CtaButtonContainer>
 </div>
 
-<div class="result-preview-container" class:visible={displayCalculations}>
-	<div class="result-preview-container-button">
-		<Button
-			onClick={() => {
-				displayCalculations = !displayCalculations;
-			}}>{displayCalculations ? 'Hide' : 'Show'} calculations</Button
-		>
-	</div>
-	<ul>
-		<li>totalDollarsYear: {result.totalDollarsYearText}</li>
-		<li>totalEmployeeHoursYear: {result.totalEmployeeHoursYearText}</li>
-		<li>totalOnboardingDaysVendor: {result.totalOnboardingDaysVendorText}</li>
-		<li>totalOnboardingDaysCandidate: {result.totalOnboardingDaysCandidateText}</li>
-		<li>totalOnboardingDaysCustomer: {result.totalOnboardingDaysCustomerText}</li>
-		<li>totalCandidateYear: {result.totalCandidateYearText}</li>
-	</ul>
-	{#each result.splitResult as resultGroup}
-		<ResultPreview {...resultGroup} />
-	{/each}
-</div>
-
+<ResultPreviews {result} />
 <div id="ui-calc-loader">
 	<h3>Calculating</h3>
 </div>
@@ -314,28 +292,6 @@
 		input {
 			-webkit-appearance: none;
 			appearance: none;
-		}
-	}
-
-	.result-preview-container {
-		.result-preview-container-button {
-			position: sticky;
-			top: 0;
-			background: inherit;
-		}
-		position: fixed;
-		top: 0;
-		right: 0;
-		height: 100%;
-		width: 30vw;
-		height: 98px;
-		overflow: hidden;
-		background: #3f0eb1;
-		padding: 24px;
-		color: white;
-		&.visible {
-			height: 100%;
-			overflow: auto;
 		}
 	}
 
