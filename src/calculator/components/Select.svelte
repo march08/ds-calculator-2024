@@ -80,7 +80,15 @@
 		strategy: 'fixed'
 	});
 	const extraOpts = {
-		modifiers: [{ name: 'offset', options: { offset: [0, 12] } }]
+		modifiers: [
+			{ name: 'offset', options: { offset: [0, 12] } },
+			{
+				name: 'flip',
+				options: {
+					fallbackPlacements: ['top', 'right']
+				}
+			}
+		]
 	};
 </script>
 

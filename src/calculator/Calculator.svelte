@@ -54,9 +54,11 @@
 	};
 
 	const resetForm = () => {
-		resetSubmissionStore();
-		resetUiStore();
 		scrollTopTopOfTheForm();
+		setTimeout(() => {
+			resetSubmissionStore();
+			resetUiStore();
+		}, 300);
 	};
 
 	const setResubmitState = (startFromTheBeginning: boolean = true) => {
