@@ -26,11 +26,13 @@
 		}
 	}
 
-	#ds-calc-cta-update-container {
-		position: absolute;
-		top: calc(100% + 120px);
-		left: 50%;
-		transform: translateX(-50%);
-		z-index: 500;
+	@media screen and (min-width: 992px) {
+		#ds-calc-cta-update-container {
+			position: absolute;
+			top: calc(100% + 120px);
+			left: 50%;
+			transform: translateX(-50%);
+			z-index: 500;
+		}
 	}
 </style>
