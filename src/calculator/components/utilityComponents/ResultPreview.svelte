@@ -5,9 +5,6 @@
 
 	export let title: string;
 	export let result: CalculatedResult[];
-
-	export let dollarsYear: NumberRange;
-	export let employeeHoursYear: NumberRange;
 </script>
 
 <div class="result-box">
@@ -75,9 +72,6 @@
 			</tr>
 		</table>
 	{/each}
-	<hr />
-	Total hourly: {numberRangeToText(employeeHoursYear)}
-	Total financial: {numberRangeToText(dollarsYear)}
 	<hr />
 </div>
 

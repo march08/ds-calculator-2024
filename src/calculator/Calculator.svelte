@@ -2,24 +2,21 @@
 	import CtaButtonContainer from './components/CtaButtonContainer.svelte';
 	import { flowConfig } from './config.js';
 
-	import { derived, writable } from 'svelte/store';
+	import { derived } from 'svelte/store';
 	import CalculatorStep from './components/CalculatorStep.svelte';
-	import type { NumberRange } from './types.js';
-	import { numberRangeToText, sumRange } from './utils/array.js';
-	import { isTruthy } from './utils/isTruthy.js';
-	import { formatUsd } from './utils/number.js';
 	import { setContext } from 'svelte';
 	import { isSectionVisible } from './utils/isSectionFilled.js';
 	import StepsContainer from './components/StepsContainer.svelte';
 	import { getSubmissionStore } from './stores/submissionStore.js';
 	import { renderResultCards } from './externalDomManipulation/renderResultCards.js';
-	import { calculate, type OverallResult } from './calculations/calculate.js';
+	import { calculate } from './calculations/calculate.js';
 	import { updateContactFormDescriptionField } from './externalDomManipulation/updateContactFormDescriptionField.js';
 	import Button from './components/Button.svelte';
 	import { toggleResult } from './externalDomManipulation/showResult.js';
 	import { getUiStore } from './stores/uiStore.js';
 	import { renderOverallResultCards } from './externalDomManipulation/renderOverallResultCards.js';
 	import ResultPreviews from './components/utilityComponents/ResultPreviews.svelte';
+	import type { OverallResult } from './types.js';
 
 	export let targetResultCardsContainerSelector: string = '';
 	export let onResultCardsUpdate: VoidFunction = () => {};
@@ -101,7 +98,9 @@
 
 	const handleEditAssessment = () => {
 		scrollTopTopOfTheForm();
-		setResubmitState();
+		setTimeout(() => {
+			setResubmitState();
+		}, 300);
 	};
 
 	$: handleSelectChange = () => {
@@ -139,6 +138,7 @@
 
 	$: handleManuallyUpdateAssessment = () => {
 		if (result.allRes.length > 0) {
+			updateContactFormDescriptionField(result);
 			setSubmittedState();
 		}
 	};
@@ -150,24 +150,8 @@
 		renderResultCards(resultItems, targetResultCardsContainerSelector);
 		renderOverallResultCards(result);
 		onResultCardsUpdate();
+		updateContactFormDescriptionField(result);
 	}
-
-	let employeeHoursYear: NumberRange, dollarsYear: NumberRange;
-	$: employeeHoursYear = sumRange(
-		resultItems.map((item) => item.employeeHoursYear).filter(isTruthy)
-	);
-	$: employeeHoursYearText = numberRangeToText(employeeHoursYear);
-	$: dollarsYear = sumRange(resultItems.map((item) => item.dollarsYear).filter(isTruthy));
-	$: dollarsYearText = numberRangeToText(dollarsYear, formatUsd);
-
-	$: allResText = resultItems.map((item) => item.text).join('; ');
-	$: totalImpactText = `Hourly impact: ${employeeHoursYearText}, financial impact: ${dollarsYearText}`;
-
-	/**
-	 * update contact form description field
-	 */
-	$: (totalImpactText || allResText) &&
-		updateContactFormDescriptionField(allResText, totalImpactText);
 </script>
 
 <div class="ds-calculator">

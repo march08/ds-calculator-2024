@@ -1,15 +1,23 @@
-export const updateContactFormDescriptionField = (allResText: string, totalImpactText: string) => {
+import type { OverallResult } from '../types.js';
+const nl = '\r\n';
+
+export const updateContactFormDescriptionField = (result: OverallResult) => {
 	if (typeof document !== 'undefined') {
 		const textAreaEl: HTMLTextAreaElement | null = document.querySelector(
-			'.gate-a6428bda-8a1c-4dfc-9866-5232101b2e52 textarea[name=description]'
+			'.gcdc-form-render textarea[name=description]'
 		);
 
+		const topAreas = (result.topTwo || []).map((item) => item.fullText).join(nl);
+		const allItems = (result.allRes || []).map((item) => item.text).join(nl);
+
+		const value = `${topAreas}
+
+See what's possible with intelligent agreement management:
+		
+${allItems}`;
+
 		if (textAreaEl) {
-			textAreaEl.value = `FIELD IS DISPLAYED FOR TESTING PURPOSES
-
-${allResText}
-
-${totalImpactText}`;
+			textAreaEl.value = value;
 		}
 	}
 };

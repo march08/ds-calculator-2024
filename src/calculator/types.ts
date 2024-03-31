@@ -59,3 +59,44 @@ export type CalculatedResult = {
 };
 
 export type NumberRange = [number, number];
+
+export type OverResult_TotalsPerArea = {
+	employeeHoursYear: NumberRange;
+	employeeHoursYearText: string;
+	// total dollars
+	totalDollarsYear: NumberRange;
+	totalDollarsYearText: string;
+	// total employee hours
+	totalEmployeeHoursYear: NumberRange;
+	totalEmployeeHoursYearText: string;
+	// total candidate onboarding
+	totalOnboardingDaysCandidate: NumberRange;
+	totalOnboardingDaysCandidateText: string;
+	// total vendor onboarding
+	totalOnboardingDaysVendor: NumberRange;
+	totalOnboardingDaysVendorText: string;
+	// total vendor customer
+	totalOnboardingDaysCustomer: NumberRange;
+	totalOnboardingDaysCustomerText: string;
+	// total candidate year
+	totalCandidateYear: NumberRange;
+	totalCandidateYearText: string;
+};
+
+export type TopTwoResultItem = {
+	displayValue: string | null;
+	text: string;
+	fullText: string;
+	illustration: 'person' | 'stack';
+};
+
+export type TopTwoResult = TopTwoResultItem[];
+
+export type OverallResult = {
+	allRes: CalculatedResult[];
+	topTwo: TopTwoResult;
+	splitResult: {
+		title: string;
+		result: CalculatedResult[];
+	}[];
+} & OverResult_TotalsPerArea;

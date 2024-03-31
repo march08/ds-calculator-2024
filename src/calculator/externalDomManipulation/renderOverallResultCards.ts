@@ -1,4 +1,4 @@
-import type { OverallResult } from '../calculations/calculate.js';
+import type { OverallResult } from '../types.js';
 import { lastRangeItem } from '../utils/array.js';
 import { nFormatter } from '../utils/number.js';
 

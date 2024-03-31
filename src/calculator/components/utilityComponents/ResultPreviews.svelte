@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { OverallResult } from '../../calculations/calculate.js';
+	import type { OverallResult } from '../../types.js';
 	import Button from '../Button.svelte';
 	import ResultPreview from './ResultPreview.svelte';
 

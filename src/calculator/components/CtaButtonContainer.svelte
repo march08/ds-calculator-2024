@@ -17,8 +17,7 @@
 		padding-top: 81px;
 		gap: 16px;
 		opacity: 0;
-		transition: 1s all;
-		transition-delay: 0.75s;
+		transition: 0.3s all;
 		&.update {
 			padding-top: 30px;
 		}

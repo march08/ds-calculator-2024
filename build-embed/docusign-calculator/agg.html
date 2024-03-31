@@ -3455,33 +3455,12 @@ End Google Tag Manager -->
 
 		<!-- <script src="https://cdn.jsdelivr.net/gh/march08/ds-calculator-2024@1/build-embed/docusign-calculator/embed.js"></script> -->
 		<script>
-			const swiper = new Swiper('#result-swiper', {
-				slidesPerView: 'auto',
-				spaceBetween: 48,
-				loop: true,
-				navigation: {
-					nextEl: '.swiper-arrow.next',
-					prevEl: '.swiper-arrow.prev'
-				},
-				pagination: {
-					el: '.hp-improve_line',
-					type: 'progressbar'
-				}
-			});
-
 			DocusignCalculator.initialize({
 				renderTarget: document.getElementById('madlib-form'),
 				targetResultCardsContainerSelector: '.swiper-wrapper',
 				// when user clicks update, or starts updating
 				onFormIsUpdating: () => {
 					// lenis resize with timeout about 3500
-				},
-				onResultCardsUpdate: () => {
-					swiper.update();
-				},
-				onCalculateAnimationStart: () => {
-					// trigger lottie animation
-					// after do lenis resize
 				}
 			});
 		</script>
