@@ -126,7 +126,6 @@
 		transition: 0.5s all;
 
 		.text-item,
-		.ds-calc-select-btn,
 		:global(.ds-calc-select-display-text) {
 			opacity: 0.5;
 			transition: 0.2s all;

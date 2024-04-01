@@ -93,7 +93,6 @@
 	};
 
 	const updatePosition = () => {
-		console.log('update');
 		getInstance()?.update();
 	};
 	$: updatePositionKey && updatePosition();

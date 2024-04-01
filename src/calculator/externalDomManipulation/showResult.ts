@@ -37,7 +37,7 @@ export const toggleResult = (
 						resultContainer.style.display = 'none';
 					}
 					onToggleResultVisibility();
-				}, 2000);
+				}, 200);
 			}
 		} else {
 			if (visible) {

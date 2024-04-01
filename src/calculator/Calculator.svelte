@@ -51,9 +51,9 @@
 		if (firstStepTarget) {
 			scrollInto(firstStepTarget, {
 				lock: true,
-
 				behavior: 'smooth',
-				block: 'center'
+				block: 'center',
+				duration: 300
 			});
 		}
 	};
