@@ -142,6 +142,7 @@
 	 */
 	// $: $submissionFormState && $uiStore.isSubmitted && setResubmitState();
 
+	$: console.log('ui store', $uiStore);
 	/**
 	 * display results when submitted
 	 */
@@ -208,11 +209,13 @@
 					}
 
 					if ($uiStore.isSubmitted) {
+						console.log('$uiStore.isSubmitted', $uiStore.isSubmitted);
 						handleSelectChange();
 					} else if (!$uiStore.isResubmitting) {
+						console.log('!$uiStore.isResubmitting', !$uiStore.isResubmitting);
 						setSubmittedState();
 					}
-				}, 1000);
+				}, 300);
 			}}
 		/>
 	</StepsContainer>
