@@ -111,24 +111,6 @@
 	};
 
 	/**
-	 * if the form has been submitted and user decides to update it
-	 * set the state to being resubmitted
-	 */
-	// $: $submissionFormState && $uiStore.isSubmitted && setResubmitState();
-
-	/**
-	 * display results when submitted
-	 */
-	const isSubmittedState = derived(uiStore, (state) => state.isSubmitted);
-	isSubmittedState.subscribe((state) => {
-		if (state) {
-			toggleResult(true, onToggleResultVisibility, onCalculateAnimationStart);
-		} else {
-			toggleResult(false, onToggleResultVisibility, onCalculateAnimationStart);
-		}
-	});
-
-	/**
 	 * result
 	 */
 	let result: OverallResult = {
@@ -153,6 +135,25 @@
 		onResultCardsUpdate();
 		updateContactFormDescriptionField(result);
 	}
+
+	/**
+	 * if the form has been submitted and user decides to update it
+	 * set the state to being resubmitted
+	 */
+	// $: $submissionFormState && $uiStore.isSubmitted && setResubmitState();
+
+	/**
+	 * display results when submitted
+	 */
+	const isSubmittedState = derived(uiStore, (state) => state.isSubmitted);
+	isSubmittedState.subscribe((state) => {
+		console.log('sub', state, result);
+		if (state) {
+			toggleResult(true, onToggleResultVisibility, onCalculateAnimationStart);
+		} else {
+			toggleResult(false, onToggleResultVisibility, onCalculateAnimationStart);
+		}
+	});
 </script>
 
 <div class="ds-calculator">
