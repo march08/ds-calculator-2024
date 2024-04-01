@@ -221,7 +221,6 @@
 				padding: 0px 12px 12px;
 				gap: 2px;
 				isolation: isolate;
-
 				max-height: 350px;
 				overflow-y: auto;
 			}

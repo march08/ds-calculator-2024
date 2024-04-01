@@ -104,6 +104,7 @@
 	};
 
 	$: handleSelectChange = () => {
+		onToggleResultVisibility();
 		if ($isSubmittedState) {
 			setResubmitState(false);
 		}

@@ -121,7 +121,7 @@ const calcHrConversionRate = tryCalcWrap((employment: string, agreementVolume: s
 
 	const calcYRange = (index: 0 | 1) => improvement[employment][volume][index] * volume;
 	const YRaw = getRange(calcYRange);
-	const Y = numberRangeToText(YRaw);
+	const Y = numberRangeToText(YRaw, nFormatter);
 	return {
 		elementId: 'bar',
 		text: `${X} increase in conversion rates by reducing abandonment in the agreement process. Onboard ${Y} additional candidates annually.`,
