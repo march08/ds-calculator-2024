@@ -18,6 +18,7 @@
 		gap: 16px;
 		opacity: 0;
 		transition: 0.3s all;
+		transition-delay: 0.2s;
 		&.update {
 			padding-top: 30px;
 		}
