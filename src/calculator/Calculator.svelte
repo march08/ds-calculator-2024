@@ -16,12 +16,15 @@
 	import { getUiStore } from './stores/uiStore.js';
 	import { renderOverallResultCards } from './externalDomManipulation/renderOverallResultCards.js';
 	import ResultPreviews from './components/utilityComponents/ResultPreviews.svelte';
-	import type { OverallResult } from './types.js';
+	import type { OverallResult, ScrollInto } from './types.js';
 
 	export let targetResultCardsContainerSelector: string = '';
 	export let onResultCardsUpdate: VoidFunction = () => {};
 	export let onCalculateAnimationStart: VoidFunction = () => {};
 	export let onToggleResultVisibility: VoidFunction = () => {};
+	export let scrollInto: ScrollInto = (target, options) => {
+		target.scrollIntoView(options);
+	};
 
 	const {
 		store: submissionFormState,
@@ -44,10 +47,15 @@
 	$: visibilityLastSection = isSectionVisible($submissionFormState, ['B2B', 'PROC', 'HR', 'B2C']);
 
 	const scrollTopTopOfTheForm = () => {
-		document.getElementById('ds-calc-step-1')?.scrollIntoView({
-			behavior: 'smooth',
-			block: 'center'
-		});
+		const firstStepTarget = document.getElementById('ds-calc-step-1');
+		if (firstStepTarget) {
+			scrollInto(firstStepTarget, {
+				lock: true,
+
+				behavior: 'smooth',
+				block: 'center'
+			});
+		}
 	};
 
 	const resetForm = () => {
@@ -142,15 +150,20 @@
 	 */
 	// $: $submissionFormState && $uiStore.isSubmitted && setResubmitState();
 
+	const toggleResultOptions = {
+		onToggleResultVisibility,
+		onCalculateAnimationStart,
+		scrollInto
+	};
 	/**
 	 * display results when submitted
 	 */
 	const isSubmittedState = derived(uiStore, (state) => state.isSubmitted);
 	isSubmittedState.subscribe((state) => {
 		if (state) {
-			toggleResult(true, onToggleResultVisibility, onCalculateAnimationStart);
+			toggleResult(true, toggleResultOptions);
 		} else {
-			toggleResult(false, onToggleResultVisibility, onCalculateAnimationStart);
+			toggleResult(false, toggleResultOptions);
 		}
 	});
 </script>
@@ -163,6 +176,7 @@
 			stateStep="first"
 			stepConfig={flowConfig.calcConfigStep1}
 			onChange={handleChangeAreas}
+			{scrollInto}
 		/>
 		<CalculatorStep
 			visible={visibilityB2B}
@@ -170,6 +184,7 @@
 			stateStep="B2B"
 			stepConfig={flowConfig.calcConfigStep2b2b}
 			onChange={handleSelectChange}
+			{scrollInto}
 		/>
 		<CalculatorStep
 			visible={visibilityPROC}
@@ -177,6 +192,7 @@
 			stateStep="PROC"
 			stepConfig={flowConfig.calcConfigStep2procurement}
 			onChange={handleSelectChange}
+			{scrollInto}
 		/>
 		<CalculatorStep
 			visible={visibilityHR}
@@ -184,6 +200,7 @@
 			stateStep="HR"
 			stepConfig={flowConfig.calcConfigStep2hr}
 			onChange={handleSelectChange}
+			{scrollInto}
 		/>
 		<CalculatorStep
 			visible={visibilityB2C}
@@ -191,8 +208,10 @@
 			stateStep="B2C"
 			stepConfig={flowConfig.calcConfigStep2b2c}
 			onChange={handleSelectChange}
+			{scrollInto}
 		/>
 		<CalculatorStep
+			{scrollInto}
 			visible={visibilityLastSection}
 			id="ds-calc-step-3"
 			stateStep="last"

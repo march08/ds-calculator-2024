@@ -1,7 +1,13 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
 	import Select from './Select.svelte';
-	import type { StepConfig, StoredCalcState, OptionOrDelimiter, UIState } from '../types.js';
+	import type {
+		StepConfig,
+		StoredCalcState,
+		OptionOrDelimiter,
+		UIState,
+		ScrollInto
+	} from '../types.js';
 
 	import { getContext } from 'svelte';
 	import { isTruthy } from '../utils/isTruthy.js';
@@ -11,6 +17,7 @@
 	export let id: string;
 	export let visible: boolean;
 	export let onChange: (values: string[]) => void = () => {};
+	export let scrollInto: ScrollInto;
 
 	const TRANSITION_DURATION = 200;
 
@@ -24,9 +31,10 @@
 
 	$: if (visible && ref) {
 		if (ref) {
-			ref.scrollIntoView({
+			scrollInto(ref, {
 				block: 'center',
-				behavior: 'smooth'
+				behavior: 'smooth',
+				lock: true
 			});
 		}
 	}

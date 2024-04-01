@@ -100,3 +100,16 @@ export type OverallResult = {
 		result: CalculatedResult[];
 	}[];
 } & OverResult_TotalsPerArea;
+
+export type ScrollInto = (
+	target: HTMLElement,
+	options: {
+		offset?: number;
+		duration?: number;
+		lock?: boolean;
+		force?: boolean;
+		onComplete?: VoidFunction;
+		block?: 'center';
+		behavior?: 'smooth';
+	}
+) => void;

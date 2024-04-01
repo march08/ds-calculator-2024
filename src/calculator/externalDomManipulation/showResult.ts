@@ -1,7 +1,16 @@
+import type { ScrollInto } from '../types.js';
+
 export const toggleResult = (
 	visible: boolean,
-	onToggleResultVisibility: VoidFunction,
-	onCalculateAnimationStart: VoidFunction
+	{
+		onToggleResultVisibility,
+		onCalculateAnimationStart,
+		scrollInto
+	}: {
+		onToggleResultVisibility: VoidFunction;
+		onCalculateAnimationStart: VoidFunction;
+		scrollInto: ScrollInto;
+	}
 ) => {
 	const resultContainer = document.querySelector('.revealed-results') as HTMLDivElement | undefined;
 
@@ -15,7 +24,10 @@ export const toggleResult = (
 						resultContainer.style.display = 'block';
 						onToggleResultVisibility();
 						setTimeout(() => {
-							document.getElementById('ds-calc-cta-update-container')?.scrollIntoView();
+							const targetToScroll = document.getElementById('ds-calc-cta-update-container');
+							if (targetToScroll) {
+								scrollInto(targetToScroll, { lock: true });
+							}
 						}, 500);
 					}, 500);
 				}
