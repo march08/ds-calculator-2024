@@ -5,8 +5,6 @@
 
 	import { getContext } from 'svelte';
 	import { isTruthy } from '../utils/isTruthy.js';
-	import { fade, slide } from 'svelte/transition';
-	import { elasticOut } from 'svelte/easing';
 	export let stepConfig: StepConfig;
 	export let stateStep: keyof StoredCalcState;
 	export let filterOptions: (option: OptionOrDelimiter) => boolean = isTruthy;
@@ -43,6 +41,8 @@
 			}
 		};
 	}
+
+	$: stepAnswers = Object.values($answerState[stateStep]).join('--');
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -74,6 +74,7 @@
 								currentFocus: stateStep
 							}));
 						}}
+						updatePositionKey={stepAnswers}
 						options={item.data.options.filter(filterOptions)}
 						value={$answerState[stateStep][item.data.key] || []}
 						onChange={(value) => {

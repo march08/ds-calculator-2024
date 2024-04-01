@@ -12,6 +12,7 @@
 	export let onChange: (value: string[]) => void;
 	export let onOpen: () => void;
 	export let multiselectDelimiter: string = ', ';
+	export let updatePositionKey: string = '';
 	let isDropdownOpen = false; // default state (dropdown close)
 
 	// for multiselect
@@ -75,7 +76,7 @@
 	let optionsOnly: Option[];
 	$: optionsOnly = options.filter((item) => 'label' in item) as Option[];
 
-	const [popperRef, popperContent] = createPopperActions({
+	const [popperRef, popperContent, getInstance] = createPopperActions({
 		placement: 'bottom-start',
 		strategy: 'fixed'
 	});
@@ -90,6 +91,12 @@
 			}
 		]
 	};
+
+	const updatePosition = () => {
+		console.log('update');
+		getInstance()?.update();
+	};
+	$: updatePositionKey && updatePosition();
 </script>
 
 <select multiple bind:value class="dc-calc-hidden">

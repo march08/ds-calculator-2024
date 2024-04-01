@@ -5,7 +5,6 @@ export const toggleResult = (
 ) => {
 	const resultContainer = document.querySelector('.revealed-results') as HTMLDivElement | undefined;
 
-	console.log('resultContainer', visible, resultContainer);
 	if (resultContainer) {
 		if (resultContainer.getAttribute('data-ds-initialized') === 'true') {
 			if (visible) {
