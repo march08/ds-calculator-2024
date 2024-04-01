@@ -22,7 +22,7 @@
 	export let onResultCardsUpdate: VoidFunction = () => {};
 	export let onCalculateAnimationStart: VoidFunction = () => {};
 	export let onToggleResultVisibility: VoidFunction = () => {};
-	export let scrollInto: ScrollInto = (target, options) => {
+	export let scrollTo: ScrollInto = (target, options) => {
 		target.scrollIntoView(options);
 	};
 
@@ -49,11 +49,10 @@
 	const scrollTopTopOfTheForm = () => {
 		const firstStepTarget = document.getElementById('ds-calc-step-1');
 		if (firstStepTarget) {
-			scrollInto(firstStepTarget, {
+			scrollTo(firstStepTarget, {
 				lock: true,
 				behavior: 'smooth',
-				block: 'center',
-				duration: 0.2
+				block: 'center'
 			});
 		}
 	};
@@ -153,7 +152,7 @@
 	const toggleResultOptions = {
 		onToggleResultVisibility,
 		onCalculateAnimationStart,
-		scrollInto
+		scrollInto: scrollTo
 	};
 	/**
 	 * display results when submitted
@@ -176,7 +175,7 @@
 			stateStep="first"
 			stepConfig={flowConfig.calcConfigStep1}
 			onChange={handleChangeAreas}
-			{scrollInto}
+			scrollInto={scrollTo}
 		/>
 		<CalculatorStep
 			visible={visibilityB2B}
@@ -184,7 +183,7 @@
 			stateStep="B2B"
 			stepConfig={flowConfig.calcConfigStep2b2b}
 			onChange={handleSelectChange}
-			{scrollInto}
+			scrollInto={scrollTo}
 		/>
 		<CalculatorStep
 			visible={visibilityPROC}
@@ -192,7 +191,7 @@
 			stateStep="PROC"
 			stepConfig={flowConfig.calcConfigStep2procurement}
 			onChange={handleSelectChange}
-			{scrollInto}
+			scrollInto={scrollTo}
 		/>
 		<CalculatorStep
 			visible={visibilityHR}
@@ -200,7 +199,7 @@
 			stateStep="HR"
 			stepConfig={flowConfig.calcConfigStep2hr}
 			onChange={handleSelectChange}
-			{scrollInto}
+			scrollInto={scrollTo}
 		/>
 		<CalculatorStep
 			visible={visibilityB2C}
@@ -208,10 +207,10 @@
 			stateStep="B2C"
 			stepConfig={flowConfig.calcConfigStep2b2c}
 			onChange={handleSelectChange}
-			{scrollInto}
+			scrollInto={scrollTo}
 		/>
 		<CalculatorStep
-			{scrollInto}
+			scrollInto={scrollTo}
 			visible={visibilityLastSection}
 			id="ds-calc-step-3"
 			stateStep="last"
