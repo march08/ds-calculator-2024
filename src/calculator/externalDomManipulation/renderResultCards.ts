@@ -53,6 +53,8 @@ export const renderResultCards = (
 		return;
 	}
 
+	targetResultContainerEl.setAttribute('data-ds-total-items', `${result.length}`);
+
 	const mappedResult = result.map((item, index) => {
 		const colorindex = (index % 4) as 0 | 1 | 2 | 3;
 		const color = colorMap[colorindex];
