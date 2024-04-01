@@ -10,9 +10,9 @@ export const toggleResult = (
 				onCalculateAnimationStart();
 
 				if (resultContainer) {
-					onToggleResultVisibility();
 					setTimeout(() => {
 						resultContainer.style.display = 'block';
+						onToggleResultVisibility();
 						setTimeout(() => {
 							document.getElementById('ds-calc-cta-update-container')?.scrollIntoView();
 						}, 500);
@@ -20,10 +20,10 @@ export const toggleResult = (
 				}
 			} else {
 				setTimeout(() => {
-					onToggleResultVisibility();
 					if (resultContainer) {
 						resultContainer.style.display = 'none';
 					}
+					onToggleResultVisibility();
 				}, 2000);
 			}
 		} else {
