@@ -53,7 +53,7 @@
 				lock: true,
 				behavior: 'smooth',
 				block: 'center',
-				duration: 300
+				duration: 0.2
 			});
 		}
 	};
