@@ -89,7 +89,6 @@
 				}
 
 				.revealed-results {
-					background: white;
 					margin-top: 300px;
 				}
 				#ui-calc-loader {
@@ -130,6 +129,39 @@
 
 			<div class="revealed-results">
 				<div class="swiper-wrapper" id="result"></div>
+
+				<div style="padding: 2rem">
+					<button type="button" class="ds-calc-button s-lmDf8rSn6BVh" id="btn-edit-assessment">
+						Edit your Assessment
+						<svg
+							width="17"
+							height="16"
+							viewBox="0 0 17 16"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+							class="s-jgfiLrHbSLP4"
+						>
+							<path
+								fill-rule="evenodd"
+								clip-rule="evenodd"
+								d="M4.02856 6.86128L8.02856 2.86128C8.28891 2.60093 8.71102 2.60093 8.97137 2.86128L12.9714 6.86128L12.0286 7.80409L9.16664 4.94216L9.16664 13.3327H7.8333L7.8333 4.94216L4.97137 7.80409L4.02856 6.86128Z"
+								fill="white"
+								class="s-jgfiLrHbSLP4"
+							></path>
+						</svg>
+					</button>
+				</div>
+				<script>
+					const updateButton = document.getElementById('btn-edit-assessment');
+
+					updateButton.addEventListener('click', () => {
+						document.getElementById('ds-calc-step-1').scrollIntoView({
+							block: 'center',
+							behavior: 'smooth'
+						});
+					});
+				</script>
+
 				<div id="gate-contact-form" class="gate-a6428bda-8a1c-4dfc-9866-5232101b2e52"></div>
 
 				<script>

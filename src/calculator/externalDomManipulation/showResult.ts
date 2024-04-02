@@ -24,10 +24,7 @@ export const toggleResult = (
 						resultContainer.style.display = 'block';
 						onToggleResultVisibility();
 						setTimeout(() => {
-							const targetToScroll = document.getElementById('ds-calc-cta-update-container');
-							if (targetToScroll) {
-								scrollInto(targetToScroll, { lock: true });
-							}
+							scrollInto(resultContainer, { lock: true });
 						}, 500);
 					}, 500);
 				}

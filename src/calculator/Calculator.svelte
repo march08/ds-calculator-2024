@@ -240,25 +240,6 @@
 		>
 		<a on:click={resetForm}>Reset form (dev only)</a>
 	</CtaButtonContainer>
-	<CtaButtonContainer visible={$uiStore.isSubmitted} id="ds-calc-cta-update-container">
-		<Button onClick={handleEditAssessment}>
-			Edit your Assessment
-			<svg
-				width="17"
-				height="16"
-				viewBox="0 0 17 16"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<path
-					fill-rule="evenodd"
-					clip-rule="evenodd"
-					d="M4.02856 6.86128L8.02856 2.86128C8.28891 2.60093 8.71102 2.60093 8.97137 2.86128L12.9714 6.86128L12.0286 7.80409L9.16664 4.94216L9.16664 13.3327H7.8333L7.8333 4.94216L4.97137 7.80409L4.02856 6.86128Z"
-					fill="white"
-				/>
-			</svg>
-		</Button>
-	</CtaButtonContainer>
 </div>
 
 <ResultPreviews {result} />
