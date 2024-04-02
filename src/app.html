@@ -88,10 +88,9 @@
 					}
 				}
 
-				#revealed-results {
-					opacity: 0;
-					transition: 0.5s all;
-					transition-delay: 0.4s;
+				.revealed-results {
+					background: white;
+					margin-top: 300px;
 				}
 				#ui-calc-loader {
 					position: fixed;
@@ -109,15 +108,29 @@
 					pointer-events: none;
 					transition: 0.5s all;
 				}
+
+				.swiper-wrapper {
+					padding-top: 200px;
+					display: flex;
+					flex-wrap: wrap;
+					gap: 40px;
+				}
+				.hp-improve_card {
+					width: calc(33.333% - 40px);
+					display: flex;
+					align-items: center;
+					text-align: center;
+					background: white;
+					padding: 40px;
+				}
+				.hp-improve_card img {
+					width: 50%;
+				}
 			</style>
 
-			<div id="ui-calc-loader">
-				<h3>Calculating</h3>
-			</div>
-			<div id="revealed-results">
-				<div class="cards" id="result"></div>
+			<div class="revealed-results">
+				<div class="swiper-wrapper" id="result"></div>
 				<div id="gate-contact-form" class="gate-a6428bda-8a1c-4dfc-9866-5232101b2e52"></div>
-				<div class="revealed-results">hello</div>
 
 				<script>
 					(function (g, a, t, e, d, c, o) {

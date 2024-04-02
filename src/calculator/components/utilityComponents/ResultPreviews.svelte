@@ -45,6 +45,7 @@
 		background: #3f0eb1;
 		padding: 24px;
 		color: white;
+		z-index: 100000;
 		&.visible {
 			height: 100%;
 			overflow: auto;

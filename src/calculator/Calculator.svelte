@@ -262,9 +262,6 @@
 </div>
 
 <ResultPreviews {result} />
-<div id="ui-calc-loader">
-	<h3>Calculating</h3>
-</div>
 
 <style lang="scss" global>
 	.ds-calculator {
