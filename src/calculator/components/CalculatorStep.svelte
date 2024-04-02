@@ -50,7 +50,7 @@
 		};
 	}
 
-	$: stepAnswers = Object.values($answerState[stateStep]).join('--');
+	$: stepAnswers = Object.values($answerState[stateStep]).join('--') + visible;
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
