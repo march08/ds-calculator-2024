@@ -16,7 +16,8 @@
 	import { getUiStore } from './stores/uiStore.js';
 	import { renderOverallResultCards } from './externalDomManipulation/renderOverallResultCards.js';
 	import ResultPreviews from './components/utilityComponents/ResultPreviews.svelte';
-	import type { OverallResult, ScrollInto } from './types.js';
+	import type { OverallResult, ScrollInto, StoredCalcState } from './types.js';
+	import { getOptionsSequence } from './utils/optionsSequence.js';
 
 	export let targetResultCardsContainerSelector: string = '';
 	export let onResultCardsUpdate: VoidFunction = () => {};
@@ -26,6 +27,9 @@
 		target.scrollIntoView(options);
 	};
 
+	/**
+	 * submission store
+	 */
 	const {
 		store: submissionFormState,
 		defaultState: defaultSubmissionState,
@@ -33,8 +37,13 @@
 	} = getSubmissionStore(flowConfig);
 	setContext('answerState', submissionFormState);
 
-	const { store: uiStore, resetStore: resetUiStore } = getUiStore();
+	/**
+	 * ui state store
+	 */
+	const { store: uiStore, resetStore: resetUiStore } = getUiStore($submissionFormState);
 	setContext('uiState', uiStore);
+
+	console.log('UI', $uiStore);
 
 	/**
 	 * controlling visibility
@@ -83,37 +92,78 @@
 	};
 
 	const handleChangeAreas = (values: string[]) => {
+		console.log('handle change areas');
 		// reset unused areas
 		submissionFormState.update((state) => {
+			// return {
+			// 	...state,
+			// 	B2B: values.includes('B2B') ? state.B2B : defaultSubmissionState.B2B,
+			// 	PROC: values.includes('PROC') ? state.PROC : defaultSubmissionState.PROC,
+			// 	HR: values.includes('HR') ? state.HR : defaultSubmissionState.HR,
+			// 	B2C: values.includes('B2C') ? state.B2C : defaultSubmissionState.B2C,
+			// 	last: {
+			// 		...state.last,
+			// 		driver: state.last.driver.filter((d) => {
+			// 			return values.filter((val) => d.includes(val)).length > 0;
+			// 		})
+			// 	}
+			// };
 			return {
 				...state,
-				B2B: values.includes('B2B') ? state.B2B : defaultSubmissionState.B2B,
-				PROC: values.includes('PROC') ? state.PROC : defaultSubmissionState.PROC,
-				HR: values.includes('HR') ? state.HR : defaultSubmissionState.HR,
-				B2C: values.includes('B2C') ? state.B2C : defaultSubmissionState.B2C,
+				B2B: defaultSubmissionState.B2B,
+				PROC: defaultSubmissionState.PROC,
+				HR: defaultSubmissionState.HR,
+				B2C: defaultSubmissionState.B2C,
 				last: {
 					...state.last,
-					driver: state.last.driver.filter((d) => {
-						return values.filter((val) => d.includes(val)).length > 0;
-					})
+					driver: []
 				}
 			};
 		});
 
+		uiStore.update((state) => ({
+			...state,
+			optionsSequence: getOptionsSequence($submissionFormState)
+		}));
+
 		handleSelectChange();
 	};
 
-	const handleEditAssessment = () => {
-		scrollTopTopOfTheForm();
-		setTimeout(() => {
-			setResubmitState();
-		}, 1000);
+	const updateNextActiveOption = () => {
+		/**
+		 * update next activeOption
+		 */
+
+		const currentOptionIndex = $uiStore.optionsSequence.findIndex(
+			(item) => item === $uiStore.activeOption
+		);
+		const nextPossibleIndex = currentOptionIndex + 1;
+		const nextIndex =
+			nextPossibleIndex < $uiStore.optionsSequence.length ? nextPossibleIndex : null;
+
+		const nextActiveOption = nextIndex !== null ? $uiStore.optionsSequence[nextIndex] : null;
+
+		uiStore.update((state) => ({
+			...state,
+			activeOption: nextActiveOption
+		}));
+
+		if (nextActiveOption) {
+			const nextSelect = document.querySelector(`#${nextActiveOption}`);
+			if (nextSelect) {
+				scrollTo(nextSelect as HTMLElement, {
+					behavior: 'smooth',
+					block: 'center'
+				});
+			}
+		}
 	};
 
 	$: handleSelectChange = () => {
 		if ($isSubmittedState) {
 			setResubmitState(false);
 		}
+		updateNextActiveOption();
 		onToggleResultVisibility();
 	};
 
@@ -224,9 +274,9 @@
 						return;
 					}
 
-					if ($uiStore.isSubmitted) {
-						handleSelectChange();
-					} else if (!$uiStore.isResubmitting) {
+					updateNextActiveOption();
+
+					if (!$uiStore.isResubmitting) {
 						setSubmittedState();
 					}
 				}, 300);

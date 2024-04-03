@@ -83,7 +83,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'driver',
-				placeholder: 'Your priorities',
+				placeholder: 'Your Priorities',
 				multiselect: true,
 				multiselectDelimiter: '; ',
 				options: driverOptions
@@ -209,7 +209,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'B2B_agreement_volume',
-				placeholder: 'Agreement volume',
+				placeholder: 'Agreement Volume',
 				options: [
 					{
 						title: 'Select your yearly B2B agreement volume'
@@ -292,7 +292,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'HR_employee_count',
-				placeholder: 'Employee count',
+				placeholder: 'Employee Count',
 				options: [
 					{
 						title: 'Select your employee count'
@@ -511,7 +511,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'PROC_agreement_volume',
-				placeholder: 'Agreement volume',
+				placeholder: 'Agreement Volume',
 				options: [
 					{
 						title: 'Select your yearly procurement agreement volume'
@@ -618,7 +618,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'B2C_agreement_volume',
-				placeholder: 'Agreement volume',
+				placeholder: 'Agreement Volume',
 				options: [
 					{
 						title: 'Select your yearly B2C agreement volume'

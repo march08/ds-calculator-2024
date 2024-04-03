@@ -29,15 +29,15 @@
 
 	$: isFocused = $uiState.currentFocus === stateStep;
 
-	$: if (visible && ref) {
-		if (ref) {
-			scrollInto(ref, {
-				block: 'center',
-				behavior: 'smooth',
-				lock: true
-			});
-		}
-	}
+	// $: if (visible && ref) {
+	// 	if (ref) {
+	// 		scrollInto(ref, {
+	// 			block: 'center',
+	// 			behavior: 'smooth',
+	// 			lock: true
+	// 		});
+	// 	}
+	// }
 
 	function fadeSlide(node: HTMLElement, { duration }: { duration: number }) {
 		return {
@@ -82,6 +82,7 @@
 								currentFocus: stateStep
 							}));
 						}}
+						isContainerVisible={visible}
 						updatePositionKey={stepAnswers}
 						options={item.data.options.filter(filterOptions)}
 						value={$answerState[stateStep][item.data.key] || []}

@@ -19,6 +19,8 @@ export type UIState = {
 	isResubmitting: boolean;
 	isSubmitted: boolean;
 	isInitLoaded: boolean;
+	activeOption: string | null;
+	optionsSequence: string[];
 };
 
 export type SelectConfig = {
