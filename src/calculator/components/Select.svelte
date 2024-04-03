@@ -362,6 +362,11 @@
 		}
 	}
 
+	.ds-calc-dropdown:hover .ds-calc-select-display-text {
+		border-bottom: 4px solid;
+		border-color: #ffffff40;
+		opacity: 1;
+	}
 	.ds-calc-select-display-text {
 		transition: 0.2s all;
 		border-bottom: 2px solid rgba(255, 255, 255, 0.25);
@@ -370,7 +375,6 @@
 		line-height: var(--question-line-height);
 		&.visible {
 			border-bottom: 4px solid;
-
 			border-image-slice: 1;
 			border-image-source: linear-gradient(45deg, #ff5252 0%, #ffa8c5 50.5%, #cbc2ff 100%);
 		}
