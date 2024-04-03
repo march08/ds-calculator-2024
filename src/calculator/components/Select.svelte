@@ -17,7 +17,6 @@
 	export let key: string;
 	export let multiselectDelimiter: string = ', ';
 	export let updatePositionKey: string = '';
-	export let autoposition: boolean = true;
 
 	let uiState = getContext<Writable<UIState>>('uiState');
 
@@ -76,32 +75,23 @@
 
 	const [popperRef, popperContent, getInstance] = createPopperActions({
 		placement: 'bottom-start',
-		strategy: 'fixed'
-	});
-	const extraOpts = {
+		strategy: 'absolute',
 		modifiers: [
-			{ name: 'offset', options: { offset: [0, 12] } },
-			...(autoposition
-				? [
-						{
-							name: 'flip',
-							options: {
-								fallbackPlacements: ['top-start', 'right']
-							}
-						}
-					]
-				: [])
+			{ name: 'offset', options: { offset: [0, 0] } },
+			{
+				name: 'flip',
+				options: {
+					fallbackPlacements: ['top-start']
+				}
+			}
 		]
-	};
-
-	console.log('item', key, autoposition, extraOpts);
+	});
+	const extraOpts = {};
 
 	const updatePosition = () => {
-		if (autoposition) {
-			setTimeout(() => {
-				getInstance()?.update();
-			}, 200);
-		}
+		setTimeout(() => {
+			getInstance()?.update();
+		}, 200);
 	};
 	$: updatePositionKey && isContainerVisible && updatePosition();
 </script>
@@ -126,6 +116,7 @@
 	{#if isOpenDebounced}
 		<div
 			class="ds-calc-dropdown-content-wrapper"
+			data-ds-key={key}
 			use:popperContent={extraOpts}
 			tabindex="-3"
 			in:fade={{ duration: 200 }}
@@ -317,6 +308,15 @@
 		@media screen and (max-width: 479px) {
 			width: calc(100%);
 		}
+
+		&[data-ds-key='businessArea'] {
+			top: calc(100% + 12px) !important;
+			transform: translate(0) !important;
+		}
+
+		&[data-popper-placement='top-start'] {
+			transform: translateY(-20px) !important;
+		}
 	}
 
 	.ds-calc-dropdown-content {
@@ -388,5 +388,9 @@
 			border-image-slice: 1;
 			border-image-source: linear-gradient(45deg, #ff5252 0%, #ffa8c5 50.5%, #cbc2ff 100%);
 		}
+	}
+
+	:global([data-popper-placement='top-start']) {
+		bottom: calc(100% + 8px) !important;
 	}
 </style>
