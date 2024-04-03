@@ -43,8 +43,6 @@
 	const { store: uiStore, resetStore: resetUiStore } = getUiStore($submissionFormState);
 	setContext('uiState', uiStore);
 
-	console.log('UI', $uiStore);
-
 	/**
 	 * controlling visibility
 	 */
@@ -86,40 +84,42 @@
 	const setSubmittedState = () => {
 		uiStore.update((state) => ({
 			...state,
+			activeOption: null,
 			isResubmitting: false,
 			isSubmitted: true
 		}));
 	};
 
-	const handleChangeAreas = (values: string[]) => {
-		console.log('handle change areas');
+	const handleChangeAreas = (key: string, values: string[]) => {
 		// reset unused areas
-		submissionFormState.update((state) => {
-			// return {
-			// 	...state,
-			// 	B2B: values.includes('B2B') ? state.B2B : defaultSubmissionState.B2B,
-			// 	PROC: values.includes('PROC') ? state.PROC : defaultSubmissionState.PROC,
-			// 	HR: values.includes('HR') ? state.HR : defaultSubmissionState.HR,
-			// 	B2C: values.includes('B2C') ? state.B2C : defaultSubmissionState.B2C,
-			// 	last: {
-			// 		...state.last,
-			// 		driver: state.last.driver.filter((d) => {
-			// 			return values.filter((val) => d.includes(val)).length > 0;
-			// 		})
-			// 	}
-			// };
-			return {
-				...state,
-				B2B: defaultSubmissionState.B2B,
-				PROC: defaultSubmissionState.PROC,
-				HR: defaultSubmissionState.HR,
-				B2C: defaultSubmissionState.B2C,
-				last: {
-					...state.last,
-					driver: []
-				}
-			};
-		});
+		if (key === 'businessArea') {
+			submissionFormState.update((state) => {
+				return {
+					...state,
+					B2B: values.includes('B2B') ? state.B2B : defaultSubmissionState.B2B,
+					PROC: values.includes('PROC') ? state.PROC : defaultSubmissionState.PROC,
+					HR: values.includes('HR') ? state.HR : defaultSubmissionState.HR,
+					B2C: values.includes('B2C') ? state.B2C : defaultSubmissionState.B2C,
+					last: {
+						...state.last,
+						driver: state.last.driver.filter((d) => {
+							return values.filter((val) => d.includes(val)).length > 0;
+						})
+					}
+				};
+				// return {
+				// 	...state,
+				// 	B2B: defaultSubmissionState.B2B,
+				// 	PROC: defaultSubmissionState.PROC,
+				// 	HR: defaultSubmissionState.HR,
+				// 	B2C: defaultSubmissionState.B2C,
+				// 	last: {
+				// 		...state.last,
+				// 		driver: []
+				// 	}
+				// };
+			});
+		}
 
 		uiStore.update((state) => ({
 			...state,
@@ -129,27 +129,51 @@
 		handleSelectChange();
 	};
 
-	const updateNextActiveOption = () => {
+	$: updateNextActiveOption = () => {
 		/**
 		 * update next activeOption
 		 */
 
-		const currentOptionIndex = $uiStore.optionsSequence.findIndex(
-			(item) => item === $uiStore.activeOption
-		);
-		const nextPossibleIndex = currentOptionIndex + 1;
-		const nextIndex =
-			nextPossibleIndex < $uiStore.optionsSequence.length ? nextPossibleIndex : null;
+		let nextUnasweredOption: string | null = null;
 
-		const nextActiveOption = nextIndex !== null ? $uiStore.optionsSequence[nextIndex] : null;
+		/**
+		 * check first unanswered option
+		 */
+
+		const flatAnswerState = {
+			...$submissionFormState.first,
+			...$submissionFormState.B2B,
+			...$submissionFormState.PROC,
+			...$submissionFormState.HR,
+			...$submissionFormState.last
+		};
+
+		nextUnasweredOption =
+			$uiStore.optionsSequence.find(
+				(item) => !flatAnswerState[item] || flatAnswerState[item].length === 0
+			) || null;
+
+		if (!nextUnasweredOption) {
+			/**
+			 * check next available
+			 */
+			const currentOptionIndex = $uiStore.optionsSequence.findIndex(
+				(item) => item === $uiStore.activeOption
+			);
+			const nextPossibleIndex = currentOptionIndex + 1;
+			const nextIndex =
+				nextPossibleIndex < $uiStore.optionsSequence.length ? nextPossibleIndex : null;
+
+			nextUnasweredOption = nextIndex !== null ? $uiStore.optionsSequence[nextIndex] : null;
+		}
 
 		uiStore.update((state) => ({
 			...state,
-			activeOption: nextActiveOption
+			activeOption: nextUnasweredOption
 		}));
 
-		if (nextActiveOption) {
-			const nextSelect = document.querySelector(`#${nextActiveOption}`);
+		if (nextUnasweredOption) {
+			const nextSelect = document.querySelector(`#${nextUnasweredOption}`);
 			if (nextSelect) {
 				scrollTo(nextSelect as HTMLElement, {
 					behavior: 'smooth',
@@ -225,7 +249,6 @@
 			stateStep="first"
 			stepConfig={flowConfig.calcConfigStep1}
 			onChange={handleChangeAreas}
-			scrollInto={scrollTo}
 		/>
 		<CalculatorStep
 			visible={visibilityB2B}
@@ -233,7 +256,6 @@
 			stateStep="B2B"
 			stepConfig={flowConfig.calcConfigStep2b2b}
 			onChange={handleSelectChange}
-			scrollInto={scrollTo}
 		/>
 		<CalculatorStep
 			visible={visibilityPROC}
@@ -241,7 +263,6 @@
 			stateStep="PROC"
 			stepConfig={flowConfig.calcConfigStep2procurement}
 			onChange={handleSelectChange}
-			scrollInto={scrollTo}
 		/>
 		<CalculatorStep
 			visible={visibilityHR}
@@ -249,7 +270,6 @@
 			stateStep="HR"
 			stepConfig={flowConfig.calcConfigStep2hr}
 			onChange={handleSelectChange}
-			scrollInto={scrollTo}
 		/>
 		<CalculatorStep
 			visible={visibilityB2C}
@@ -257,10 +277,8 @@
 			stateStep="B2C"
 			stepConfig={flowConfig.calcConfigStep2b2c}
 			onChange={handleSelectChange}
-			scrollInto={scrollTo}
 		/>
 		<CalculatorStep
-			scrollInto={scrollTo}
 			visible={visibilityLastSection}
 			id="ds-calc-step-3"
 			stateStep="last"
@@ -275,10 +293,7 @@
 					}
 
 					updateNextActiveOption();
-
-					if (!$uiStore.isResubmitting) {
-						setSubmittedState();
-					}
+					setSubmittedState();
 				}, 300);
 			}}
 		/>

@@ -16,8 +16,7 @@
 	export let filterOptions: (option: OptionOrDelimiter) => boolean = isTruthy;
 	export let id: string;
 	export let visible: boolean;
-	export let onChange: (values: string[]) => void = () => {};
-	export let scrollInto: ScrollInto;
+	export let onChange: (key: string, values: string[]) => void = () => {};
 
 	const TRANSITION_DURATION = 200;
 
@@ -88,7 +87,7 @@
 						value={$answerState[stateStep][item.data.key] || []}
 						onChange={(value) => {
 							answerState.update((prevState) => {
-								if (item.type === 'select') {
+								if (item.type === 'select' && 'key' in item.data) {
 									return {
 										...prevState,
 										[stateStep]: {
@@ -100,7 +99,11 @@
 								}
 								return prevState;
 							});
-							onChange(value);
+							setTimeout(() => {
+								if (item.type === 'select' && 'key' in item.data) {
+									onChange(item.data.key, value);
+								}
+							}, 100);
 						}}
 					/>
 				</span>
