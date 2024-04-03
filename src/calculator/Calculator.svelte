@@ -304,7 +304,6 @@
 		<Button disabled={!canManuallyUpdate} onClick={handleManuallyUpdateAssessment}
 			>Update your Results</Button
 		>
-		<a on:click={resetForm}>Reset form (dev only)</a>
 	</CtaButtonContainer>
 </div>
 
