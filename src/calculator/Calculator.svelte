@@ -126,7 +126,7 @@
 			optionsSequence: getOptionsSequence($submissionFormState)
 		}));
 
-		handleSelectChange();
+		handleSelectChange(key, values);
 	};
 
 	$: updateNextActiveOption = () => {
@@ -145,6 +145,7 @@
 			...$submissionFormState.B2B,
 			...$submissionFormState.PROC,
 			...$submissionFormState.HR,
+			...$submissionFormState.B2C,
 			...$submissionFormState.last
 		};
 
@@ -183,7 +184,7 @@
 		}
 	};
 
-	$: handleSelectChange = () => {
+	$: handleSelectChange = (key: string, val: string[]) => {
 		if ($isSubmittedState) {
 			setResubmitState(false);
 		}

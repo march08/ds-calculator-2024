@@ -51,6 +51,7 @@
 				internalState = [...internalState, key];
 			}
 		} else {
+			internalState = [key];
 			onChange([key]);
 		}
 	};
