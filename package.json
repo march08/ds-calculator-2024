@@ -51,6 +51,8 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
+		"@popperjs/core": "^2.11.8",
+		"@popperjs/svelte": "^0.1.1",
 		"@rollup/plugin-commonjs": "^25.0.7",
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-terser": "^0.4.4",

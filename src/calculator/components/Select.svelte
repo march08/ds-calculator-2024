@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { isTruthy } from '../utils/isTruthy.js';
+	import Popper from '@popperjs/svelte';
 
-	import { createPopperActions } from 'svelte-popperjs';
 	import type { Option, OptionOrDelimiter, UIState } from '../types.js';
 	import type { Writable } from 'svelte/store';
 	import { getContext } from 'svelte';
@@ -16,7 +16,6 @@
 	export let isContainerVisible: boolean;
 	export let key: string;
 	export let multiselectDelimiter: string = ', ';
-	export let updatePositionKey: string = '';
 
 	let uiState = getContext<Writable<UIState>>('uiState');
 
@@ -73,11 +72,13 @@
 	let optionsOnly: Option[];
 	$: optionsOnly = options.filter((item) => 'label' in item) as Option[];
 
-	const [popperRef, popperContent, getInstance] = createPopperActions({
+	let referenceElement: HTMLButtonElement;
+	let popperElement: HTMLDivElement;
+
+	$: popperOptions = {
 		placement: 'bottom-start',
-		strategy: 'absolute',
 		modifiers: [
-			{ name: 'offset', options: { offset: [0, 0] } },
+			{ name: 'offset', options: { offset: [0, 12] } },
 			{
 				name: 'flip',
 				options: {
@@ -85,15 +86,17 @@
 				}
 			}
 		]
-	});
-	const extraOpts = {};
-
-	const updatePosition = () => {
-		setTimeout(() => {
-			getInstance()?.update();
-		}, 200);
 	};
-	$: updatePositionKey && isContainerVisible && updatePosition();
+
+	// bound variables where Popper will store styles and attributes
+	let styles: { popper: Record<string, string> } = {
+		popper: {}
+	};
+	let attributes: { popper: Record<string, string> } = { popper: {} };
+	const css = (obj: Record<string, string>) =>
+		Object.entries(obj || {})
+			.map((x) => x.join(':'))
+			.join(';');
 </script>
 
 <select multiple bind:value class="dc-calc-hidden" name={key}>
@@ -102,8 +105,15 @@
 	{/each}
 </select>
 
-<div use:popperRef class="ds-calc-dropdown" id={key}>
+<Popper
+	reference={referenceElement}
+	popper={popperElement}
+	options={popperOptions}
+	bind:styles
+	bind:attributes
+>
 	<button
+		bind:this={referenceElement}
 		class="ds-calc-select-btn"
 		on:click={handleDropdownClick}
 		class:placeholder={value.length === 0}
@@ -112,15 +122,26 @@
 			{displayValue || placeholder}
 		</span>
 	</button>
-
 	{#if isOpenDebounced}
 		<div
-			class="ds-calc-dropdown-content-wrapper"
-			data-ds-key={key}
-			use:popperContent={extraOpts}
 			tabindex="-3"
 			in:fade={{ duration: 200 }}
 			out:fade={{ duration: 100 }}
+			bind:this={popperElement}
+			style={css(styles.popper)}
+			{...attributes.popper}
+		></div>
+	{/if}
+
+	{#if isOpenDebounced}
+		<div
+			tabindex="-3"
+			in:fade={{ duration: 200 }}
+			out:fade={{ duration: 100 }}
+			bind:this={popperElement}
+			style={css(styles.popper)}
+			class="ds-calc-dropdown-content-wrapper"
+			{...attributes.popper}
 		>
 			<div
 				class="ds-calc-dropdown-content"
@@ -179,7 +200,7 @@
 			</div>
 		</div>
 	{/if}
-</div>
+</Popper>
 
 <style lang="scss" global>
 	.dc-calc-hidden {
@@ -190,6 +211,7 @@
 		display: inline;
 		width: min-content;
 		align-items: center;
+		transform: translateX(0);
 		button {
 			text-align: left;
 		}
@@ -290,6 +312,7 @@
 	.ds-calc-select-btn {
 		display: inline-block;
 		background: none;
+		text-align: left;
 		outline: none;
 		border: none;
 		padding: 0;
@@ -307,11 +330,6 @@
 		/* visibility: hidden; */
 		@media screen and (max-width: 479px) {
 			width: calc(100%);
-		}
-
-		&[data-ds-key='businessArea'] {
-			top: calc(100% + 12px) !important;
-			transform: translate(0) !important;
 		}
 	}
 
@@ -384,9 +402,5 @@
 			border-image-slice: 1;
 			border-image-source: linear-gradient(45deg, #ff5252 0%, #ffa8c5 50.5%, #cbc2ff 100%);
 		}
-	}
-
-	:global([data-popper-placement='top-start']) {
-		bottom: calc(100% + 8px) !important;
 	}
 </style>

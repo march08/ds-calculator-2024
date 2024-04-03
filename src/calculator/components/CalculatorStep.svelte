@@ -82,7 +82,6 @@
 							}));
 						}}
 						isContainerVisible={visible}
-						updatePositionKey={stepAnswers}
 						options={item.data.options.filter(filterOptions)}
 						value={$answerState[stateStep][item.data.key] || []}
 						onChange={(value) => {
