@@ -94,6 +94,8 @@
 		]
 	};
 
+	console.log('item', key, autoposition, extraOpts);
+
 	const updatePosition = () => {
 		setTimeout(() => {
 			getInstance()?.update();
