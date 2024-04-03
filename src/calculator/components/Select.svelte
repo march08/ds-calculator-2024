@@ -17,6 +17,7 @@
 	export let key: string;
 	export let multiselectDelimiter: string = ', ';
 	export let updatePositionKey: string = '';
+	export let autoposition: boolean = true;
 
 	let uiState = getContext<Writable<UIState>>('uiState');
 
@@ -80,12 +81,16 @@
 	const extraOpts = {
 		modifiers: [
 			{ name: 'offset', options: { offset: [0, 12] } },
-			{
-				name: 'flip',
-				options: {
-					fallbackPlacements: ['top-start', 'right']
-				}
-			}
+			...(autoposition
+				? [
+						{
+							name: 'flip',
+							options: {
+								fallbackPlacements: ['top-start', 'right']
+							}
+						}
+					]
+				: [])
 		]
 	};
 
@@ -194,6 +199,7 @@
 			text-align: left;
 		}
 		&-content {
+			align-items: stretch;
 			&-title {
 				display: flex;
 				padding: 16px 12px;
@@ -204,11 +210,11 @@
 				text-transform: uppercase;
 				color: rgba(25, 24, 35, 0.6);
 				width: 100%;
-				margin-left: -12px;
 				margin-bottom: -2px;
 				position: sticky;
 				top: 0;
 				background: var(--bg-primary);
+				max-width: 370px;
 				&:not(:first-child) {
 					&:before {
 						content: '';

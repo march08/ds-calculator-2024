@@ -101,6 +101,7 @@ export const flowConfig: FlowConfig = {
 				key: 'businessArea',
 				placeholder: 'Your area',
 				multiselect: true,
+				autoposition: false,
 				options: [
 					{
 						title: 'Select your Business Process'

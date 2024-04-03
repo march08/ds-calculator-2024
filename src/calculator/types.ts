@@ -28,6 +28,7 @@ export type SelectConfig = {
 	data: {
 		key: string;
 		placeholder: string;
+		autoposition?: boolean;
 		options: Readonly<OptionOrDelimiter[]>;
 		multiselect?: true;
 		multiselectDelimiter?: string;
