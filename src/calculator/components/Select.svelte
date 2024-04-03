@@ -214,7 +214,6 @@
 				position: sticky;
 				top: 0;
 				background: var(--bg-primary);
-				max-width: 370px;
 				&:not(:first-child) {
 					&:before {
 						content: '';
