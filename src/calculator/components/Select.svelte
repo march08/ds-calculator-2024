@@ -78,11 +78,11 @@
 	$: popperOptions = {
 		placement: 'bottom-start',
 		modifiers: [
-			{ name: 'offset', options: { offset: [0, 12] } },
+			{ name: 'offset', options: { offset: [0, 0] } },
 			{
 				name: 'flip',
 				options: {
-					fallbackPlacements: ['top-start']
+					fallbackPlacements: key === 'businessArea' ? ['bottom-start'] : ['top-start']
 				}
 			}
 		]
@@ -105,113 +105,104 @@
 	{/each}
 </select>
 
-<Popper
-	reference={referenceElement}
-	popper={popperElement}
-	options={popperOptions}
-	bind:styles
-	bind:attributes
->
-	<button
-		bind:this={referenceElement}
-		class="ds-calc-select-btn"
-		on:click={handleDropdownClick}
-		class:placeholder={value.length === 0}
+<div class="ds-calc-dropdown">
+	<Popper
+		reference={referenceElement}
+		popper={popperElement}
+		options={popperOptions}
+		bind:styles
+		bind:attributes
 	>
-		<span class="ds-calc-select-display-text" class:visible={isOpen}>
-			{displayValue || placeholder}
-		</span>
-	</button>
-	{#if isOpenDebounced}
-		<div
-			tabindex="-3"
-			in:fade={{ duration: 200 }}
-			out:fade={{ duration: 100 }}
-			bind:this={popperElement}
-			style={css(styles.popper)}
-			{...attributes.popper}
-		></div>
-	{/if}
-
-	{#if isOpenDebounced}
-		<div
-			tabindex="-3"
-			in:fade={{ duration: 200 }}
-			out:fade={{ duration: 100 }}
-			bind:this={popperElement}
-			style={css(styles.popper)}
-			class="ds-calc-dropdown-content-wrapper"
-			{...attributes.popper}
+		<button
+			bind:this={referenceElement}
+			class="ds-calc-select-btn"
+			on:click={handleDropdownClick}
+			class:placeholder={value.length === 0}
 		>
-			<div
-				class="ds-calc-dropdown-content"
-				data-lenis-prevent
-				data-lenis-prevent-wheel
-				data-lenis-prevent-touch
-			>
-				<div class="ds-calc-dropdown-content-items">
-					{#each options as option}
-						{#if 'key' in option && 'label' in option}
-							<button
-								class="ds-calc-dropdown-content-item"
-								class:selected={internalState.includes(option.key)}
-								on:click={() => {
-									if (option.key) {
-										handleSelect(option.key);
-									}
-								}}
-								>{option.label}
+			<span class="ds-calc-select-display-text" class:visible={isOpen}>
+				{displayValue || placeholder}
+			</span>
+		</button>
 
-								{#if multiselect}
-									<div class="ds-calc-dropdown-content-item-check">
-										<svg
-											width="16"
-											height="14"
-											viewBox="0 0 16 14"
-											fill="none"
-											xmlns="http://www.w3.org/2000/svg"
-										>
-											<path
-												fill-rule="evenodd"
-												clip-rule="evenodd"
-												d="M15.0834 1.26507L7.25967 13.2936C7.1236 13.5028 6.90317 13.6385 6.65905 13.6632C6.41492 13.688 6.17282 13.5993 5.99936 13.4215L0.916748 8.21204L2.07476 7.02512L6.45109 11.5107L13.7208 0.333984L15.0834 1.26507Z"
-												fill="var(--color-checkmark)"
-											/>
-										</svg>
-									</div>
-								{/if}
-							</button>
-						{:else}
-							<div class="ds-calc-dropdown-content-title">
-								{option.title}
-							</div>
-						{/if}
-					{/each}
-				</div>
-				{#if multiselect}
-					<div class="ds-calc-dropdown-confirm-container">
-						<button
-							class="ds-calc-dropdown-confirm"
-							disabled={internalState.length === 0}
-							on:click={onConfirm}>Confirm Selection</button
-						>
+		{#if isOpenDebounced}
+			<div
+				tabindex="-3"
+				in:fade={{ duration: 200 }}
+				out:fade={{ duration: 100 }}
+				bind:this={popperElement}
+				style={css(styles.popper)}
+				class="ds-calc-dropdown-content-wrapper"
+				data-popper-item-id={key}
+				{...attributes.popper}
+			>
+				<div
+					class="ds-calc-dropdown-content"
+					data-lenis-prevent
+					data-lenis-prevent-wheel
+					data-lenis-prevent-touch
+				>
+					<div class="ds-calc-dropdown-content-items">
+						{#each options as option}
+							{#if 'key' in option && 'label' in option}
+								<button
+									class="ds-calc-dropdown-content-item"
+									class:selected={internalState.includes(option.key)}
+									on:click={() => {
+										if (option.key) {
+											handleSelect(option.key);
+										}
+									}}
+									>{option.label}
+
+									{#if multiselect}
+										<div class="ds-calc-dropdown-content-item-check">
+											<svg
+												width="16"
+												height="14"
+												viewBox="0 0 16 14"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<path
+													fill-rule="evenodd"
+													clip-rule="evenodd"
+													d="M15.0834 1.26507L7.25967 13.2936C7.1236 13.5028 6.90317 13.6385 6.65905 13.6632C6.41492 13.688 6.17282 13.5993 5.99936 13.4215L0.916748 8.21204L2.07476 7.02512L6.45109 11.5107L13.7208 0.333984L15.0834 1.26507Z"
+													fill="var(--color-checkmark)"
+												/>
+											</svg>
+										</div>
+									{/if}
+								</button>
+							{:else}
+								<div class="ds-calc-dropdown-content-title">
+									{option.title}
+								</div>
+							{/if}
+						{/each}
 					</div>
-				{/if}
+					{#if multiselect}
+						<div class="ds-calc-dropdown-confirm-container">
+							<button
+								class="ds-calc-dropdown-confirm"
+								disabled={internalState.length === 0}
+								on:click={onConfirm}>Confirm Selection</button
+							>
+						</div>
+					{/if}
+				</div>
 			</div>
-		</div>
-	{/if}
-</Popper>
+		{/if}
+	</Popper>
+</div>
 
 <style lang="scss" global>
 	.dc-calc-hidden {
 		display: none;
 	}
 	.ds-calc-dropdown {
-		position: relative;
 		display: inline;
 		width: min-content;
 		align-items: center;
-		transform: translateX(0);
 		button {
 			text-align: left;
 		}
@@ -403,4 +394,8 @@
 			border-image-source: linear-gradient(45deg, #ff5252 0%, #ffa8c5 50.5%, #cbc2ff 100%);
 		}
 	}
+
+	/* :global([data-popper-item-id='businessArea']) {
+		inset: 0px auto auto 0px !important;
+	} */
 </style>
