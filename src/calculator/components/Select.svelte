@@ -97,9 +97,11 @@
 	console.log('item', key, autoposition, extraOpts);
 
 	const updatePosition = () => {
-		setTimeout(() => {
-			getInstance()?.update();
-		}, 200);
+		if (autoposition) {
+			setTimeout(() => {
+				getInstance()?.update();
+			}, 200);
+		}
 	};
 	$: updatePositionKey && isContainerVisible && updatePosition();
 </script>
