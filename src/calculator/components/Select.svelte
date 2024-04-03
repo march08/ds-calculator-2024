@@ -313,10 +313,6 @@
 			top: calc(100% + 12px) !important;
 			transform: translate(0) !important;
 		}
-
-		&[data-popper-placement='top-start'] {
-			transform: translateY(-20px) !important;
-		}
 	}
 
 	.ds-calc-dropdown-content {
