@@ -82,7 +82,7 @@
 			{
 				name: 'flip',
 				options: {
-					fallbackPlacements: key === 'businessArea' ? ['bottom-start'] : ['top-start']
+					fallbackPlacements: ['bottom-start']
 				}
 			}
 		]
