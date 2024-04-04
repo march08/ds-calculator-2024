@@ -340,9 +340,7 @@
 		max-width: 90vw;
 
 		@media screen and (max-width: 479px) {
-			/* transform: translateX(-16px); */
-			margin-left: 12px;
-			width: calc(100% - 24px);
+			width: 100%;
 			max-width: none;
 		}
 	}
