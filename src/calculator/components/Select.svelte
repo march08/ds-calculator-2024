@@ -38,7 +38,7 @@
 		}));
 	};
 
-	$: if (isOpen) {
+	$: if (isOpenDebounced) {
 		onOpen();
 	}
 
@@ -105,7 +105,7 @@
 	{/each}
 </select>
 
-<div class="ds-calc-dropdown">
+<div class="ds-calc-dropdown" id={key}>
 	<Popper
 		reference={referenceElement}
 		popper={popperElement}
@@ -119,7 +119,7 @@
 			on:click={handleDropdownClick}
 			class:placeholder={value.length === 0}
 		>
-			<span class="ds-calc-select-display-text" class:visible={isOpen}>
+			<span class="ds-calc-select-display-text" class:visible={isOpenDebounced}>
 				{displayValue || placeholder}
 			</span>
 		</button>
@@ -264,8 +264,10 @@
 				font-weight: 500;
 				font-size: 18px;
 				line-height: 27px;
+				border: 1px solid transparent;
 
 				.ds-calc-dropdown-content-item-check {
+					margin-top: 3px;
 					border-radius: 2px;
 					height: 20px;
 					width: 20px;
@@ -277,8 +279,7 @@
 					align-items: center;
 					justify-content: center;
 				}
-				&:hover,
-				&:focus {
+				&:hover {
 					color: var(--text-primary);
 					background: var(--bg-secondary);
 					.ds-calc-dropdown-content-item-check {
@@ -286,9 +287,12 @@
 						outline: 2px solid #1918230d;
 					}
 				}
+				&:focus {
+					border: 1px solid var(--border-primary);
+				}
 				&.selected {
 					.ds-calc-dropdown-content-item-check {
-						background: #5b8bff;
+						background: var(--primary-cobalt);
 						--color-checkmark: white;
 					}
 					&:hover {
@@ -364,7 +368,7 @@
 		font-style: normal;
 		font-weight: 500;
 		font-size: 16px;
-		color: #4c00ff;
+		color: var(--primary-cobalt);
 		transition: 0.2s all;
 		border-radius: 8px;
 		&:disabled {

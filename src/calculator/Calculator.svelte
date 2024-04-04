@@ -174,13 +174,15 @@
 		}));
 
 		if (nextUnasweredOption) {
-			const nextSelect = document.querySelector(`#${nextUnasweredOption}`);
-			if (nextSelect) {
-				scrollTo(nextSelect as HTMLElement, {
-					behavior: 'smooth',
-					block: 'center'
-				});
-			}
+			setTimeout(() => {
+				const nextSelect = document.querySelector(`#${nextUnasweredOption}`);
+				if (nextSelect) {
+					scrollTo(nextSelect as HTMLElement, {
+						behavior: 'smooth',
+						block: 'center'
+					});
+				}
+			}, 200);
 		}
 	};
 
@@ -320,6 +322,7 @@
 		--bg-secondary: #f8f3f0;
 		--border-primary: #13003226;
 		--text-disabled: #13003240;
+		--primary-cobalt: #4c00ff;
 
 		--assessment-font-size: 36px;
 		--assessment-font-letter-spacing: -0.5px;
@@ -343,20 +346,8 @@
 		}
 	}
 
-	#ui-calc-loader {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: #4c00ff;
-		z-index: 100000;
-		color: white;
-		opacity: 0;
-		pointer-events: none;
-		transition: 0.5s all;
+	:global(#agreement-potential-form) {
+		position: relative;
+		z-index: 200;
 	}
 </style>

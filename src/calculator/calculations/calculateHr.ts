@@ -28,7 +28,7 @@ const calcB2cTat = tryCalcWrap((employment: string) => {
 
 	return {
 		elementId: 'calendar',
-		text: `${X} faster candidate onboarding, going from weeks to just ${Y} days`,
+		text: `${X} faster candidate onboarding, going from weeks to just ${Y} days.`,
 		X,
 		Y,
 		dollarsYear: null,

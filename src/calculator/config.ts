@@ -83,7 +83,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'driver',
-				placeholder: 'Your Priorities',
+				placeholder: 'Add Priorities',
 				multiselect: true,
 				multiselectDelimiter: '; ',
 				options: driverOptions
@@ -99,7 +99,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'businessArea',
-				placeholder: 'Your area',
+				placeholder: 'Your Area',
 				multiselect: true,
 				options: [
 					{
@@ -108,7 +108,7 @@ export const flowConfig: FlowConfig = {
 					{ key: 'B2B', label: 'B2B' },
 					{ key: 'PROC', label: 'Procurement' },
 					{ key: 'HR', label: 'HR' },
-					{ key: 'B2C', label: 'B2C' }
+					{ key: 'B2C', label: 'B2C Sales/CX' }
 				]
 			}
 		},
@@ -120,7 +120,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'industry',
-				placeholder: 'Your industry',
+				placeholder: 'Your Industry',
 				options: [
 					{
 						title: 'Select your Industry'
