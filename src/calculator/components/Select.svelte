@@ -220,7 +220,7 @@
 				width: 100%;
 				margin-bottom: -2px;
 				position: sticky;
-				top: 0;
+				top: 0px;
 				background: var(--bg-primary);
 				&:not(:first-child) {
 					&:before {
@@ -245,6 +245,17 @@
 				isolation: isolate;
 				max-height: 350px;
 				overflow-y: auto;
+				&:before {
+					display: block;
+					content: '';
+					position: absolute;
+					top: 8px;
+					left: 8px;
+					right: 8px;
+					height: 1px;
+					background: white;
+					z-index: 100;
+				}
 			}
 			&-item {
 				width: 100%;
@@ -396,10 +407,10 @@
 			border-image-source: linear-gradient(45deg, #ff5252 0%, #ffa8c5 50.5%, #cbc2ff 100%);
 		}
 	}
-
+	/* 
 	@media screen and (max-width: 479px) {
 		:global([data-popper-item-id='businessArea']) {
 			left: -32px !important;
 		}
-	}
+	} */
 </style>
