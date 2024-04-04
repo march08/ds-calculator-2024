@@ -77,6 +77,7 @@
 
 	$: popperOptions = {
 		placement: 'bottom-start',
+		strategy: 'fixed',
 		modifiers: [
 			{ name: 'offset', options: { offset: [0, 0] } },
 			{
@@ -335,7 +336,8 @@
 		/* pointer-events: none; */
 		/* visibility: hidden; */
 		@media screen and (max-width: 479px) {
-			width: calc(100%);
+			width: 100%;
+			max-width: calc(100% - 64px);
 		}
 	}
 

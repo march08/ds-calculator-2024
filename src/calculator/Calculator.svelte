@@ -40,7 +40,7 @@
 	/**
 	 * ui state store
 	 */
-	const { store: uiStore, resetStore: resetUiStore } = getUiStore($submissionFormState);
+	const { store: uiStore } = getUiStore($submissionFormState);
 	setContext('uiState', uiStore);
 
 	/**
@@ -53,24 +53,24 @@
 	$: visibilityB2C = isSectionVisible($submissionFormState, ['B2B', 'PROC', 'HR'], 'B2C');
 	$: visibilityLastSection = isSectionVisible($submissionFormState, ['B2B', 'PROC', 'HR', 'B2C']);
 
-	const scrollTopTopOfTheForm = () => {
-		const firstStepTarget = document.getElementById('ds-calc-step-1');
-		if (firstStepTarget) {
-			scrollTo(firstStepTarget, {
-				lock: true,
-				behavior: 'smooth',
-				block: 'center'
-			});
-		}
-	};
+	// const scrollTopTopOfTheForm = () => {
+	// 	const firstStepTarget = document.getElementById('ds-calc-step-1');
+	// 	if (firstStepTarget) {
+	// 		scrollTo(firstStepTarget, {
+	// 			lock: true,
+	// 			behavior: 'smooth',
+	// 			block: 'center'
+	// 		});
+	// 	}
+	// };
 
-	const resetForm = () => {
-		scrollTopTopOfTheForm();
-		setTimeout(() => {
-			resetSubmissionStore();
-			resetUiStore();
-		}, 300);
-	};
+	// const resetForm = () => {
+	// 	scrollTopTopOfTheForm();
+	// 	setTimeout(() => {
+	// 		resetSubmissionStore();
+	// 		resetUiStore();
+	// 	}, 300);
+	// };
 
 	const setResubmitState = (startFromTheBeginning: boolean = true) => {
 		uiStore.update((state) => ({
@@ -298,6 +298,7 @@
 
 					updateNextActiveOption();
 					setSubmittedState();
+					toggleResult(true, toggleResultOptions);
 				}, 300);
 			}}
 		/>
