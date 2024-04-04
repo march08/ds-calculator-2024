@@ -26,7 +26,7 @@ export const toggleResult = (
 						setTimeout(() => {
 							scrollInto(resultContainer, { lock: true });
 						}, 500);
-					}, 500);
+					}, 1500);
 				}
 			} else {
 				setTimeout(() => {
