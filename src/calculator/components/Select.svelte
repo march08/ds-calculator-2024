@@ -406,7 +406,7 @@
 		&.visible {
 			border-bottom: 4px solid;
 			border-image-slice: 1;
-			border-image-source: linear-gradient(45deg, #ff5252 0%, #ffa8c5 50.5%, #cbc2ff 100%);
+			border-image-source: linear-gradient(45deg, #ff5252 0%, #4000cc 100%);
 		}
 	}
 	/* 
