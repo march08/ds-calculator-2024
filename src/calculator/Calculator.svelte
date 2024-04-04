@@ -306,7 +306,7 @@
 
 	<CtaButtonContainer visible={$uiStore.isResubmitting} isUpdateContainer>
 		<Button disabled={!canManuallyUpdate} onClick={handleManuallyUpdateAssessment}
-			>Update your Results</Button
+			>Update Your Results</Button
 		>
 	</CtaButtonContainer>
 </div>
