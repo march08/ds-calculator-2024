@@ -127,8 +127,8 @@
 		{#if isOpenDebounced}
 			<div
 				tabindex="-3"
-				in:fade={{ duration: 200 }}
-				out:fade={{ duration: 100 }}
+				in:fade={{ duration: 350, delay: 100 }}
+				out:fade={{ duration: 200 }}
 				bind:this={popperElement}
 				style={css(styles.popper)}
 				class="ds-calc-dropdown-content-wrapper"

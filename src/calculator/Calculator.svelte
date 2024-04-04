@@ -167,12 +167,6 @@
 
 			nextUnasweredOption = nextIndex !== null ? $uiStore.optionsSequence[nextIndex] : null;
 		}
-
-		uiStore.update((state) => ({
-			...state,
-			activeOption: nextUnasweredOption
-		}));
-
 		if (nextUnasweredOption) {
 			setTimeout(() => {
 				const nextSelect = document.querySelector(`#${nextUnasweredOption}`);
@@ -182,8 +176,15 @@
 						block: 'center'
 					});
 				}
-			}, 200);
+			}, 100);
 		}
+
+		setTimeout(() => {
+			uiStore.update((state) => ({
+				...state,
+				activeOption: nextUnasweredOption
+			}));
+		}, 400);
 	};
 
 	$: handleSelectChange = (key: string, val: string[]) => {
