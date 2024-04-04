@@ -397,7 +397,9 @@
 		}
 	}
 
-	/* :global([data-popper-item-id='businessArea']) {
-		inset: 0px auto auto 0px !important;
-	} */
+	@media screen and (max-width: 479px) {
+		:global([data-popper-item-id='businessArea']) {
+			left: -32px !important;
+		}
+	}
 </style>
