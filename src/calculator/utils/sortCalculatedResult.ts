@@ -10,9 +10,9 @@ const sort = (input: CalculatedResult[]) => {
 
 	while (from.length > 0) {
 		const lastAdded = res[res.length - 1] || null;
-		const lastTypeAdded = lastAdded?.elementId || '';
+		const lastTypeAdded = lastAdded?.illustrationType || '';
 		// we add first that is not the same as the last added. If there are no items, then add the first one
-		const foundIndex = from.findIndex((item) => item.elementId !== lastTypeAdded);
+		const foundIndex = from.findIndex((item) => item.illustrationType !== lastTypeAdded);
 		const nextToAddIndex = foundIndex > -1 ? foundIndex : 0;
 		const nextToAdd = from[nextToAddIndex];
 		from.splice(nextToAddIndex, 1);

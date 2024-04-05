@@ -42,8 +42,26 @@ const calcB2bTat = tryCalcWrap((complexity: string) => {
 	const Y = numberRangeToText(YRaw);
 
 	return {
-		elementId: 'pie',
+		illustrationType: 'pie',
 		text: `${X} faster deals, with the potential to reduce the sales cycle from weeks to just ${Y} days.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content: ' faster deals, with the potential to reduce the sales cycle from weeks to just '
+			},
+			{
+				type: 'variable',
+				key: 'Y'
+			},
+			{
+				type: 'text',
+				content: ' days.'
+			}
+		],
 		X,
 		XRaw,
 		Y,
@@ -90,11 +108,30 @@ const calcB2bSellerProductivity = tryCalcWrap((complexity: string, agreementVolu
 		base[complexity][index] * financial[complexity] * improvement[complexity][index] * volume;
 
 	return {
-		elementId: 'calendar',
+		illustrationType: 'calendar',
 		text: `${X} more productive sellers, which frees up ${Y} annual hours to accelerate pipeline development, close more deals, defend price points, etc.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content: ' more productive sellers, which frees up '
+			},
+			{
+				type: 'variable',
+				key: 'Y'
+			},
+			{
+				type: 'text',
+				content:
+					' annual hours to accelerate pipeline development, close more deals, defend price points, etc.'
+			}
+		],
 		X,
 		XRaw,
-		Y: null,
+		Y,
 		dollarsYear: [calcZRange(0), calcZRange(1)],
 		employeeHoursYear,
 		cardMainValue: nFormatter(calcZRange(1)),
@@ -117,8 +154,23 @@ const calcB2bLegalCapacity = tryCalcWrap((complexity: string) => {
 	const X = numberRangeToText(XRaw, formatPercent);
 
 	return {
-		elementId: 'pie',
+		illustrationType: 'pie',
 		text: `Up to ${X} of agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
+		renderConfig: [
+			{
+				type: 'text',
+				content: 'Up to '
+			},
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content:
+					' of agreements completed without legal intervention by establishing a self-service process with smart guardrails.'
+			}
+		],
 		X,
 		XRaw,
 		Y: null,
@@ -163,11 +215,33 @@ const calcB2bReducedLegalProductivity = tryCalcWrap(
 		const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 
 		return {
-			elementId: 'calendar',
+			illustrationType: 'calendar',
 			text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
+			renderConfig: [
+				{
+					type: 'text',
+					content: 'Up to '
+				},
+				{
+					type: 'variable',
+					key: 'X'
+				},
+				{
+					type: 'text',
+					content: ' faster legal review and approvals, freeing up '
+				},
+				{
+					type: 'variable',
+					key: 'Y'
+				},
+				{
+					type: 'text',
+					content: ' annual hours to focus on more strategic negotiations, audits, etc.'
+				}
+			],
 			X,
 			XRaw,
-			Y: null,
+			Y,
 			dollarsYear: [calcZRange(0), calcZRange(1)],
 			employeeHoursYear,
 			cardMainValue: nFormatter(ZRaw[1]),
@@ -203,8 +277,19 @@ const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVol
 	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 
 	return {
-		elementId: 'bar',
+		illustrationType: 'bar',
 		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content:
+					' estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.'
+			}
+		],
 		X,
 		XRaw,
 		Y: null,
@@ -255,8 +340,19 @@ const calcB2bReducedRevenueLeakage = tryCalcWrap((complexity: string, rev: strin
 	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 
 	return {
-		elementId: 'bar',
+		illustrationType: 'bar',
 		text: `${X} estimated reduction in revenue leakage by ensuring obligations are enforced, fees are collected, and renewal events are maximized.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content:
+					' estimated reduction in revenue leakage by ensuring obligations are enforced, fees are collected, and renewal events are maximized.'
+			}
+		],
 		X,
 		XRaw,
 		Y: null,

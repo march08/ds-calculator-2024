@@ -58,7 +58,7 @@ export const renderResultCards = (
 	const mappedResult = result.map((item, index) => {
 		const colorindex = (index % 4) as 0 | 1 | 2 | 3;
 		const color = colorMap[colorindex];
-		const imgSrc = imgSrcMap[item.elementId][color];
+		const imgSrc = imgSrcMap[item.illustrationType][color];
 		return `
 	<div data-ds-result-card-style="${color}" class="hp-improve_card swiper-slide">
 		<div class="hp-improve_card-content">
@@ -78,7 +78,11 @@ export const renderResultCards = (
 			}
 					<div class="text-size-regular">
 					<div data-ds-result-card="description" class="hp-improve_description">
-						${item.text}
+						${item.renderConfig
+							.map((config) =>
+								config.type === 'text' ? config.content : `<strong>${item[config.key]}</strong>`
+							)
+							.join('')}
 					</div>
 					</div>
 			</div>

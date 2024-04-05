@@ -5,7 +5,7 @@ import { isTruthy } from '../utils/isTruthy.js';
 import { formatNumber, formatPercent, nFormatter } from '../utils/number.js';
 import { getRange, tryCalcWrap } from './utils.js';
 
-const calcB2cTat = tryCalcWrap((employment: string) => {
+const calcHrTat = tryCalcWrap((employment: string) => {
 	const base: Record<string, NumberRange> = {
 		parttime: [7, 26],
 		fulltime: [7, 26]
@@ -27,8 +27,26 @@ const calcB2cTat = tryCalcWrap((employment: string) => {
 	);
 
 	return {
-		elementId: 'calendar',
+		illustrationType: 'calendar',
 		text: `${X} faster candidate onboarding, going from weeks to just ${Y} days.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content: ' faster candidate onboarding, going from weeks to just '
+			},
+			{
+				type: 'variable',
+				key: 'Y'
+			},
+			{
+				type: 'text',
+				content: ' days.'
+			}
+		],
 		X,
 		Y,
 		dollarsYear: null,
@@ -68,10 +86,28 @@ const calcHrProductivity = tryCalcWrap((employment: string, agreementVolume: str
 
 	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 	return {
-		elementId: 'pie',
+		illustrationType: 'pie',
 		text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value HR activities.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content: ' improvement in staff productivity, freeing up '
+			},
+			{
+				type: 'variable',
+				key: 'Y'
+			},
+			{
+				type: 'text',
+				content: ' annual hours for higher-value HR activities.'
+			}
+		],
 		X,
-		Y: null,
+		Y,
 		dollarsYear: ZRaw,
 		employeeHoursYear,
 		cardMainValue: nFormatter(ZRaw[1]),
@@ -123,8 +159,27 @@ const calcHrConversionRate = tryCalcWrap((employment: string, agreementVolume: s
 	const YRaw = getRange(calcYRange);
 	const Y = numberRangeToText(YRaw, nFormatter);
 	return {
-		elementId: 'bar',
+		illustrationType: 'bar',
 		text: `${X} increase in conversion rates by reducing abandonment in the agreement process. Onboard ${Y} additional candidates annually.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content:
+					' increase in conversion rates by reducing abandonment in the agreement process. Onboard '
+			},
+			{
+				type: 'variable',
+				key: 'Y'
+			},
+			{
+				type: 'text',
+				content: ' additional candidates annually.'
+			}
+		],
 		X,
 		Y,
 		dollarsYear: null,
@@ -147,7 +202,7 @@ export const calcHr = (
 ) => {
 	return [
 		...(driverOption.includes('HR_1_faster_onboard')
-			? [calcB2cTat(characteristics.HR_employee_type[0])]
+			? [calcHrTat(characteristics.HR_employee_type[0])]
 			: []),
 		...(driverOption.includes('HR_2_attract_retain_talent')
 			? [

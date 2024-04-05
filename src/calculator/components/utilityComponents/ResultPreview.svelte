@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { renderConfigToText } from '../../calculations/utils.js';
 	import type { CalculatedResult, NumberRange } from '../../types.js';
 	import { numberRangeToText } from '../../utils/array.js';
 	import { formatUsd } from '../../utils/number.js';
@@ -11,7 +12,7 @@
 	<h3>{title}</h3>
 	<hr />
 	{#each result as resultItem}
-		<p>{resultItem.text}</p>
+		<p>{renderConfigToText(resultItem)}</p>
 		<table>
 			<tr><td>X</td><td>{resultItem.X}</td></tr>
 			<tr>

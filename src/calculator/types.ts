@@ -45,9 +45,21 @@ export type SelectAreaType = 'B2B' | 'Procurement' | 'HR' | 'B2C';
 
 export type StepConfig = Readonly<(SelectConfig | TextConfig)[]>;
 
+export type ResultRenderConfigVariable = {
+	type: 'variable';
+	key: keyof CalculatedResult;
+};
+
+export type ResultRenderConfigText = {
+	type: 'text';
+	content: string;
+};
+
+export type ResultRenderConfigItem = ResultRenderConfigVariable | ResultRenderConfigText;
+
 export type CalculatedResult = {
-	elementId: 'bar' | 'pie' | 'calendar';
-	text: string;
+	illustrationType: 'bar' | 'pie' | 'calendar';
+	renderConfig: ResultRenderConfigItem[];
 	X: string | null;
 	Y: string | null;
 	cardMainValue: string;

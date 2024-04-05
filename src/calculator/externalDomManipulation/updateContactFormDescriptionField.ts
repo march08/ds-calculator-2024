@@ -1,3 +1,4 @@
+import { renderConfigToText } from '../calculations/utils.js';
 import type { OverallResult } from '../types.js';
 const nl = '\r\n';
 
@@ -8,7 +9,11 @@ export const updateContactFormDescriptionField = (result: OverallResult) => {
 		);
 
 		const topAreas = (result.topTwo || []).map((item) => item.fullText).join(nl);
-		const allItems = (result.allRes || []).map((item) => item.text).join(nl);
+		const allItems = (result.allRes || [])
+			.map((item) => {
+				return renderConfigToText(item);
+			})
+			.join(nl);
 
 		const value = `${topAreas}
 

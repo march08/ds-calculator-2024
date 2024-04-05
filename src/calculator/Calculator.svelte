@@ -297,8 +297,7 @@
 					}
 
 					updateNextActiveOption();
-					setSubmittedState();
-					toggleResult(true, toggleResultOptions);
+					setResubmitState(false);
 				}, 300);
 			}}
 		/>

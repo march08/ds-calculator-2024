@@ -1,4 +1,4 @@
-import type { CalculatedResult, NumberRange } from '../types.js';
+import type { CalculatedResult, NumberRange, ResultRenderConfigItem } from '../types.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const tryCalcWrap = <T extends Array<any>>(fn: (...args: T) => CalculatedResult) => {
@@ -14,4 +14,16 @@ export const tryCalcWrap = <T extends Array<any>>(fn: (...args: T) => Calculated
 export const getRange = (fn: (index: 0 | 1) => number) => {
 	const result: NumberRange = [fn(0), fn(1)];
 	return result;
+};
+
+export const renderConfigToText = (item: CalculatedResult) => {
+	item.renderConfig
+		.map((config) => {
+			if (config.type === 'variable') {
+				return item[config.key];
+			} else {
+				return config.content;
+			}
+		})
+		.join('');
 };

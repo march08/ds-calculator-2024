@@ -30,8 +30,26 @@ const calcB2cTat = tryCalcWrap((customerInformation: string) => {
 	);
 
 	return {
-		elementId: 'calendar',
+		illustrationType: 'calendar',
 		text: `${X} faster deals, with the potential to reduce the sales cycle from weeks to just ${Y} days.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content: ' faster deals, with the potential to reduce the sales cycle from weeks to just '
+			},
+			{
+				type: 'variable',
+				key: 'Y'
+			},
+			{
+				type: 'text',
+				content: ' days.'
+			}
+		],
 		X,
 		Y,
 		employeeHoursYear: null,
@@ -74,8 +92,26 @@ const calcB2cStaffProductivity = tryCalcWrap(
 
 		const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 		return {
-			elementId: 'pie',
+			illustrationType: 'pie',
 			text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value activities.`,
+			renderConfig: [
+				{
+					type: 'variable',
+					key: 'X'
+				},
+				{
+					type: 'text',
+					content: ' improvement in staff productivity, freeing up '
+				},
+				{
+					type: 'variable',
+					key: 'Y'
+				},
+				{
+					type: 'text',
+					content: ' annual hours for higher-value activities.'
+				}
+			],
 			X,
 			Y,
 			dollarsYear: ZRaw,
@@ -126,8 +162,19 @@ const calcB2cConversionRate = tryCalcWrap((customerInformation: string, amount: 
 		improvement[customerInformation][financial][index] * financial;
 	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 	return {
-		elementId: 'bar',
+		illustrationType: 'bar',
 		text: `${X} increase in conversion rates by reducing customer abandonment during the agreement process.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content:
+					' increase in conversion rates by reducing customer abandonment during the agreement process.'
+			}
+		],
 		X,
 		Y: null,
 		employeeHoursYear: null,

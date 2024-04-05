@@ -31,8 +31,26 @@ const calcPROCtat = tryCalcWrap((spendType: string) => {
 	);
 
 	return {
-		elementId: 'calendar',
+		illustrationType: 'calendar',
 		text: `${X} faster vendor onboarding, going from weeks to just ${Y} days.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content: ' faster vendor onboarding, going from weeks to just '
+			},
+			{
+				type: 'variable',
+				key: 'Y'
+			},
+			{
+				type: 'text',
+				content: ' days.'
+			}
+		],
 		X,
 		Y,
 		cardMainValue: `${Y} days`,
@@ -80,8 +98,26 @@ const calcPROCProductivity = tryCalcWrap((spendType: string, agreementVolume: st
 	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
 
 	return {
-		elementId: 'bar',
+		illustrationType: 'bar',
 		text: `${X} improvement in staff productivity, freeing up ${Y} annual hours to focus on priorities like vendor management and innovation. `,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content: ' improvement in staff productivity, freeing up '
+			},
+			{
+				type: 'variable',
+				key: 'Y'
+			},
+			{
+				type: 'text',
+				content: ' annual hours to focus on priorities like vendor management and innovation.'
+			}
+		],
 		X,
 		Y,
 		dollarsYear: [calcZ(0), calcZ(1)],
@@ -105,8 +141,19 @@ const calcPROCLegalCapacity = tryCalcWrap((spendType: string) => {
 	const X = formatPercent(improvement[spendType][0]);
 
 	return {
-		elementId: 'pie',
+		illustrationType: 'pie',
 		text: `Up to ${X} of agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content:
+					' of agreements completed without legal intervention by establishing a self-service process with smart guardrails.'
+			}
+		],
 		X,
 		Y: null,
 		dollarsYear: null,
@@ -153,8 +200,26 @@ const calcPROCLegalProductivity = tryCalcWrap((spendType: string, agreementVolum
 	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
 
 	return {
-		elementId: 'bar',
+		illustrationType: 'bar',
 		text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content: ' faster legal review and approvals, freeing up '
+			},
+			{
+				type: 'variable',
+				key: 'Y'
+			},
+			{
+				type: 'text',
+				content: ' annual hours to focus on more strategic negotiations, audits, etc.'
+			}
+		],
 		X,
 		Y,
 		dollarsYear: ZRaw,
@@ -195,8 +260,19 @@ const calcPROCReduceRisk = tryCalcWrap((spendType: string, agreementVolume: stri
 	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
 
 	return {
-		elementId: 'bar',
+		illustrationType: 'bar',
 		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content:
+					' estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.'
+			}
+		],
 		X,
 		Y: null,
 		dollarsYear: ZRaw,
@@ -263,8 +339,19 @@ const calcPROCReduceSavingsLeakage = tryCalcWrap((spendType: string, spendAmount
 	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
 
 	return {
-		elementId: 'pie',
+		illustrationType: 'pie',
 		text: `${X} estimated reduction in savings leakage by ensuring obligations are enforced, rebates/penalties are collected, and renewals are maximized.`,
+		renderConfig: [
+			{
+				type: 'variable',
+				key: 'X'
+			},
+			{
+				type: 'text',
+				content:
+					' estimated reduction in savings leakage by ensuring obligations are enforced, rebates/penalties are collected, and renewals are maximized.'
+			}
+		],
 		X,
 		Y: null,
 		dollarsYear: ZRaw,
@@ -286,10 +373,6 @@ export const calcPROC = (
 		PROC_agreement_volume: string[];
 	}
 ) => {
-	// PROC_1_onboard_vendors
-	// PROC_2_improved_productivity
-	// PROC_3_reduce_risk
-	// PROC_4_max_value
 	return [
 		...(driverOption.includes('PROC_1_onboard_vendors')
 			? [calcPROCtat(characteristics.PROC_spend_type[0])]
