@@ -12,6 +12,5 @@
 	}
 	.container {
 		padding-top: 80dvh;
-		padding-bottom: 20dvh;
 	}
 </style>

@@ -19,8 +19,9 @@
 		opacity: 0;
 		transition: 0.3s all;
 		transition-delay: 0.2s;
-		&.update {
-			padding-top: 120px;
+		padding-bottom: 60dvh;
+		@media screen and (max-width: 479px) {
+			padding-top: 40px;
 		}
 		&.visible {
 			opacity: 1;
