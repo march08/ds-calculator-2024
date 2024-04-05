@@ -32,6 +32,7 @@ export type SelectConfig = {
 		options: Readonly<OptionOrDelimiter[]>;
 		multiselect?: true;
 		multiselectDelimiter?: string;
+		displayValueLowercase?: boolean;
 	};
 };
 

@@ -101,6 +101,7 @@ export const flowConfig: FlowConfig = {
 				key: 'businessArea',
 				placeholder: 'Your Area',
 				multiselect: true,
+				displayValueLowercase: false,
 				options: [
 					{
 						title: 'Select your Business Process'
@@ -269,15 +270,15 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: 'low',
-						label: 'low complexity process'
+						label: 'Low complexity process'
 					},
 					{
 						key: 'medium',
-						label: 'medium complexity process'
+						label: 'Medium complexity process'
 					},
 					{
 						key: 'high',
-						label: 'high complexity process'
+						label: 'High complexity process'
 					}
 				]
 			}
@@ -407,11 +408,11 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: 'fulltime',
-						label: 'full-time employees'
+						label: 'Full-time employees'
 					},
 					{
 						key: 'parttime',
-						label: 'seasonal/part-time employees'
+						label: 'Seasonal/part-time employees'
 					}
 				]
 			}
@@ -486,11 +487,11 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: 'direct',
-						label: 'direct spend'
+						label: 'Direct spend'
 					},
 					{
 						key: 'indirect',
-						label: 'indirect spend'
+						label: 'Indirect spend'
 					},
 					{
 						key: 'capex',
@@ -681,11 +682,11 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: 'signature',
-						label: 'customer signature/consent'
+						label: 'Customer signature/consent'
 					},
 					{
 						key: 'identity',
-						label: 'customer data and/or verify identity'
+						label: 'Customer data and/or verify identity'
 					}
 				]
 			}

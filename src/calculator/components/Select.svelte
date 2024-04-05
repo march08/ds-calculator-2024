@@ -16,6 +16,7 @@
 	export let isContainerVisible: boolean;
 	export let key: string;
 	export let multiselectDelimiter: string = ', ';
+	export let displayValueLowercase: boolean = true;
 
 	let uiState = getContext<Writable<UIState>>('uiState');
 
@@ -120,7 +121,11 @@
 			on:click={handleDropdownClick}
 			class:placeholder={value.length === 0}
 		>
-			<span class="ds-calc-select-display-text" class:visible={isOpenDebounced}>
+			<span
+				class="ds-calc-select-display-text"
+				class:visible={isOpenDebounced}
+				class:lc={displayValueLowercase && displayValue}
+			>
 				{displayValue || placeholder}
 			</span>
 		</button>
@@ -407,6 +412,9 @@
 			border-bottom: 4px solid;
 			border-image-slice: 1;
 			border-image-source: linear-gradient(45deg, #ff5252 0%, #4000cc 100%);
+		}
+		&.lc {
+			text-transform: lowercase;
 		}
 	}
 	/* 
