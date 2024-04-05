@@ -62,12 +62,14 @@
 	$: visibilityLastSection = isSectionVisible($submissionFormState, ['B2B', 'PROC', 'HR', 'B2C']);
 
 	const setResubmitState = (startFromTheBeginning: boolean = true) => {
-		uiStore.update((state) => ({
-			...state,
-			currentFocus: startFromTheBeginning ? 'first' : state.currentFocus,
-			isResubmitting: true,
-			isSubmitted: false
-		}));
+		if ($uiStore.isSubmitted) {
+			uiStore.update((state) => ({
+				...state,
+				currentFocus: startFromTheBeginning ? 'first' : state.currentFocus,
+				isResubmitting: true,
+				isSubmitted: false
+			}));
+		}
 	};
 
 	const setSubmittedState = () => {
@@ -298,7 +300,12 @@
 					}
 
 					updateNextActiveOption();
-					setResubmitState(false);
+
+					if (!$uiStore.isResubmitting && !$uiStore.isSubmitted) {
+						setSubmittedState();
+					} else {
+						setResubmitState(false);
+					}
 				}, 300);
 			}}
 		/>
