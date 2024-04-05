@@ -12,7 +12,7 @@
 
 	const mostCenteredChildNode = () => {
 		const childEls = Array.from(stepsContainerRef?.children || []);
-		const windowCenterOffset = windowInnerHeight / 2;
+		const windowCenterOffset = windowInnerHeight / 3;
 		const distancesPerStep = childEls
 			.map((childEl) => {
 				const step = childEl.getAttribute('data-ds-calc-step');

@@ -24,7 +24,15 @@
 	export let onCalculateAnimationStart: VoidFunction = () => {};
 	export let onToggleResultVisibility: VoidFunction = () => {};
 	export let scrollTo: ScrollInto = (target, options) => {
-		target.scrollIntoView(options);
+		// go with offset if center
+		if (options.blockCenterOffset) {
+			const yOffset = window.innerHeight / 3;
+			const y = target.getBoundingClientRect().top + window.scrollY - yOffset;
+
+			window.scrollTo({ top: y, behavior: 'smooth' });
+		} else {
+			target.scrollIntoView(options);
+		}
 	};
 
 	/**
@@ -52,25 +60,6 @@
 	$: visibilityHR = isSectionVisible($submissionFormState, ['B2B', 'PROC'], 'HR');
 	$: visibilityB2C = isSectionVisible($submissionFormState, ['B2B', 'PROC', 'HR'], 'B2C');
 	$: visibilityLastSection = isSectionVisible($submissionFormState, ['B2B', 'PROC', 'HR', 'B2C']);
-
-	// const scrollTopTopOfTheForm = () => {
-	// 	const firstStepTarget = document.getElementById('ds-calc-step-1');
-	// 	if (firstStepTarget) {
-	// 		scrollTo(firstStepTarget, {
-	// 			lock: true,
-	// 			behavior: 'smooth',
-	// 			block: 'center'
-	// 		});
-	// 	}
-	// };
-
-	// const resetForm = () => {
-	// 	scrollTopTopOfTheForm();
-	// 	setTimeout(() => {
-	// 		resetSubmissionStore();
-	// 		resetUiStore();
-	// 	}, 300);
-	// };
 
 	const setResubmitState = (startFromTheBeginning: boolean = true) => {
 		uiStore.update((state) => ({
@@ -173,7 +162,19 @@
 				if (nextSelect) {
 					scrollTo(nextSelect as HTMLElement, {
 						behavior: 'smooth',
-						block: 'center'
+						block: 'center',
+						blockCenterOffset: true
+					});
+				}
+			}, 100);
+		} else if ($uiStore.isResubmitting) {
+			setTimeout(() => {
+				const toScroll = document.querySelector(`#ds-update-res-container`);
+				if (toScroll) {
+					scrollTo(toScroll as HTMLElement, {
+						behavior: 'smooth',
+						block: 'center',
+						blockCenterOffset: true
 					});
 				}
 			}, 100);
@@ -303,7 +304,11 @@
 		/>
 	</StepsContainer>
 
-	<CtaButtonContainer visible={$uiStore.isResubmitting} isUpdateContainer>
+	<CtaButtonContainer
+		id="ds-update-res-container"
+		visible={$uiStore.isResubmitting}
+		isUpdateContainer
+	>
 		<Button disabled={!canManuallyUpdate} onClick={handleManuallyUpdateAssessment}
 			>Update Your Results</Button
 		>

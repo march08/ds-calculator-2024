@@ -1,4 +1,4 @@
-import type { CalculatedResult, NumberRange, ResultRenderConfigItem } from '../types.js';
+import type { CalculatedResult, NumberRange } from '../types.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const tryCalcWrap = <T extends Array<any>>(fn: (...args: T) => CalculatedResult) => {

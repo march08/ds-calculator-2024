@@ -127,5 +127,6 @@ export type ScrollInto = (
 		onComplete?: VoidFunction;
 		block?: 'center';
 		behavior?: 'smooth';
+		blockCenterOffset?: boolean;
 	}
 ) => void;

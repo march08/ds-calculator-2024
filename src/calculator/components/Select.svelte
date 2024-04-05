@@ -77,14 +77,26 @@
 	let popperElement: HTMLDivElement;
 
 	$: popperOptions = {
+		// placement: 'bottom-start',
 		placement: 'bottom-start',
 		strategy: 'fixed',
 		modifiers: [
 			{ name: 'offset', options: { offset: [0, 0] } },
 			{
+				name: 'preventOverflow',
+				options: {
+					boundary: document.querySelector('.ds-calculator'),
+					padding: {
+						left: 0,
+						right: 32
+					}
+				}
+			},
+			{
 				name: 'flip',
 				options: {
-					fallbackPlacements: ['bottom-start']
+					fallbackPlacements:
+						key === 'businessArea' ? ['bottom-start'] : ['bottom-start', 'top-start']
 				}
 			}
 		]
@@ -249,7 +261,7 @@
 				padding: 0px 12px 12px;
 				gap: 2px;
 				isolation: isolate;
-				max-height: 350px;
+				max-height: calc(50dvh - 120px);
 				overflow-y: auto;
 				&:before {
 					display: block;

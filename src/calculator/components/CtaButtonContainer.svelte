@@ -20,20 +20,10 @@
 		transition: 0.3s all;
 		transition-delay: 0.2s;
 		&.update {
-			padding-top: 30px;
+			padding-top: 120px;
 		}
 		&.visible {
 			opacity: 1;
-		}
-	}
-
-	@media screen and (min-width: 992px) {
-		#ds-calc-cta-update-container {
-			position: absolute;
-			top: calc(100% + 120px);
-			left: 50%;
-			transform: translateX(-50%);
-			z-index: 500;
 		}
 	}
 </style>

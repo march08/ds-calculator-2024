@@ -1,13 +1,7 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
 	import Select from './Select.svelte';
-	import type {
-		StepConfig,
-		StoredCalcState,
-		OptionOrDelimiter,
-		UIState,
-		ScrollInto
-	} from '../types.js';
+	import type { StepConfig, StoredCalcState, OptionOrDelimiter, UIState } from '../types.js';
 
 	import { getContext } from 'svelte';
 	import { isTruthy } from '../utils/isTruthy.js';
@@ -28,16 +22,6 @@
 
 	$: isFocused = $uiState.currentFocus === stateStep;
 
-	// $: if (visible && ref) {
-	// 	if (ref) {
-	// 		scrollInto(ref, {
-	// 			block: 'center',
-	// 			behavior: 'smooth',
-	// 			lock: true
-	// 		});
-	// 	}
-	// }
-
 	function fadeSlide(node: HTMLElement, { duration }: { duration: number }) {
 		return {
 			duration,
@@ -48,8 +32,6 @@
 			}
 		};
 	}
-
-	$: stepAnswers = Object.values($answerState[stateStep]).join('--') + visible;
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
