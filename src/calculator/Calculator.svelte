@@ -316,9 +316,16 @@
 		visible={$uiStore.isResubmitting}
 		isUpdateContainer
 	>
-		<Button disabled={!canManuallyUpdate} onClick={handleManuallyUpdateAssessment}
-			>Update Your Results</Button
+		<Button
+			onClick={handleManuallyUpdateAssessment}
+			data={{
+				action: 'update results',
+				context: 'assessment-test'
+			}}
+			disabled={!canManuallyUpdate}
 		>
+			Update Your Results
+		</Button>
 	</CtaButtonContainer>
 </div>
 

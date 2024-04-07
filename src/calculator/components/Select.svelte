@@ -132,6 +132,8 @@
 			class="ds-calc-select-btn"
 			on:click={handleDropdownClick}
 			class:placeholder={value.length === 0}
+			data-context="assessment-test"
+			data-action={key}
 		>
 			<span
 				class="ds-calc-select-display-text"
@@ -165,6 +167,8 @@
 								<button
 									class="ds-calc-dropdown-content-item"
 									class:selected={internalState.includes(option.key)}
+									data-context="assessment-test"
+									data-action={`${key}:${option.key} [${multiselect && internalState.includes(option.key) ? 'to unselect' : 'to select'}]`}
 									on:click={() => {
 										if (option.key) {
 											handleSelect(option.key);

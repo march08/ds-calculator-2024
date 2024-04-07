@@ -1,9 +1,14 @@
 <script lang="ts">
 	export let onClick: VoidFunction;
 	export let disabled: boolean = false;
+	export let data = {};
+	$: dataProps = Object.entries(data).reduce(
+		(acc, [key, value]) => ({ ...acc, [`data-${key}`]: value }),
+		{}
+	);
 </script>
 
-<button type="button" on:click={onClick} class="ds-calc-button" {disabled}>
+<button type="button" on:click={onClick} class="ds-calc-button" {disabled} {...dataProps}>
 	<slot />
 </button>
 
