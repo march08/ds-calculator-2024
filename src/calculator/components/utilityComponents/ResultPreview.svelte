@@ -14,6 +14,7 @@
 	{#each result as resultItem}
 		<p>{renderConfigToText(resultItem)}</p>
 		<table>
+			<tr><td>TTT</td><td>{resultItem.cardMainValue}</td></tr>
 			<tr><td>X</td><td>{resultItem.X}</td></tr>
 			<tr>
 				<td> Y: </td>

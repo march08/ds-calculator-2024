@@ -254,14 +254,30 @@ const calcPROCReduceRisk = tryCalcWrap((spendType: string, agreementVolume: stri
 		formatPercent
 	);
 
+	const zTableCapex: Record<string, NumberRange> = {
+		1000: [37500, 50000],
+		2500: [93750, 125000],
+		5000: [187500, 250000],
+		10000: [375000, 500000],
+		25000: [937500, 1250000],
+		50000: [1875000, 2500000],
+		100000: [3750000, 5000000],
+		1000000: [37500000, 50000000],
+		10000000: [375000000, 500000000]
+	};
+
 	const calcZ = (index: 0 | 1) => {
 		return base[spendType][index] * improvement[spendType][index] * volume * financialConstant;
 	};
-	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
+
+	const ZRaw: NumberRange =
+		spendType === 'capex'
+			? zTableCapex[agreementVolume as unknown as keyof typeof zTableCapex]
+			: [calcZ(0), calcZ(1)];
 
 	return {
 		illustrationType: 'bar',
-		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
+		text: `${X} estimated risk exposure reduction by ensuring procurement agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
 		renderConfig: [
 			{
 				type: 'variable',
@@ -270,7 +286,7 @@ const calcPROCReduceRisk = tryCalcWrap((spendType: string, agreementVolume: stri
 			{
 				type: 'text',
 				content:
-					' estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.'
+					' estimated risk exposure reduction by ensuring procurement agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.'
 			}
 		],
 		X,

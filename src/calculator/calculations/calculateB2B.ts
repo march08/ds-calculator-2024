@@ -155,7 +155,7 @@ const calcB2bLegalCapacity = tryCalcWrap((complexity: string) => {
 
 	return {
 		illustrationType: 'pie',
-		text: `Up to ${X} of agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
+		text: `Up to ${X} of sales agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
 		renderConfig: [
 			{
 				type: 'text',
@@ -168,7 +168,7 @@ const calcB2bLegalCapacity = tryCalcWrap((complexity: string) => {
 			{
 				type: 'text',
 				content:
-					' of agreements completed without legal intervention by establishing a self-service process with smart guardrails.'
+					' of sales agreements completed without legal intervention by establishing a self-service process with smart guardrails.'
 			}
 		],
 		X,
@@ -278,7 +278,7 @@ const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVol
 
 	return {
 		illustrationType: 'bar',
-		text: `${X} estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
+		text: `${X} estimated risk exposure reduction by ensuring sales agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
 		renderConfig: [
 			{
 				type: 'variable',
@@ -287,7 +287,7 @@ const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVol
 			{
 				type: 'text',
 				content:
-					' estimated risk exposure reduction by ensuring agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.'
+					' estimated risk exposure reduction by ensuring sales agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.'
 			}
 		],
 		X,
