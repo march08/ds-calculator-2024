@@ -133,7 +133,7 @@
 			on:click={handleDropdownClick}
 			class:placeholder={value.length === 0}
 			data-context="assessment-test"
-			data-action={key}
+			data-action={`${key} open`}
 		>
 			<span
 				class="ds-calc-select-display-text"
