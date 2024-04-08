@@ -99,7 +99,6 @@ const calcPROCProductivity = tryCalcWrap((spendType: string, agreementVolume: st
 
 	return {
 		illustrationType: 'bar',
-		text: `${X} improvement in staff productivity, freeing up ${Y} annual hours to focus on priorities like vendor management and innovation. `,
 		renderConfig: [
 			{
 				type: 'variable',
@@ -107,7 +106,7 @@ const calcPROCProductivity = tryCalcWrap((spendType: string, agreementVolume: st
 			},
 			{
 				type: 'text',
-				content: ' improvement in staff productivity, freeing up '
+				content: ' improvement in procurement staff productivity, freeing up '
 			},
 			{
 				type: 'variable',
@@ -142,7 +141,6 @@ const calcPROCLegalCapacity = tryCalcWrap((spendType: string) => {
 
 	return {
 		illustrationType: 'pie',
-		text: `Up to ${X} of agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
 		renderConfig: [
 			{
 				type: 'variable',
@@ -151,7 +149,7 @@ const calcPROCLegalCapacity = tryCalcWrap((spendType: string) => {
 			{
 				type: 'text',
 				content:
-					' of agreements completed without legal intervention by establishing a self-service process with smart guardrails.'
+					' of vendor agreements completed without legal intervention by establishing a self-service process with smart guardrails.'
 			}
 		],
 		X,
@@ -201,7 +199,6 @@ const calcPROCLegalProductivity = tryCalcWrap((spendType: string, agreementVolum
 
 	return {
 		illustrationType: 'bar',
-		text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
 		renderConfig: [
 			{
 				type: 'variable',
@@ -209,7 +206,7 @@ const calcPROCLegalProductivity = tryCalcWrap((spendType: string, agreementVolum
 			},
 			{
 				type: 'text',
-				content: ' faster legal review and approvals, freeing up '
+				content: ' faster legal review and approvals for vendor agreements, freeing up '
 			},
 			{
 				type: 'variable',
@@ -286,7 +283,7 @@ const calcPROCReduceRisk = tryCalcWrap((spendType: string, agreementVolume: stri
 			{
 				type: 'text',
 				content:
-					' estimated risk exposure reduction by ensuring procurement agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.'
+					' estimated risk exposure reduction by ensuring vendor agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.'
 			}
 		],
 		X,

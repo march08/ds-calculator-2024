@@ -155,7 +155,6 @@ const calcB2bLegalCapacity = tryCalcWrap((complexity: string) => {
 
 	return {
 		illustrationType: 'pie',
-		text: `Up to ${X} of sales agreements completed without legal intervention by establishing a self-service process with smart guardrails.`,
 		renderConfig: [
 			{
 				type: 'text',
@@ -168,7 +167,7 @@ const calcB2bLegalCapacity = tryCalcWrap((complexity: string) => {
 			{
 				type: 'text',
 				content:
-					' of sales agreements completed without legal intervention by establishing a self-service process with smart guardrails.'
+					' of B2B sales agreements completed without legal intervention by establishing a self-service process with smart guardrails.'
 			}
 		],
 		X,
@@ -216,7 +215,6 @@ const calcB2bReducedLegalProductivity = tryCalcWrap(
 
 		return {
 			illustrationType: 'calendar',
-			text: `Up to ${X} faster legal review and approvals, freeing up ${Y} annual hours to focus on more strategic negotiations, audits, etc.`,
 			renderConfig: [
 				{
 					type: 'text',
@@ -228,7 +226,7 @@ const calcB2bReducedLegalProductivity = tryCalcWrap(
 				},
 				{
 					type: 'text',
-					content: ' faster legal review and approvals, freeing up '
+					content: ' faster legal review and approvals for B2B sales agreements, freeing up '
 				},
 				{
 					type: 'variable',
@@ -278,7 +276,6 @@ const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVol
 
 	return {
 		illustrationType: 'bar',
-		text: `${X} estimated risk exposure reduction by ensuring sales agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
 		renderConfig: [
 			{
 				type: 'variable',
@@ -287,7 +284,7 @@ const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVol
 			{
 				type: 'text',
 				content:
-					' estimated risk exposure reduction by ensuring sales agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.'
+					' estimated risk exposure reduction by ensuring B2B sales agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.'
 			}
 		],
 		X,
