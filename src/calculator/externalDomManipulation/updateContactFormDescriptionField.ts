@@ -16,12 +16,10 @@ export const updateContactFormDescriptionField = (result: OverallResult) => {
 			})
 			.join(nl);
 
-		console.log(allItems);
+		const value = `Based on your inputs, The Agreement Trap costs your team:*
+${topAreas}
 
-		const value = `${topAreas}
-
-See what's possible with intelligent agreement management:
-		
+See what’s possible with intelligent agreement management:*
 ${allItems}`;
 
 		if (textAreaEl) {
