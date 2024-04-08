@@ -17,7 +17,7 @@ export const getRange = (fn: (index: 0 | 1) => number) => {
 };
 
 export const renderConfigToText = (item: CalculatedResult) => {
-	item.renderConfig
+	return item.renderConfig
 		.map((config) => {
 			if (config.type === 'variable') {
 				return item[config.key];

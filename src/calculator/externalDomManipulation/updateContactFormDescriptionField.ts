@@ -9,11 +9,14 @@ export const updateContactFormDescriptionField = (result: OverallResult) => {
 		);
 
 		const topAreas = (result.topTwo || []).map((item) => item.fullText).join(nl);
+
 		const allItems = (result.allRes || [])
 			.map((item) => {
 				return renderConfigToText(item);
 			})
 			.join(nl);
+
+		console.log(allItems);
 
 		const value = `${topAreas}
 
