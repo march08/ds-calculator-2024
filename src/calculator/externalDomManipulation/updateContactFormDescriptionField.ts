@@ -19,7 +19,7 @@ export const updateContactFormDescriptionField = (result: OverallResult) => {
 		const value = `Based on your inputs, The Agreement Trap costs your team:*
 ${topAreas}
 
-See what’s possible with intelligent agreement management:*
+See what’s possible with Intelligent Agreement Management:*
 ${allItems}`;
 
 		if (textAreaEl) {

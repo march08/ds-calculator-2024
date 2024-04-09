@@ -63,72 +63,74 @@ const calcPROCtat = tryCalcWrap((spendType: string) => {
 	};
 });
 
-const calcPROCProductivity = tryCalcWrap((spendType: string, agreementVolume: string) => {
-	const volume = Number(agreementVolume);
-	const base: Record<string, NumberRange> = {
-		direct: [10, 20],
-		indirect: [5, 10],
-		capex: [15, 25]
-	};
+const calcPROCEfficiencyToIncreaseCapacity = tryCalcWrap(
+	(spendType: string, agreementVolume: string) => {
+		const volume = Number(agreementVolume);
+		const base: Record<string, NumberRange> = {
+			direct: [10, 10],
+			indirect: [5, 5],
+			capex: [15, 15]
+		};
 
-	const improvement: Record<string, NumberRange> = {
-		direct: [0.25, 0.5],
-		indirect: [0.25, 0.5],
-		capex: [0.25, 0.5]
-	};
+		const improvement: Record<string, NumberRange> = {
+			direct: [0.25, 0.5],
+			indirect: [0.25, 0.5],
+			capex: [0.25, 0.5]
+		};
 
-	const financialConstant = 25;
+		const financialConstant = 25;
 
-	const calcY = (index: 0 | 1) => {
-		return base[spendType][index] * improvement[spendType][index] * volume;
-	};
+		const calcY = (index: 0 | 1) => {
+			return base[spendType][index] * improvement[spendType][index] * volume;
+		};
 
-	const X = numberRangeToText(
-		[improvement[spendType][0], improvement[spendType][1]],
-		formatPercent
-	);
+		const X = numberRangeToText(
+			[improvement[spendType][0], improvement[spendType][1]],
+			formatPercent
+		);
 
-	const employeeHoursYear: NumberRange = [calcY(0), calcY(1)];
-	const Y = numberRangeToText(employeeHoursYear);
+		const employeeHoursYear: NumberRange = [calcY(0), calcY(1)];
+		const Y = numberRangeToText(employeeHoursYear);
 
-	const calcZ = (index: 0 | 1) => {
-		return base[spendType][index] * improvement[spendType][index] * volume * financialConstant;
-	};
+		const calcZ = (index: 0 | 1) => {
+			return base[spendType][index] * improvement[spendType][index] * volume * financialConstant;
+		};
 
-	const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
+		const ZRaw: NumberRange = [calcZ(0), calcZ(1)];
 
-	return {
-		illustrationType: 'bar',
-		renderConfig: [
-			{
-				type: 'variable',
-				key: 'X'
-			},
-			{
-				type: 'text',
-				content: ' improvement in procurement staff productivity, freeing up '
-			},
-			{
-				type: 'variable',
-				key: 'Y'
-			},
-			{
-				type: 'text',
-				content: ' annual hours to focus on priorities like vendor management and innovation.'
-			}
-		],
-		X,
-		Y,
-		dollarsYear: [calcZ(0), calcZ(1)],
-		employeeHoursYear,
-		cardMainValue: nFormatter(ZRaw[1]),
-		cardMainValueDollars: true,
-		onboardingDaysCustomer: null,
-		onboardingDaysCandidate: null,
-		onboardingDaysVendor: null,
-		candidatesYear: null
-	};
-});
+		return {
+			illustrationType: 'bar',
+			renderConfig: [
+				{
+					type: 'variable',
+					key: 'X'
+				},
+				{
+					type: 'text',
+					content: ' improvement in procurement staff productivity, freeing up '
+				},
+				{
+					type: 'variable',
+					key: 'Y'
+				},
+				{
+					type: 'text',
+					content: ' annual hours to focus on priorities like vendor management and innovation.'
+				}
+			],
+			X,
+			Y,
+			dollarsYear: [calcZ(0), calcZ(1)],
+			employeeHoursYear,
+			cardMainValue: nFormatter(ZRaw[1]),
+			cardMainValueDollars: true,
+			onboardingDaysCustomer: null,
+			onboardingDaysCandidate: null,
+			onboardingDaysVendor: null,
+			candidatesYear: null
+		};
+	}
+);
 
 const calcPROCLegalCapacity = tryCalcWrap((spendType: string) => {
 	const improvement: Record<string, NumberRange> = {
@@ -167,9 +169,9 @@ const calcPROCLegalCapacity = tryCalcWrap((spendType: string) => {
 const calcPROCLegalProductivity = tryCalcWrap((spendType: string, agreementVolume: string) => {
 	const volume = Number(agreementVolume);
 	const base: Record<string, NumberRange> = {
-		direct: [10, 15],
+		direct: [5, 10],
 		indirect: [0.5, 2],
-		capex: [10, 15]
+		capex: [4, 8]
 	};
 
 	const improvement: Record<string, NumberRange> = {
@@ -392,7 +394,7 @@ export const calcPROC = (
 			: []),
 		...(driverOption.includes('PROC_2_improved_productivity')
 			? [
-					calcPROCProductivity(
+					calcPROCEfficiencyToIncreaseCapacity(
 						characteristics.PROC_spend_type[0],
 						characteristics.PROC_agreement_volume[0]
 					)
