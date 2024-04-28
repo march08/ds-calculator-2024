@@ -1,4 +1,3 @@
-// import type { DriverOption } from '../config.js';
 import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
@@ -20,7 +19,9 @@ const calcHrTat = tryCalcWrap((employment: string) => {
 		formatNumber(base[employment][index] * (1 - improvement[employment][index]));
 
 	const Y = `${calcYRange(0)}-${calcYRange(1)}`;
-	const X = `${formatPercent(improvement[employment][0])}`;
+	const XRaw: NumberRange = [improvement[employment][0], improvement[employment][0]];
+	const X = numberRangeToText(XRaw, formatPercent);
+	const XText = XRaw.map((x) => formatPercent(x));
 
 	const calcOnboardingDaysCandidateRaw = getRange(
 		(index: 0 | 1) => base[employment][index] * improvement[employment][index]
@@ -28,26 +29,10 @@ const calcHrTat = tryCalcWrap((employment: string) => {
 
 	return {
 		illustrationType: 'calendar',
-		text: `${X} faster candidate onboarding, going from weeks to just ${Y} days.`,
-		renderConfig: [
-			{
-				type: 'variable',
-				key: 'X'
-			},
-			{
-				type: 'text',
-				content: ' faster candidate onboarding, going from weeks to just '
-			},
-			{
-				type: 'variable',
-				key: 'Y'
-			},
-			{
-				type: 'text',
-				content: ' days.'
-			}
-		],
+		resultTextKey: 'hr_1',
 		X,
+		XRaw,
+		XText,
 		Y,
 		dollarsYear: null,
 		employeeHoursYear: null,
@@ -58,67 +43,6 @@ const calcHrTat = tryCalcWrap((employment: string) => {
 		candidatesYear: null
 	};
 });
-
-const calcHrProductivity = tryCalcWrap((employment: string, agreementVolume: string) => {
-	const volume = Number(agreementVolume);
-	const base: Record<string, NumberRange> = {
-		parttime: [1.25, 3.5],
-		fulltime: [1.25, 3.5]
-	};
-
-	const improvement: Record<string, NumberRange> = {
-		parttime: [0.32, 0.5],
-		fulltime: [0.32, 0.5]
-	};
-
-	const financialConstant = 25;
-
-	const calcYRange = (index: 0 | 1) =>
-		base[employment][index] * improvement[employment][index] * volume;
-
-	const employeeHoursYear: NumberRange = [calcYRange(0), calcYRange(1)];
-
-	const Y = numberRangeToText(employeeHoursYear);
-	const X = `${formatPercent(improvement[employment][0])}-${formatPercent(improvement[employment][1])}`;
-
-	const calcZRange = (index: 0 | 1) =>
-		base[employment][index] * improvement[employment][index] * financialConstant * volume;
-
-	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
-	return {
-		illustrationType: 'pie',
-		text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value HR activities.`,
-		renderConfig: [
-			{
-				type: 'variable',
-				key: 'X'
-			},
-			{
-				type: 'text',
-				content: ' improvement in staff productivity, freeing up '
-			},
-			{
-				type: 'variable',
-				key: 'Y'
-			},
-			{
-				type: 'text',
-				content: ' annual hours for higher-value HR activities.'
-			}
-		],
-		X,
-		Y,
-		dollarsYear: ZRaw,
-		employeeHoursYear,
-		cardMainValue: nFormatter(ZRaw[1]),
-		cardMainValueDollars: true,
-		candidatesYear: null,
-		onboardingDaysCustomer: null,
-		onboardingDaysCandidate: null,
-		onboardingDaysVendor: null
-	};
-});
-
 const calcHrConversionRate = tryCalcWrap((employment: string, agreementVolume: string) => {
 	const volume = Number(agreementVolume);
 
@@ -147,45 +71,81 @@ const calcHrConversionRate = tryCalcWrap((employment: string, agreementVolume: s
 		}
 	};
 
-	const X = `${formatPercent(improvement[employment][volume][0], {
-		maximumFractionDigits: 2,
-		minimumFractionDigits: 1
-	})}-${formatPercent(improvement[employment][volume][1], {
-		maximumFractionDigits: 2,
-		minimumFractionDigits: 1
-	})}`;
+	const XRaw: NumberRange = [
+		improvement[employment][volume][0],
+		improvement[employment][volume][1]
+	];
+
+	const X = numberRangeToText(XRaw, (value) =>
+		formatPercent(value, {
+			maximumFractionDigits: 2,
+			minimumFractionDigits: 1
+		})
+	);
+	const XText = XRaw.map((x) =>
+		formatPercent(x, { maximumFractionDigits: 2, minimumFractionDigits: 1 })
+	);
 
 	const calcYRange = (index: 0 | 1) => improvement[employment][volume][index] * volume;
 	const YRaw = getRange(calcYRange);
 	const Y = numberRangeToText(YRaw, nFormatter);
 	return {
 		illustrationType: 'bar',
-		text: `${X} increase in conversion rates by reducing abandonment in the agreement process. Onboard ${Y} additional candidates annually.`,
-		renderConfig: [
-			{
-				type: 'variable',
-				key: 'X'
-			},
-			{
-				type: 'text',
-				content:
-					' increase in conversion rates by reducing abandonment in the agreement process. Onboard '
-			},
-			{
-				type: 'variable',
-				key: 'Y'
-			},
-			{
-				type: 'text',
-				content: ' additional candidates annually.'
-			}
-		],
+		resultTextKey: 'hr_2',
 		X,
+		XRaw,
+		XText,
 		Y,
 		dollarsYear: null,
 		employeeHoursYear: null,
 		cardMainValue: Y,
 		candidatesYear: YRaw,
+		onboardingDaysCustomer: null,
+		onboardingDaysCandidate: null,
+		onboardingDaysVendor: null
+	};
+});
+
+const calcHrProductivity = tryCalcWrap((employment: string, agreementVolume: string) => {
+	const volume = Number(agreementVolume);
+	const base: Record<string, NumberRange> = {
+		parttime: [1.25, 3.5],
+		fulltime: [1.25, 3.5]
+	};
+
+	const improvement: Record<string, NumberRange> = {
+		parttime: [0.32, 0.5],
+		fulltime: [0.32, 0.5]
+	};
+
+	const financialConstant = 25;
+
+	const calcYRange = (index: 0 | 1) =>
+		base[employment][index] * improvement[employment][index] * volume;
+
+	const employeeHoursYear: NumberRange = [calcYRange(0), calcYRange(1)];
+
+	const Y = numberRangeToText(employeeHoursYear);
+	const XRaw: NumberRange = [improvement[employment][0], improvement[employment][1]];
+	const X = numberRangeToText(XRaw, formatPercent);
+	const XText = XRaw.map((x) => formatPercent(x));
+
+	const calcZRange = (index: 0 | 1) =>
+		base[employment][index] * improvement[employment][index] * financialConstant * volume;
+
+	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
+	return {
+		illustrationType: 'pie',
+		resultTextKey: 'hr_3',
+		X,
+		XRaw,
+		XText,
+		Y,
+		dollarsYear: ZRaw,
+		employeeHoursYear,
+		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValueDollars: true,
+		candidatesYear: null,
 		onboardingDaysCustomer: null,
 		onboardingDaysCandidate: null,
 		onboardingDaysVendor: null

@@ -1,4 +1,3 @@
-// import type { DriverOption } from '../config.js';
 import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
@@ -23,7 +22,14 @@ const calcB2cTat = tryCalcWrap((customerInformation: string) => {
 		});
 
 	const Y = `${calcYRange(0, 1)}-${calcYRange(1, 0)}`;
-	const X = `${formatPercent(improvement[customerInformation][0])}`;
+
+	const XRaw: NumberRange = [
+		improvement[customerInformation][0],
+		improvement[customerInformation][1]
+	];
+
+	const X = numberRangeToText(XRaw, formatPercent);
+	const XText = XRaw.map((x) => formatPercent(x));
 
 	const calcOnboardingDaysCustomerRaw = getRange(
 		(index: 0 | 1) => base[customerInformation][index] * improvement[customerInformation][index]
@@ -31,26 +37,10 @@ const calcB2cTat = tryCalcWrap((customerInformation: string) => {
 
 	return {
 		illustrationType: 'calendar',
-		text: `${X} faster deals, with the potential to reduce the sales cycle from weeks to just ${Y} days.`,
-		renderConfig: [
-			{
-				type: 'variable',
-				key: 'X'
-			},
-			{
-				type: 'text',
-				content: ' faster deals, with the potential to reduce the sales cycle from weeks to just '
-			},
-			{
-				type: 'variable',
-				key: 'Y'
-			},
-			{
-				type: 'text',
-				content: ' days.'
-			}
-		],
+		resultTextKey: 'b2c_1',
 		X,
+		XRaw,
+		XText,
 		Y,
 		employeeHoursYear: null,
 		dollarsYear: null,
@@ -82,7 +72,12 @@ const calcB2cStaffProductivity = tryCalcWrap(
 
 		const employeeHoursYear: NumberRange = [calcYRange(0), calcYRange(1)];
 		const Y = numberRangeToText(employeeHoursYear);
-		const X = `${formatPercent(improvement[customerInformation][0])}-${formatPercent(improvement[customerInformation][1])}`;
+		const XRaw: NumberRange = [
+			improvement[customerInformation][0],
+			improvement[customerInformation][1]
+		];
+		const X = numberRangeToText(XRaw, formatPercent);
+		const XText = XRaw.map((x) => formatPercent(x));
 
 		const calcZRange = (index: 0 | 1) =>
 			base[customerInformation][index] *
@@ -93,26 +88,10 @@ const calcB2cStaffProductivity = tryCalcWrap(
 		const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 		return {
 			illustrationType: 'pie',
-			text: `${X} improvement in staff productivity, freeing up ${Y} annual hours for higher-value activities.`,
-			renderConfig: [
-				{
-					type: 'variable',
-					key: 'X'
-				},
-				{
-					type: 'text',
-					content: ' improvement in staff productivity, freeing up '
-				},
-				{
-					type: 'variable',
-					key: 'Y'
-				},
-				{
-					type: 'text',
-					content: ' annual hours for higher-value activities.'
-				}
-			],
+			resultTextKey: 'b2c_3',
+			XRaw,
 			X,
+			XText,
 			Y,
 			dollarsYear: ZRaw,
 			employeeHoursYear,
@@ -152,30 +131,22 @@ const calcB2cConversionRate = tryCalcWrap((customerInformation: string, amount: 
 		}
 	};
 
-	const X = `${formatPercent(improvement[customerInformation][financial][0], {
-		maximumFractionDigits: 1
-	})}-${formatPercent(improvement[customerInformation][financial][1], {
-		maximumFractionDigits: 1
-	})}`;
+	const XRaw: NumberRange = [
+		improvement[customerInformation][financial][0],
+		improvement[customerInformation][financial][1]
+	];
+	const X = numberRangeToText(XRaw, (n) => formatPercent(n, { maximumFractionDigits: 1 }));
+	const XText = XRaw.map((x) => formatPercent(x, { maximumFractionDigits: 1 }));
 
 	const calcZRange = (index: 0 | 1) =>
 		improvement[customerInformation][financial][index] * financial;
 	const ZRaw: NumberRange = [calcZRange(0), calcZRange(1)];
 	return {
 		illustrationType: 'bar',
-		text: `${X} increase in conversion rates by reducing customer abandonment during the agreement process.`,
-		renderConfig: [
-			{
-				type: 'variable',
-				key: 'X'
-			},
-			{
-				type: 'text',
-				content:
-					' increase in conversion rates by reducing customer abandonment during the agreement process.'
-			}
-		],
+		resultTextKey: 'b2c_2',
 		X,
+		XRaw,
+		XText,
 		Y: null,
 		employeeHoursYear: null,
 		dollarsYear: ZRaw,

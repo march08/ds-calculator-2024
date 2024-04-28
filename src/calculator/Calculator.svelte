@@ -1,6 +1,5 @@
 <script lang="ts">
 	import CtaButtonContainer from './components/CtaButtonContainer.svelte';
-	import { flowConfig } from './config.js';
 
 	import { derived } from 'svelte/store';
 	import CalculatorStep from './components/CalculatorStep.svelte';
@@ -9,15 +8,22 @@
 	import StepsContainer from './components/StepsContainer.svelte';
 	import { getSubmissionStore } from './stores/submissionStore.js';
 	import { renderResultCards } from './externalDomManipulation/renderResultCards.js';
-	import { calculate } from './calculations/calculate.js';
+	import { calculate, type OverallResultWithTranslations } from './calculations/calculate.js';
 	import { updateContactFormDescriptionField } from './externalDomManipulation/updateContactFormDescriptionField.js';
 	import Button from './components/Button.svelte';
 	import { toggleResult } from './externalDomManipulation/showResult.js';
 	import { getUiStore } from './stores/uiStore.js';
 	import { renderOverallResultCards } from './externalDomManipulation/renderOverallResultCards.js';
 	import ResultPreviews from './components/utilityComponents/ResultPreviews.svelte';
-	import type { OverallResult, ScrollInto, StoredCalcState } from './types.js';
+	import type { OverallResult, ScrollInto } from './types.js';
 	import { getOptionsSequence } from './utils/optionsSequence.js';
+	import { TRANSLATION_STORE_CONTENXT, getTranslationStore } from './stores/translationStore.js';
+	import type { WindowWithOptions } from './utils/getWindow.js';
+
+	export let lang: string = 'fr-CA';
+
+	const translationStore = getTranslationStore(lang);
+	setContext(TRANSLATION_STORE_CONTENXT, translationStore);
 
 	export let targetResultCardsContainerSelector: string = '';
 	export let onResultCardsUpdate: VoidFunction = () => {};
@@ -35,14 +41,20 @@
 		}
 	};
 
+	(window as unknown as WindowWithOptions).langOptions = {
+		currencyFormatter: {
+			currency: 'CAD',
+			currencyDisplay: 'narrowSymbol'
+		},
+		lang
+	};
+
 	/**
 	 * submission store
 	 */
-	const {
-		store: submissionFormState,
-		defaultState: defaultSubmissionState,
-		resetStore: resetSubmissionStore
-	} = getSubmissionStore(flowConfig);
+	const { store: submissionFormState, defaultState: defaultSubmissionState } = getSubmissionStore(
+		$translationStore.flowConfig
+	);
 	setContext('answerState', submissionFormState);
 
 	/**
@@ -201,10 +213,10 @@
 	/**
 	 * result
 	 */
-	let result: OverallResult = {
+	let result: OverallResultWithTranslations = {
 		allRes: []
 	} as any;
-	$: result = calculate($submissionFormState);
+	$: result = calculate($submissionFormState, $translationStore);
 	$: resultItems = result.allRes;
 
 	$: handleManuallyUpdateAssessment = () => {
@@ -254,35 +266,35 @@
 			visible={true}
 			id="ds-calc-step-1"
 			stateStep="first"
-			stepConfig={flowConfig.calcConfigStep1}
+			stepConfig={$translationStore.flowConfig.calcConfigStep1}
 			onChange={handleChangeAreas}
 		/>
 		<CalculatorStep
 			visible={visibilityB2B}
 			id="ds-calc-step-2-b2b"
 			stateStep="B2B"
-			stepConfig={flowConfig.calcConfigStep2b2b}
+			stepConfig={$translationStore.flowConfig.calcConfigStep2b2b}
 			onChange={handleSelectChange}
 		/>
 		<CalculatorStep
 			visible={visibilityPROC}
 			id="ds-calc-step-2-proc"
 			stateStep="PROC"
-			stepConfig={flowConfig.calcConfigStep2procurement}
+			stepConfig={$translationStore.flowConfig.calcConfigStep2procurement}
 			onChange={handleSelectChange}
 		/>
 		<CalculatorStep
 			visible={visibilityHR}
 			id="ds-calc-step-2-hr"
 			stateStep="HR"
-			stepConfig={flowConfig.calcConfigStep2hr}
+			stepConfig={$translationStore.flowConfig.calcConfigStep2hr}
 			onChange={handleSelectChange}
 		/>
 		<CalculatorStep
 			visible={visibilityB2C}
 			id="ds-calc-step-2-b2c"
 			stateStep="B2C"
-			stepConfig={flowConfig.calcConfigStep2b2c}
+			stepConfig={$translationStore.flowConfig.calcConfigStep2b2c}
 			onChange={handleSelectChange}
 		/>
 		<CalculatorStep
@@ -292,7 +304,7 @@
 			filterOptions={(option) => {
 				return !!$submissionFormState.first.businessArea.find((area) => option.key?.includes(area));
 			}}
-			stepConfig={flowConfig.calcConfigLast}
+			stepConfig={$translationStore.flowConfig.calcConfigLast}
 			onChange={(values) => {
 				setTimeout(() => {
 					if (values.length === 0) {
@@ -324,7 +336,7 @@
 			}}
 			disabled={!canManuallyUpdate}
 		>
-			Update Your Results
+			{$translationStore.translations.update_your_results}
 		</Button>
 	</CtaButtonContainer>
 </div>

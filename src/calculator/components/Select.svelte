@@ -2,10 +2,11 @@
 	import { isTruthy } from '../utils/isTruthy.js';
 	import Popper from '@popperjs/svelte';
 
-	import type { Option, OptionOrDelimiter, UIState } from '../types.js';
+	import type { LangTranslation, Option, OptionOrDelimiter, UIState } from '../types.js';
 	import type { Writable } from 'svelte/store';
 	import { getContext } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import { getTranslationStoreContext } from '../stores/translationStore.js';
 
 	export let multiselect: boolean = false;
 	export let value: string[] = [];
@@ -17,6 +18,8 @@
 	export let key: string;
 	export let multiselectDelimiter: string = ', ';
 	export let displayValueLowercase: boolean = true;
+
+	const translationStore = getTranslationStoreContext();
 
 	let uiState = getContext<Writable<UIState>>('uiState');
 
@@ -207,7 +210,7 @@
 							<button
 								class="ds-calc-dropdown-confirm"
 								disabled={internalState.length === 0}
-								on:click={onConfirm}>Confirm Selection</button
+								on:click={onConfirm}>{$translationStore.translations.confirm_selection}</button
 							>
 						</div>
 					{/if}

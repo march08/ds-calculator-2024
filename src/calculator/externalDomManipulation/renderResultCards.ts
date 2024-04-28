@@ -1,4 +1,4 @@
-import type { CalculatedResult } from '../types.js';
+import type { OverallResultWithTranslations } from '../calculations/calculate.js';
 import { sortCalculatedResult } from '../utils/sortCalculatedResult.js';
 type Color = 'lavender' | 'deepblue' | 'gradient' | 'white';
 type In = 0 | 1 | 2 | 3;
@@ -43,7 +43,7 @@ const imgSrcMap = {
 };
 
 export const renderResultCards = (
-	resultUnsorted: CalculatedResult[],
+	resultUnsorted: OverallResultWithTranslations['allRes'],
 	targetResultCardsContainerSelector: string
 ) => {
 	const result = sortCalculatedResult(resultUnsorted);
@@ -78,11 +78,7 @@ export const renderResultCards = (
 			}
 					<div class="text-size-regular">
 					<div data-ds-result-card="description" class="hp-improve_description">
-						${item.renderConfig
-							.map((config) =>
-								config.type === 'text' ? config.content : `<strong>${item[config.key]}</strong>`
-							)
-							.join('')}
+						${item.translatedTextHtml}
 					</div>
 					</div>
 			</div>

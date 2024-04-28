@@ -1,95 +1,6 @@
-import type { StepConfig } from './types.js';
+import type { FlowConfig, LangTranslation } from '../types.js';
 
-const driverOptions = [
-	{
-		key: 'B2B',
-		title: 'Select your priorities for B2B sales'
-	},
-	{
-		key: 'B2B_1_seller_productivity',
-		label: 'Drive business growth from faster, more productive selling'
-	},
-	{
-		key: 'B2B_2_reduced_risk_exposure',
-		label: 'Reduce risk exposure by mitigating risky clauses'
-	},
-	{
-		key: 'B2B_3_reduced_revenue_leakage',
-		label: 'Maximize agreement value and limit leakage'
-	},
-	{
-		key: 'PROC',
-		title: 'Select your priorities for procurement'
-	},
-	{
-		key: 'PROC_1_onboard_vendors',
-		label: 'Onboard vendors faster to access goods and services sooner'
-	},
-	{
-		key: 'PROC_2_improved_productivity',
-		label: 'Improve operational efficiency to increase capacity'
-	},
-	{
-		key: 'PROC_3_reduce_risk',
-		label: 'Reduce risk exposure by mitigating risky clauses'
-	},
-	{
-		key: 'PROC_4_max_value',
-		label: 'Maximize value from spend and receive full benefits'
-	},
-	{
-		key: 'HR',
-		title: 'Select your priorities for HR'
-	},
-	{
-		key: 'HR_1_faster_onboard',
-		label: 'Onboard new hires faster and easier'
-	},
-	{ key: 'HR_2_attract_retain_talent', label: 'Attract and retain top talent' },
-	{
-		key: 'HR_3_staff_productivity',
-		label: 'Increase staff productivity to expand scope'
-	},
-	{
-		key: 'B2C',
-		title: 'Select your priorities for B2C sales'
-	},
-	{
-		key: 'B2C_1_onboard_customers',
-		label: 'Onboard customers faster and easier'
-	},
-	{ key: 'B2C_2_attract_retain', label: 'Attract and retain more customers' },
-	{
-		key: 'B2C_3_boost_productivity',
-		label: 'Boost staff productivity to improve speed and capacity'
-	}
-] as const;
-
-export type FlowConfig = {
-	calcConfigStep1: StepConfig;
-	calcConfigStep2b2b: StepConfig;
-	calcConfigStep2hr: StepConfig;
-	calcConfigStep2procurement: StepConfig;
-	calcConfigStep2b2c: StepConfig;
-	calcConfigLast: StepConfig;
-};
 export const flowConfig: FlowConfig = {
-	calcConfigLast: [
-		{
-			type: 'text',
-			data: 'Lastly, I want to'
-		},
-		{
-			type: 'select',
-			data: {
-				key: 'driver',
-				placeholder: 'Add Priorities',
-				multiselect: true,
-				multiselectDelimiter: '; ',
-				options: driverOptions
-			}
-		}
-	],
 	calcConfigStep1: [
 		{
 			type: 'text',
@@ -557,7 +468,6 @@ export const flowConfig: FlowConfig = {
 			}
 		}
 	],
-
 	calcConfigStep2b2c: [
 		{
 			type: 'text',
@@ -691,7 +601,135 @@ export const flowConfig: FlowConfig = {
 				]
 			}
 		}
+	],
+	calcConfigLast: [
+		{
+			type: 'text',
+			data: 'Lastly, I want to'
+		},
+		{
+			type: 'select',
+			data: {
+				key: 'driver',
+				placeholder: 'Add Priorities',
+				multiselect: true,
+				multiselectDelimiter: '; ',
+				options: [
+					{
+						key: 'B2B',
+						title: 'Select your priorities for B2B sales'
+					},
+					{
+						key: 'B2B_1_seller_productivity',
+						label: 'Drive business growth from faster, more productive selling'
+					},
+					{
+						key: 'B2B_2_reduced_risk_exposure',
+						label: 'Reduce risk exposure by mitigating risky clauses'
+					},
+					{
+						key: 'B2B_3_reduced_revenue_leakage',
+						label: 'Maximize agreement value and limit leakage'
+					},
+					{
+						key: 'PROC',
+						title: 'Select your priorities for procurement'
+					},
+					{
+						key: 'PROC_1_onboard_vendors',
+						label: 'Onboard vendors faster to access goods and services sooner'
+					},
+					{
+						key: 'PROC_2_improved_productivity',
+						label: 'Improve operational efficiency to increase capacity'
+					},
+					{
+						key: 'PROC_3_reduce_risk',
+						label: 'Reduce risk exposure by mitigating risky clauses'
+					},
+					{
+						key: 'PROC_4_max_value',
+						label: 'Maximize value from spend and receive full benefits'
+					},
+					{
+						key: 'HR',
+						title: 'Select your priorities for HR'
+					},
+					{
+						key: 'HR_1_faster_onboard',
+						label: 'Onboard new hires faster and easier'
+					},
+					{ key: 'HR_2_attract_retain_talent', label: 'Attract and retain top talent' },
+					{
+						key: 'HR_3_staff_productivity',
+						label: 'Increase staff productivity to expand scope'
+					},
+					{
+						key: 'B2C',
+						title: 'Select your priorities for B2C sales'
+					},
+					{
+						key: 'B2C_1_onboard_customers',
+						label: 'Onboard customers faster and easier'
+					},
+					{ key: 'B2C_2_attract_retain', label: 'Attract and retain more customers' },
+					{
+						key: 'B2C_3_boost_productivity',
+						label: 'Boost staff productivity to improve speed and capacity'
+					}
+				] as const
+			}
+		}
 	]
 } as const;
 
-export type DriverOption = (typeof driverOptions)[number]['key'];
+export const langConfig: LangTranslation = {
+	confirm_selection: 'Confirm Selection',
+	update_your_results: 'Update Your Results',
+	edit_your_assessment: 'Edit Your assessment',
+	title_days: 'days'
+};
+
+export const resultText = {
+	b2b_1:
+		'{X} faster deals, with the potential to reduce the sales cycle from weeks to just {Y} days.',
+	b2b_2:
+		'{X} more productive sellers, which frees up {Y} annual hours to accelerate pipeline development, close more deals, defend price points, etc.',
+	b2b_3:
+		'Up to {X} of B2B sales agreements completed without legal intervention by establishing a self-service process with smart guardrails.',
+	b2b_4:
+		'Up to {X} faster legal review and approvals for B2B sales agreements, freeing up {Y} annual hours to focus on more strategic negotiations, audits, etc.',
+	b2b_5:
+		'{X} estimated risk exposure reduction by ensuring B2B sales agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.',
+	b2b_6:
+		'{X} estimated reduction in revenue leakage by ensuring obligations are enforced, fees are collected, and renewal events are maximized.',
+	proc_1: '{X} faster vendor onboarding, going from weeks to just {Y} days.',
+	proc_2:
+		'{X} improvement in procurement staff productivity, freeing up {Y} annual hours to focus on priorities like vendor management and innovation.',
+	proc_3:
+		'Up to {X} of vendor agreements completed without legal intervention by establishing a self-service process with smart guardrails.',
+	proc_4:
+		'Up to {X} faster legal review and approvals for vendor agreements, freeing up {Y} annual hours to focus on more strategic negotiations, audits, etc.',
+	proc_5:
+		"{X} estimated risk exposure reduction by ensuring vendor agreements only contain standard, pre approved clauses unless there's a legal-approved exception.",
+	proc_6:
+		'{X} estimated reduction in savings leakage by ensuring obligations are enforced, rebates/penalties are collected, and renewals are maximized.',
+	hr_1: '{X} faster candidate onboarding, going from weeks to just {Y} days.',
+	hr_2: '{X} increase in conversion rates by reducing abandonment in the agreement process. Onboard {Y} additional candidates annually.',
+	hr_3: '{X} improvement in staff productivity, freeing up {Y} annual hours for higher-value HR activities.',
+	b2c_1:
+		'{X} faster deals, with the potential to reduce the sales cycle from weeks to just {Y} days.',
+	b2c_2:
+		'{X} increase in conversion rates by reducing customer abandonment during the agreement process.',
+	b2c_3:
+		'{X} improvement in staff productivity, freeing up {Y} annual hours for higher-value activities.',
+	up_to_1: 'Up to {X} Dollars/Year',
+	up_to_2: 'Up to {X} Employee Hours/Year',
+	up_to_3: 'Up to {X} Onboarding Days/Vendor',
+	up_to_4: 'Up to {X} Onboarding Days/Candidate',
+	up_to_5: 'Up to {X} Onboarding Days/Customer',
+	up_to_6: 'Up to {X} Candidates/Year'
+};
+
+export type ResultTextKey = keyof typeof resultText;
+export type ResultTranslation = typeof resultText;

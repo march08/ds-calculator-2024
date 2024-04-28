@@ -1,18 +1,17 @@
 <script lang="ts">
-	import { renderConfigToText } from '../../calculations/utils.js';
-	import type { CalculatedResult, NumberRange } from '../../types.js';
+	import type { OverallResultWithTranslations } from '../../calculations/calculate.js';
 	import { numberRangeToText } from '../../utils/array.js';
-	import { formatUsd } from '../../utils/number.js';
+	import { formatCurrency } from '../../utils/number.js';
 
 	export let title: string;
-	export let result: CalculatedResult[];
+	export let result: OverallResultWithTranslations['allRes'];
 </script>
 
 <div class="result-box">
 	<h3>{title}</h3>
 	<hr />
 	{#each result as resultItem}
-		<p>{renderConfigToText(resultItem)}</p>
+		<p>{resultItem.translatedText}</p>
 		<table>
 			<tr><td>TTT</td><td>{resultItem.cardMainValue}</td></tr>
 			<tr><td>X</td><td>{resultItem.X}</td></tr>
@@ -36,7 +35,7 @@
 				<td> Dollars/year: </td>
 				<td>
 					{#if resultItem.dollarsYear}
-						{numberRangeToText(resultItem.dollarsYear, formatUsd)}
+						{numberRangeToText(resultItem.dollarsYear, formatCurrency)}
 					{/if}
 				</td>
 			</tr>

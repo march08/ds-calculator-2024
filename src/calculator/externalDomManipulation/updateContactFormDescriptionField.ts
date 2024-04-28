@@ -1,8 +1,7 @@
-import { renderConfigToText } from '../calculations/utils.js';
-import type { OverallResult } from '../types.js';
+import type { OverallResultWithTranslations } from '../calculations/calculate.js';
 const nl = '\r\n';
 
-export const updateContactFormDescriptionField = (result: OverallResult) => {
+export const updateContactFormDescriptionField = (result: OverallResultWithTranslations) => {
 	if (typeof document !== 'undefined') {
 		const textAreaEl: HTMLTextAreaElement | null = document.querySelector(
 			'.gcdc-form-render textarea[name=description]'
@@ -12,7 +11,7 @@ export const updateContactFormDescriptionField = (result: OverallResult) => {
 
 		const allItems = (result.allRes || [])
 			.map((item) => {
-				return renderConfigToText(item);
+				return item.translatedText;
 			})
 			.join(nl);
 

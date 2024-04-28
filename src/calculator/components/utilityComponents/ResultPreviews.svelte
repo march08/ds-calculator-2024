@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { OverallResult } from '../../types.js';
+	import type { OverallResultWithTranslations } from '../../calculations/calculate.js';
 	import Button from '../Button.svelte';
 	import ResultPreview from './ResultPreview.svelte';
 
-	export let result: OverallResult;
+	export let result: OverallResultWithTranslations;
 	let displayCalculations = false;
 </script>
 
@@ -15,6 +15,11 @@
 			}}>{displayCalculations ? 'Hide' : 'Show'} calculations</Button
 		>
 	</div>
+	<ul>
+		{#each result.topTwo as item}
+			<li>{item.fullText}</li>
+		{/each}
+	</ul>
 	<ul>
 		<li>totalDollarsYear: {result.totalDollarsYearText}</li>
 		<li>totalEmployeeHoursYear: {result.totalEmployeeHoursYearText}</li>

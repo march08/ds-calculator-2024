@@ -1,28 +1,67 @@
-import type { OverallResult, StoredCalcState } from '../types.js';
+import type { CalculatedResult, StoredCalcState, TranslationState } from '../types.js';
 import { calcB2b } from './calculateB2B.js';
 import { calcB2c } from './calculateB2C.js';
 import { calcHr } from './calculateHr.js';
 import { calcPROC } from './calculatePROC.js';
 import { getTopTwoTotals } from './getTopTwoTotals.js';
 import { getTotalsPerArea } from './getTotalsPerArea.js';
+import {
+	translationResultToTextWithValues,
+	translationResultToTextWithValuesHtml
+} from './utils.js';
 
-export const calculate = (submissionFormState: StoredCalcState): OverallResult => {
+const includeTranslatedResultText = (
+	results: CalculatedResult[],
+	translationState: TranslationState
+) => {
+	return results.map((item) => {
+		return {
+			...item,
+			translatedText: translationResultToTextWithValues(
+				item,
+				translationState.resultTranslations[item.resultTextKey]
+			),
+			translatedTextHtml: translationResultToTextWithValuesHtml(
+				item,
+				translationState.resultTranslations[item.resultTextKey]
+			),
+			cardMainValue: item.cardMainValue.replace('days', translationState.translations.title_days)
+		};
+	});
+};
+
+export const calculate = (
+	submissionFormState: StoredCalcState,
+	translationState: TranslationState
+) => {
 	const driver = submissionFormState.last.driver || [];
 	/**
 	 * calculations
 	 */
 
-	// eslint-disable-next-line
-	const b2bResult = calcB2b(driver, submissionFormState.B2B as any);
+	const b2bResult = includeTranslatedResultText(
+		// eslint-disable-next-line
+		calcB2b(driver, submissionFormState.B2B as any),
+		translationState
+	);
 
-	// eslint-disable-next-line
-	const hrResult = calcHr(driver, submissionFormState.HR as any);
+	const hrResult = includeTranslatedResultText(
+		// eslint-disable-next-line
+		calcHr(driver, submissionFormState.HR as any),
+		translationState
+	);
 
-	// eslint-disable-next-line
-	const b2cResult = calcB2c(driver, submissionFormState.B2C as any);
+	const b2cResult = includeTranslatedResultText(
+		// eslint-disable-next-line
+		calcB2c(driver, submissionFormState.B2C as any),
+		translationState
+	);
 
-	// eslint-disable-next-line
-	const procResult = calcPROC(driver, submissionFormState.PROC as any);
+	const procResult = includeTranslatedResultText(
+		// eslint-disable-next-line
+		calcPROC(driver, submissionFormState.PROC as any),
+		translationState
+	);
 
 	const allRes = [...b2bResult, ...procResult, ...hrResult, ...b2cResult];
 
@@ -49,6 +88,8 @@ export const calculate = (submissionFormState: StoredCalcState): OverallResult =
 				result: b2cResult
 			}
 		],
-		topTwo: getTopTwoTotals(totalsPerArea)
+		topTwo: getTopTwoTotals(totalsPerArea, translationState)
 	};
 };
+
+export type OverallResultWithTranslations = ReturnType<typeof calculate>;

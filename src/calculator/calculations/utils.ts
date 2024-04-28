@@ -16,14 +16,18 @@ export const getRange = (fn: (index: 0 | 1) => number) => {
 	return result;
 };
 
-export const renderConfigToText = (item: CalculatedResult) => {
-	return item.renderConfig
-		.map((config) => {
-			if (config.type === 'variable') {
-				return item[config.key];
-			} else {
-				return config.content;
-			}
-		})
-		.join('');
+export const translationResultToTextWithValues = (item: CalculatedResult, text: string) => {
+	return text
+		.replace('{X}', item.X || '')
+		.replace('{Y}', item.Y || '')
+		.replace('{X1}', item.XText[0] || '')
+		.replace('{X2}', item.XText[1] || '');
+};
+
+export const translationResultToTextWithValuesHtml = (item: CalculatedResult, text: string) => {
+	return text
+		.replace('{X}', `<strong>${item.X || ''}</strong>`)
+		.replace('{X1}', `<strong>${item.XText[0] || ''}</strong>`)
+		.replace('{X2}', `<strong>${item.XText[1] || ''}</strong>`)
+		.replace('{Y}', `<strong>${item.Y || ''}</strong>`);
 };

@@ -1,3 +1,5 @@
+import type { ResultTextKey, ResultTranslation } from './lang/config.js';
+
 export type Steps = 1 | 2 | 3;
 
 export type Option = Readonly<{ key: string; label: string }>;
@@ -21,6 +23,13 @@ export type UIState = {
 	isInitLoaded: boolean;
 	activeOption: string | null;
 	optionsSequence: string[];
+};
+
+export type TranslationState = {
+	lang: string;
+	translations: LangTranslation;
+	resultTranslations: ResultTranslation;
+	flowConfig: FlowConfig;
 };
 
 export type SelectConfig = {
@@ -58,9 +67,11 @@ export type ResultRenderConfigText = {
 export type ResultRenderConfigItem = ResultRenderConfigVariable | ResultRenderConfigText;
 
 export type CalculatedResult = {
+	resultTextKey: ResultTextKey;
 	illustrationType: 'bar' | 'pie' | 'calendar';
-	renderConfig: ResultRenderConfigItem[];
 	X: string | null;
+	XRaw: NumberRange;
+	XText: string[];
 	Y: string | null;
 	cardMainValue: string;
 	cardMainValueDollars?: boolean;
@@ -130,3 +141,38 @@ export type ScrollInto = (
 		blockCenterOffset?: boolean;
 	}
 ) => void;
+
+export type DriverOption =
+	| 'B2B'
+	| 'B2B_1_seller_productivity'
+	| 'B2B_2_reduced_risk_exposure'
+	| 'B2B_3_reduced_revenue_leakage'
+	| 'PROC'
+	| 'PROC_1_onboard_vendors'
+	| 'PROC_2_improved_productivity'
+	| 'PROC_3_reduce_risk'
+	| 'PROC_4_max_value'
+	| 'HR'
+	| 'HR_1_faster_onboard'
+	| 'HR_2_attract_retain_talent'
+	| 'HR_3_staff_productivity'
+	| 'B2C'
+	| 'B2C_1_onboard_customers'
+	| 'B2C_2_attract_retain'
+	| 'B2C_3_boost_productivity';
+
+export type FlowConfig = {
+	calcConfigStep1: StepConfig;
+	calcConfigStep2b2b: StepConfig;
+	calcConfigStep2hr: StepConfig;
+	calcConfigStep2procurement: StepConfig;
+	calcConfigStep2b2c: StepConfig;
+	calcConfigLast: StepConfig;
+};
+
+export type LangTranslation = {
+	title_days: string;
+	confirm_selection: string;
+	update_your_results: string;
+	edit_your_assessment: string;
+};

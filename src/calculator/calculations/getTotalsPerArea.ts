@@ -1,14 +1,14 @@
 import type { CalculatedResult, OverResult_TotalsPerArea } from '../types.js';
 import { numberRangeToText, sumRange } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
-import { formatUsd } from '../utils/number.js';
+import { formatCurrency } from '../utils/number.js';
 
 export const getTotalsPerArea = (allRes: CalculatedResult[]): OverResult_TotalsPerArea => {
 	const employeeHoursYear = sumRange(allRes.map((item) => item.employeeHoursYear).filter(isTruthy));
 	const employeeHoursYearText = numberRangeToText(employeeHoursYear);
 
 	const totalDollarsYear = sumRange(allRes.map((item) => item.dollarsYear).filter(isTruthy));
-	const totalDollarsYearText = numberRangeToText(totalDollarsYear, formatUsd);
+	const totalDollarsYearText = numberRangeToText(totalDollarsYear, formatCurrency);
 
 	const totalEmployeeHoursYear = sumRange(
 		allRes.map((item) => item.employeeHoursYear).filter(isTruthy)

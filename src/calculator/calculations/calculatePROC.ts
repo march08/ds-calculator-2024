@@ -1,4 +1,3 @@
-// import type { DriverOption } from '../config.js';
 import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
@@ -18,7 +17,9 @@ const calcPROCtat = tryCalcWrap((spendType: string) => {
 		capex: [0.83, 0.83]
 	};
 
-	const X = formatPercent(improvement[spendType][0]);
+	const XRaw: NumberRange = [improvement[spendType][0], improvement[spendType][0]];
+	const X = numberRangeToText(XRaw, formatPercent);
+	const XText = XRaw.map((x) => formatPercent(x));
 
 	const calcY = (index: 0 | 1) => {
 		return base[spendType][index] * (1 - improvement[spendType][index]);
@@ -32,26 +33,10 @@ const calcPROCtat = tryCalcWrap((spendType: string) => {
 
 	return {
 		illustrationType: 'calendar',
-		text: `${X} faster vendor onboarding, going from weeks to just ${Y} days.`,
-		renderConfig: [
-			{
-				type: 'variable',
-				key: 'X'
-			},
-			{
-				type: 'text',
-				content: ' faster vendor onboarding, going from weeks to just '
-			},
-			{
-				type: 'variable',
-				key: 'Y'
-			},
-			{
-				type: 'text',
-				content: ' days.'
-			}
-		],
+		resultTextKey: 'proc_1',
 		X,
+		XRaw,
+		XText,
 		Y,
 		cardMainValue: `${Y} days`,
 		dollarsYear: null,
@@ -84,10 +69,9 @@ const calcPROCEfficiencyToIncreaseCapacity = tryCalcWrap(
 			return base[spendType][index] * improvement[spendType][index] * volume;
 		};
 
-		const X = numberRangeToText(
-			[improvement[spendType][0], improvement[spendType][1]],
-			formatPercent
-		);
+		const XRaw: NumberRange = [improvement[spendType][0], improvement[spendType][1]];
+		const X = numberRangeToText(XRaw, formatPercent);
+		const XText = XRaw.map((x) => formatPercent(x));
 
 		const employeeHoursYear: NumberRange = [calcY(0), calcY(1)];
 		const Y = numberRangeToText(employeeHoursYear);
@@ -100,25 +84,10 @@ const calcPROCEfficiencyToIncreaseCapacity = tryCalcWrap(
 
 		return {
 			illustrationType: 'bar',
-			renderConfig: [
-				{
-					type: 'variable',
-					key: 'X'
-				},
-				{
-					type: 'text',
-					content: ' improvement in procurement staff productivity, freeing up '
-				},
-				{
-					type: 'variable',
-					key: 'Y'
-				},
-				{
-					type: 'text',
-					content: ' annual hours to focus on priorities like vendor management and innovation.'
-				}
-			],
+			resultTextKey: 'proc_2',
 			X,
+			XRaw,
+			XText,
 			Y,
 			dollarsYear: [calcZ(0), calcZ(1)],
 			employeeHoursYear,
@@ -139,22 +108,16 @@ const calcPROCLegalCapacity = tryCalcWrap((spendType: string) => {
 		capex: [0.78, 0.78]
 	};
 
-	const X = formatPercent(improvement[spendType][0]);
+	const XRaw: NumberRange = [improvement[spendType][0], improvement[spendType][0]];
+	const X = numberRangeToText(XRaw, formatPercent);
+	const XText = XRaw.map((x) => formatPercent(x));
 
 	return {
 		illustrationType: 'pie',
-		renderConfig: [
-			{
-				type: 'variable',
-				key: 'X'
-			},
-			{
-				type: 'text',
-				content:
-					' of vendor agreements completed without legal intervention by establishing a self-service process with smart guardrails.'
-			}
-		],
+		resultTextKey: 'proc_3',
 		X,
+		XRaw,
+		XText,
 		Y: null,
 		dollarsYear: null,
 		employeeHoursYear: null,
@@ -186,10 +149,9 @@ const calcPROCLegalProductivity = tryCalcWrap((spendType: string, agreementVolum
 		return base[spendType][index] * improvement[spendType][index] * volume;
 	};
 
-	const X = numberRangeToText(
-		[improvement[spendType][0], improvement[spendType][1]],
-		formatPercent
-	);
+	const XRaw: NumberRange = [improvement[spendType][0], improvement[spendType][1]];
+	const X = numberRangeToText(XRaw, formatPercent);
+	const XText = XRaw.map((x) => formatPercent(x));
 
 	const employeeHoursYear: NumberRange = [calcY(0), calcY(1)];
 	const Y = numberRangeToText(employeeHoursYear);
@@ -201,25 +163,10 @@ const calcPROCLegalProductivity = tryCalcWrap((spendType: string, agreementVolum
 
 	return {
 		illustrationType: 'bar',
-		renderConfig: [
-			{
-				type: 'variable',
-				key: 'X'
-			},
-			{
-				type: 'text',
-				content: ' faster legal review and approvals for vendor agreements, freeing up '
-			},
-			{
-				type: 'variable',
-				key: 'Y'
-			},
-			{
-				type: 'text',
-				content: ' annual hours to focus on more strategic negotiations, audits, etc.'
-			}
-		],
+		resultTextKey: 'proc_4',
 		X,
+		XRaw,
+		XText,
 		Y,
 		dollarsYear: ZRaw,
 		employeeHoursYear,
@@ -248,10 +195,9 @@ const calcPROCReduceRisk = tryCalcWrap((spendType: string, agreementVolume: stri
 
 	const financialConstant = 100000;
 
-	const X = numberRangeToText(
-		[improvement[spendType][0], improvement[spendType][1]],
-		formatPercent
-	);
+	const XRaw: NumberRange = [improvement[spendType][0], improvement[spendType][1]];
+	const X = numberRangeToText(XRaw, formatPercent);
+	const XText = XRaw.map((x) => formatPercent(x));
 
 	const zTableCapex: Record<string, NumberRange> = {
 		1000: [37500, 50000],
@@ -276,19 +222,10 @@ const calcPROCReduceRisk = tryCalcWrap((spendType: string, agreementVolume: stri
 
 	return {
 		illustrationType: 'bar',
-		text: `${X} estimated risk exposure reduction by ensuring procurement agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.`,
-		renderConfig: [
-			{
-				type: 'variable',
-				key: 'X'
-			},
-			{
-				type: 'text',
-				content:
-					' estimated risk exposure reduction by ensuring vendor agreements only contain standard, pre approved clauses unless there’s a legal-approved exception.'
-			}
-		],
+		resultTextKey: 'proc_5',
 		X,
+		XRaw,
+		XText,
 		Y: null,
 		dollarsYear: ZRaw,
 		employeeHoursYear: null,
@@ -343,10 +280,9 @@ const calcPROCReduceSavingsLeakage = tryCalcWrap((spendType: string, spendAmount
 		}
 	};
 
-	const X = numberRangeToText(
-		[improvement[spendType][0], improvement[spendType][1]],
-		formatPercent
-	);
+	const XRaw: NumberRange = [improvement[spendType][0], improvement[spendType][1]];
+	const X = numberRangeToText(XRaw, formatPercent);
+	const XText = XRaw.map((x) => formatPercent(x));
 
 	const calcZ = (index: 0 | 1) => {
 		return amount * base[spendType][amount][index] * improvement[spendType][index];
@@ -355,19 +291,10 @@ const calcPROCReduceSavingsLeakage = tryCalcWrap((spendType: string, spendAmount
 
 	return {
 		illustrationType: 'pie',
-		text: `${X} estimated reduction in savings leakage by ensuring obligations are enforced, rebates/penalties are collected, and renewals are maximized.`,
-		renderConfig: [
-			{
-				type: 'variable',
-				key: 'X'
-			},
-			{
-				type: 'text',
-				content:
-					' estimated reduction in savings leakage by ensuring obligations are enforced, rebates/penalties are collected, and renewals are maximized.'
-			}
-		],
+		resultTextKey: 'proc_6',
 		X,
+		XRaw,
+		XText,
 		Y: null,
 		dollarsYear: ZRaw,
 		employeeHoursYear: null,
