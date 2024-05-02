@@ -723,13 +723,21 @@ export const resultText = {
 		'{X} increase in conversion rates by reducing customer abandonment during the agreement process.',
 	b2c_3:
 		'{X} improvement in staff productivity, freeing up {Y} annual hours for higher-value activities.',
-	up_to_1: 'Up to {X} Dollars/Year',
-	up_to_2: 'Up to {X} Employee Hours/Year',
-	up_to_3: 'Up to {X} Onboarding Days/Vendor',
-	up_to_4: 'Up to {X} Onboarding Days/Candidate',
-	up_to_5: 'Up to {X} Onboarding Days/Customer',
-	up_to_6: 'Up to {X} Candidates/Year'
+	up_to_1_1: 'Up to {X}',
+	up_to_1_2: 'Dollars/Year',
+	up_to_2_1: 'Up to {X}',
+	up_to_2_2: 'Employee Hours/Year',
+	up_to_3_1: 'Up to {X}',
+	up_to_3_2: 'Onboarding Days/Vendor',
+	up_to_4_1: 'Up to {X}',
+	up_to_4_2: 'Onboarding Days/Candidate',
+	up_to_5_1: 'Up to {X}',
+	up_to_5_2: 'Onboarding Days/Customer',
+	up_to_6_1: 'Up to {X}',
+	up_to_6_2: 'Candidates/Year'
 };
+
+export const currency = 'USD';
 
 export type ResultTextKey = keyof typeof resultText;
 export type ResultTranslation = typeof resultText;

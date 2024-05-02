@@ -1,7 +1,7 @@
 import type { OverResult_TotalsPerArea, TopTwoResult, TranslationState } from '../types.js';
 import { lastRangeItem } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
-import { nFormatter } from '../utils/number.js';
+import { formatCurrency, nFormatter } from '../utils/number.js';
 
 /**
  * returns up to two main domains
@@ -13,63 +13,71 @@ export const getTopTwoTotals = (
 ): TopTwoResult => {
 	const arrayTotals = [
 		{
-			displayValue: lastRangeItem(result.totalDollarsYear, nFormatter, 'Up to $'),
-			text: 'Dollars/Year',
-			illustration: 'stack' as const,
-			fullText: translationState.resultTranslations.up_to_1.replace(
-				'{X}',
-				lastRangeItem(result.totalDollarsYear, nFormatter) || ''
-			)
+			displayValue: lastRangeItem(
+				result.totalDollarsYear,
+				(value) =>
+					formatCurrency(value, {
+						compactDisplay: 'short',
+						notation: 'compact'
+					}),
+				translationState.resultTranslations.up_to_1_1
+			),
+			text: translationState.resultTranslations.up_to_1_2,
+			illustration: 'stack' as const
 		},
 		{
-			displayValue: lastRangeItem(result.totalEmployeeHoursYear, nFormatter, 'Up to '),
-			text: 'Employee Hours/Year',
-			illustration: 'person' as const,
-			fullText: translationState.resultTranslations.up_to_2.replace(
-				'{X}',
-				lastRangeItem(result.totalEmployeeHoursYear, nFormatter) || ''
-			)
+			displayValue: lastRangeItem(
+				result.totalEmployeeHoursYear,
+				nFormatter,
+				translationState.resultTranslations.up_to_2_1
+			),
+			text: translationState.resultTranslations.up_to_2_2,
+			illustration: 'person' as const
 		},
 		{
-			displayValue: lastRangeItem(result.totalOnboardingDaysVendor, nFormatter, 'Up to '),
-			text: 'Onboarding Days/Vendor',
-			illustration: 'stack' as const,
-			fullText: translationState.resultTranslations.up_to_3.replace(
-				'{X}',
-				lastRangeItem(result.totalOnboardingDaysVendor, nFormatter) || ''
-			)
+			displayValue: lastRangeItem(
+				result.totalOnboardingDaysVendor,
+				nFormatter,
+				translationState.resultTranslations.up_to_3_1
+			),
+			text: translationState.resultTranslations.up_to_3_2,
+			illustration: 'stack' as const
 		},
 		{
-			displayValue: lastRangeItem(result.totalOnboardingDaysCandidate, nFormatter, 'Up to '),
-			text: 'Onboarding Days/Candidate',
-			illustration: 'stack' as const,
-			fullText: translationState.resultTranslations.up_to_4.replace(
-				'{X}',
-				lastRangeItem(result.totalOnboardingDaysCandidate, nFormatter) || ''
-			)
+			displayValue: lastRangeItem(
+				result.totalOnboardingDaysCandidate,
+				nFormatter,
+				translationState.resultTranslations.up_to_4_1
+			),
+			text: translationState.resultTranslations.up_to_4_2,
+			illustration: 'stack' as const
 		},
 		{
-			displayValue: lastRangeItem(result.totalOnboardingDaysCustomer, nFormatter, 'Up to '),
-			text: 'Onboarding Days/Customer',
-			illustration: 'stack' as const,
-			fullText: translationState.resultTranslations.up_to_5.replace(
-				'{X}',
-				lastRangeItem(result.totalOnboardingDaysCustomer, nFormatter) || ''
-			)
+			displayValue: lastRangeItem(
+				result.totalOnboardingDaysCustomer,
+				nFormatter,
+				translationState.resultTranslations.up_to_5_1
+			),
+			text: translationState.resultTranslations.up_to_5_2,
+			illustration: 'stack' as const
 		},
 		{
-			displayValue: lastRangeItem(result.totalCandidateYear, nFormatter, 'Up to '),
-			text: 'Candidates/Year',
-			illustration: 'person' as const,
-			fullText: translationState.resultTranslations.up_to_6.replace(
-				'{X}',
-				lastRangeItem(result.totalCandidateYear, nFormatter) || ''
-			)
+			displayValue: lastRangeItem(
+				result.totalCandidateYear,
+				nFormatter,
+				translationState.resultTranslations.up_to_6_1
+			),
+			text: translationState.resultTranslations.up_to_6_2,
+			illustration: 'person' as const
 		}
 	]
 		.filter((item) => !!item.displayValue)
-		.filter(isTruthy)
-		.slice(0, 2);
+		.map((item) => ({
+			...item,
+			fullText: `${item.displayValue} ${item.text}`
+		}))
+		.filter(isTruthy);
+	// .slice(0, 2);
 
 	return arrayTotals;
 };

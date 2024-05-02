@@ -15,12 +15,12 @@
 	import { getUiStore } from './stores/uiStore.js';
 	import { renderOverallResultCards } from './externalDomManipulation/renderOverallResultCards.js';
 	import ResultPreviews from './components/utilityComponents/ResultPreviews.svelte';
-	import type { OverallResult, ScrollInto } from './types.js';
+	import type { ScrollInto } from './types.js';
 	import { getOptionsSequence } from './utils/optionsSequence.js';
 	import { TRANSLATION_STORE_CONTENXT, getTranslationStore } from './stores/translationStore.js';
 	import type { WindowWithOptions } from './utils/getWindow.js';
 
-	export let lang: string = 'fr-CA';
+	export let lang: string = 'en-GB';
 
 	const translationStore = getTranslationStore(lang);
 	setContext(TRANSLATION_STORE_CONTENXT, translationStore);
@@ -43,7 +43,7 @@
 
 	(window as unknown as WindowWithOptions).langOptions = {
 		currencyFormatter: {
-			currency: 'CAD',
+			currency: $translationStore.currency,
 			currencyDisplay: 'narrowSymbol'
 		},
 		lang
@@ -110,17 +110,6 @@
 						})
 					}
 				};
-				// return {
-				// 	...state,
-				// 	B2B: defaultSubmissionState.B2B,
-				// 	PROC: defaultSubmissionState.PROC,
-				// 	HR: defaultSubmissionState.HR,
-				// 	B2C: defaultSubmissionState.B2C,
-				// 	last: {
-				// 		...state.last,
-				// 		driver: []
-				// 	}
-				// };
 			});
 		}
 

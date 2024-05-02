@@ -89,7 +89,19 @@
 				}
 
 				.revealed-results {
-					margin-top: 300px;
+					margin-top: 00px;
+					display: block !important;
+				}
+				.hp-costs_cards {
+					background: white;
+					display: flex;
+					gap: 40px;
+					padding: 40px;
+					flex-wrap: wrap;
+				}
+
+				.hp-costs_cards > * {
+					width: 33%;
 				}
 				#ui-calc-loader {
 					position: fixed;
@@ -127,6 +139,7 @@
 				}
 			</style>
 
+			<div class="hp-costs_cards"></div>
 			<div class="revealed-results">
 				<div class="swiper-wrapper" id="result"></div>
 

@@ -30,6 +30,7 @@ export type TranslationState = {
 	translations: LangTranslation;
 	resultTranslations: ResultTranslation;
 	flowConfig: FlowConfig;
+	currency: string;
 };
 
 export type SelectConfig = {

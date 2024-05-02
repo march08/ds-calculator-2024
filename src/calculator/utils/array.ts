@@ -19,9 +19,14 @@ export const sumRange = (ranges: NumberRange[]): NumberRange => {
 	return res;
 };
 
-export const lastRangeItem = (arr: NumberRange, formatter: NumberFormatter, prep?: string) => {
+export const lastRangeItem = (
+	arr: NumberRange,
+	formatter: NumberFormatter,
+	resultToReplace: string
+) => {
 	if (arr[1]) {
-		return [prep, formatter(arr[1])].filter(isTruthy).join('');
+		const valueFormatted = formatter(arr[1]);
+		return resultToReplace.replace('{X}', valueFormatted);
 	}
 	return null;
 };

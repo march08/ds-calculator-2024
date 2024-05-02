@@ -1,5 +1,6 @@
 import type { OverallResultWithTranslations } from '../calculations/calculate.js';
 import { sortCalculatedResult } from '../utils/sortCalculatedResult.js';
+import { getCurrencySymbol } from '../utils/number.js';
 type Color = 'lavender' | 'deepblue' | 'gradient' | 'white';
 type In = 0 | 1 | 2 | 3;
 const colorMap: Record<In, Color> = {
@@ -68,7 +69,7 @@ export const renderResultCards = (
 				item.cardMainValueDollars
 					? `
 			<div data-ds-result-card="value" class="hp-improve_value">
-				<sup data-ds-result-card="currency-span" class="hp-improve_superscript">$</sup>
+				<sup data-ds-result-card="currency-span" class="hp-improve_superscript">${getCurrencySymbol()}</sup>
 				<span data-ds-result-card="currency-value" class="hp-improve_span-value">${item.cardMainValue}</span>
 			</div>`
 					: `

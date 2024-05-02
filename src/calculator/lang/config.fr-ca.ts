@@ -707,7 +707,7 @@ export const resultText = {
 		"Entre {X1} et {X2} environ de pertes de revenus en moins en s'assurant que les obligations sont respectées, que les taxes sont perçues et que les renouvellements sont maximisés.",
 
 	proc_1:
-		'Intégration des fournisseurs entre {X1} et {X2} plus rapide, passant de plusieurs semaines à seulement {Y} jours.',
+		'Intégration des fournisseurs entre {X} plus rapide, passant de plusieurs semaines à seulement {Y} jours.',
 	proc_2:
 		"Entre {X1} et {X2} d'amélioration de la productivité du personnel chargé des achats, ce qui libère {Y} heures annuelles, qui peuvent être consacrées à des priorités telles que la gestion des fournisseurs et l'innovation.",
 	proc_3:
@@ -722,15 +722,23 @@ export const resultText = {
 	hr_2: "Augmentation de {X1} à {X2} des taux de conversion en réduisant l'abandon dans le processus d'accord. Intégrez entre YY et {Y} candidats supplémentaires chaque année.",
 	hr_3: 'Amélioration de {X1} à {X2} de la productivité du personnel, ce qui permet de libérer {Y} heures chaque année pour des activités RH à plus forte valeur ajoutée. ',
 	b2c_1:
-		"Des ententes conclues entre {X1} et {X2} plus rapidement, avec la possibilité d'écourter le cycle de vente de plusieurs semaines à seulement {Y} jours.",
+		"Des ententes conclues entre {X} plus rapidement, avec la possibilité d'écourter le cycle de vente de plusieurs semaines à seulement {Y} jours.",
 	b2c_2:
 		"Augmentation de {X1} à {X2} des taux de conversion en réduisant l'abandon des clients au cours du processus d'accord.",
 	b2c_3:
 		'Amélioration de {X1} à {X2} de la productivité du personnel, ce qui permet de libérer {Y} heures chaque année pour des activités à plus forte valeur ajoutée.',
-	up_to_1: 'Jusqu’à {X} dollars/an',
-	up_to_2: 'Jusqu’à {X} heures de travail par an',
-	up_to_3: 'Jusqu’à {X} jours d’intégration/fournisseur ',
-	up_to_4: 'Jusqu’à {X} jours d’intégration/candidat',
-	up_to_5: 'Jusqu’à {X} jours d’intégration/client',
-	up_to_6: 'Jusqu’à {X} candidats/an'
+	up_to_1_1: 'Jusqu’à {X}',
+	up_to_1_2: 'dollars/an',
+	up_to_2_1: 'Jusqu’à {X}',
+	up_to_2_2: 'heures de travail par an',
+	up_to_3_1: 'Jusqu’à {X}',
+	up_to_3_2: 'jours d’intégration/fournisseur ',
+	up_to_4_1: 'Jusqu’à {X}',
+	up_to_4_2: 'jours d’intégration/candidat',
+	up_to_5_1: 'Jusqu’à {X}',
+	up_to_5_2: 'jours d’intégration/client',
+	up_to_6_1: 'Jusqu’à {X}',
+	up_to_6_2: 'candidats/an'
 };
+
+export const currency = 'CAD';

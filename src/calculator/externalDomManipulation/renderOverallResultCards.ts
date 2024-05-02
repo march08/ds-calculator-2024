@@ -1,48 +1,13 @@
 import type { OverallResult } from '../types.js';
-import { lastRangeItem } from '../utils/array.js';
-import { nFormatter } from '../utils/number.js';
 
 export const renderOverallResultCards = (result: OverallResult) => {
-	const arrayTotals = [
-		{
-			displayValue: lastRangeItem(result.totalDollarsYear, nFormatter, 'Up to $'),
-			text: 'Dollars/Year',
-			illustration: 'stack'
-		},
-		{
-			displayValue: lastRangeItem(result.totalEmployeeHoursYear, nFormatter, 'Up to '),
-			text: 'Employee Hours/Year',
-			illustration: 'person'
-		},
-		{
-			displayValue: lastRangeItem(result.totalOnboardingDaysVendor, nFormatter, 'Up to '),
-			text: 'Onboarding Days/Vendor',
-			illustration: 'stack'
-		},
-		{
-			displayValue: lastRangeItem(result.totalOnboardingDaysCandidate, nFormatter, 'Up to '),
-			text: 'Onboarding Days/Candidate',
-			illustration: 'stack'
-		},
-		{
-			displayValue: lastRangeItem(result.totalOnboardingDaysCustomer, nFormatter, 'Up to '),
-			text: 'Onboarding Days/Customer',
-			illustration: 'stack'
-		},
-		{
-			displayValue: lastRangeItem(result.totalCandidateYear, nFormatter, 'Up to '),
-			text: 'Candidates/Year',
-			illustration: 'person'
-		}
-	].filter((item) => !!item.displayValue);
-
 	const targetResultContainerEl = document.querySelector('.hp-costs_cards');
 
 	if (!targetResultContainerEl) {
 		return;
 	}
 
-	const mapped = arrayTotals.slice(0, 2).map(
+	const mapped = result.topTwo.map(
 		(item) =>
 			`<div data-ds-costs-card="dollars" class="hp-costs_card">
 		<img src=${item.illustration === 'stack' ? 'https://assets-global.website-files.com/659c190170ce3a9329d76dac/65fbf4bb182a9dfde91d1368_dollars-icon.svg' : 'https://assets-global.website-files.com/659c190170ce3a9329d76dac/65fbf4bbd871a17de019dcc0_employee-icon.svg'} alt="" class="hp-costs_icon">
