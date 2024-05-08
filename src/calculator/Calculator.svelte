@@ -17,13 +17,13 @@
 	import ResultPreviews from './components/utilityComponents/ResultPreviews.svelte';
 	import type { ScrollInto } from './types.js';
 	import { getOptionsSequence } from './utils/optionsSequence.js';
-	import { TRANSLATION_STORE_CONTENXT, getTranslationStore } from './stores/translationStore.js';
+	import { TRANSLATION_STORE_CONTEXT, getTranslationStore } from './stores/translationStore.js';
 	import type { WindowWithOptions } from './utils/getWindow.js';
 
-	export let lang: string = 'en-GB';
+	export let lang: string = 'fr-CA';
 
 	const translationStore = getTranslationStore(lang);
-	setContext(TRANSLATION_STORE_CONTENXT, translationStore);
+	setContext(TRANSLATION_STORE_CONTEXT, translationStore);
 
 	export let targetResultCardsContainerSelector: string = '';
 	export let onResultCardsUpdate: VoidFunction = () => {};
@@ -41,13 +41,14 @@
 		}
 	};
 
-	(window as unknown as WindowWithOptions).langOptions = {
-		currencyFormatter: {
-			currency: $translationStore.currency,
-			currencyDisplay: 'narrowSymbol'
-		},
-		lang
-	};
+	$: $translationStore.lang &&
+		((window as unknown as WindowWithOptions).langOptions = {
+			currencyFormatter: {
+				currency: $translationStore.currency,
+				currencyDisplay: 'narrowSymbol'
+			},
+			lang
+		});
 
 	/**
 	 * submission store

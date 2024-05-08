@@ -5,4 +5,4 @@ export type WindowWithOptions = Window & {
 	};
 };
 
-export const getWindow = () => window as unknown as WindowWithOptions;
+export const windowWithLangOptions = window as unknown as WindowWithOptions;

@@ -1,8 +1,6 @@
 import { writable, type Writable } from 'svelte/store';
 import type { TranslationState } from '../types.js';
 
-getTranslations;
-
 import { getTranslations } from '../lang/getConfigByLang.js';
 import { getContext } from 'svelte';
 
@@ -19,7 +17,7 @@ export const getTranslationStore = (lang?: string) => {
 	return store;
 };
 
-export const TRANSLATION_STORE_CONTENXT = 'translationState';
+export const TRANSLATION_STORE_CONTEXT = 'translationState';
 
 export const getTranslationStoreContext = () =>
-	getContext<Writable<TranslationState>>(TRANSLATION_STORE_CONTENXT);
+	getContext<Writable<TranslationState>>(TRANSLATION_STORE_CONTEXT);

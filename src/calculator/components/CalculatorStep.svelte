@@ -1,13 +1,7 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
 	import Select from './Select.svelte';
-	import type {
-		StepConfig,
-		StoredCalcState,
-		OptionOrDelimiter,
-		UIState,
-		LangTranslation
-	} from '../types.js';
+	import type { StepConfig, StoredCalcState, OptionOrDelimiter, UIState } from '../types.js';
 
 	import { getContext } from 'svelte';
 	import { isTruthy } from '../utils/isTruthy.js';
