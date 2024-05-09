@@ -20,11 +20,11 @@ const setHiddenField = (
 
 export const updateContactFormDescriptionField = (result: OverallResultWithTranslations) => {
 	if (typeof document !== 'undefined') {
-		setHiddenField('dynamic_benefit1', result.topTwo[0].fullText);
-		setHiddenField('dynamic_benefit2', result.topTwo[1].fullText);
-		setHiddenField('dynamic_result1', result.allRes[0].translatedText);
-		setHiddenField('dynamic_result2', result.allRes[1].translatedText);
-		setHiddenField('dynamic_result3', result.allRes[2].translatedText);
+		setHiddenField('dynamic_benefit1', result.topTwo[0]?.fullText || '');
+		setHiddenField('dynamic_benefit2', result.topTwo[1]?.fullText || '');
+		setHiddenField('dynamic_result1', result.allRes[0]?.translatedText || '');
+		setHiddenField('dynamic_result2', result.allRes[1]?.translatedText || '');
+		setHiddenField('dynamic_result3', result.allRes[2]?.translatedText || '');
 
 		/** Description field */
 		const textAreaEl: HTMLTextAreaElement | null = document.querySelector(
