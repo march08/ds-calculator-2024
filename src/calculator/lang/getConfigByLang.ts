@@ -5,7 +5,7 @@ import * as enca from './config.en-ca.js';
 import * as enau from './config.en-ca.js';
 import type { TranslationState } from '../types.js';
 
-export const getTranslationData = (lang: string) => {
+const getTranslationData = (lang: string) => {
 	const langLowercase = lang.toLowerCase();
 
 	switch (langLowercase) {

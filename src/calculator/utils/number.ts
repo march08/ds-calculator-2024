@@ -41,14 +41,9 @@ export const formatCurrency = (value: number, options?: Intl.NumberFormatOptions
 		...windowWithLangOptions.langOptions.currencyFormatter
 	});
 
-export const intlAbbreviateFormatter = Intl.NumberFormat(
-	windowWithLangOptions.langOptions.lang || undefined,
-	{
+export const nFormatter = (num: number) => {
+	return Intl.NumberFormat(windowWithLangOptions.langOptions.lang || undefined, {
 		compactDisplay: 'short',
 		notation: 'compact'
-	}
-);
-
-export const nFormatter = (num: number) => {
-	return intlAbbreviateFormatter.format(num);
+	}).format(num);
 };
