@@ -9,7 +9,7 @@
 	import { getSubmissionStore } from './stores/submissionStore.js';
 	import { renderResultCards } from './externalDomManipulation/renderResultCards.js';
 	import { calculate, type OverallResultWithTranslations } from './calculations/calculate.js';
-	import { updateContactFormDescriptionField } from './externalDomManipulation/updateContactFormDescriptionField.js';
+	import { updateContactFormDescriptionField } from './externalDomManipulation/updateContactFormHiddenFields.js';
 	import Button from './components/Button.svelte';
 	import { toggleResult } from './externalDomManipulation/showResult.js';
 	import { getUiStore } from './stores/uiStore.js';
@@ -20,7 +20,7 @@
 	import { TRANSLATION_STORE_CONTEXT, getTranslationStore } from './stores/translationStore.js';
 	import type { WindowWithOptions } from './utils/getWindow.js';
 
-	export let lang: string = 'fr-CA';
+	export let lang: string = 'en-US';
 
 	const translationStore = getTranslationStore(lang);
 	setContext(TRANSLATION_STORE_CONTEXT, translationStore);
