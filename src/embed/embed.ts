@@ -9,8 +9,10 @@ type Props = {
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 (window as unknown as any).DocusignCalculator = {
-	initialize: ({ renderTarget, locale, ...rest }: Props) => {
-		const langConfig = getTranslations(locale || 'en');
+	initialize: ({ renderTarget, locale: localeProp, ...rest }: Props) => {
+		const localeFromPathname = location.pathname.split('/')[1];
+		const locale = localeProp || localeFromPathname || 'en';
+		const langConfig = getTranslations(locale);
 
 		(window as unknown as WindowWithOptions).langOptions = {
 			currencyFormatter: {
@@ -22,7 +24,10 @@ type Props = {
 
 		return new Calculator({
 			target: renderTarget,
-			props: rest
+			props: {
+				...rest,
+				lang: locale
+			}
 		});
 	}
 };
