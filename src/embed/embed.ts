@@ -12,7 +12,11 @@ type Props = {
 	initialize: ({ renderTarget, locale: localeProp, ...rest }: Props) => {
 		const localeFromPathname = location.pathname.split('/')[1];
 		const locale = localeProp || localeFromPathname || 'en';
+
+		console.log('locale', locale);
 		const langConfig = getTranslations(locale);
+
+		console.log('langConfig', langConfig);
 
 		(window as unknown as WindowWithOptions).langOptions = {
 			currencyFormatter: {
