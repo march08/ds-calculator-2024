@@ -22,7 +22,9 @@
 
 	export let lang: string = 'en-US';
 
-	const translationStore = getTranslationStore(lang);
+	const localeFromPathname = location.pathname.split('/')[1];
+
+	const translationStore = getTranslationStore(localeFromPathname || lang);
 	setContext(TRANSLATION_STORE_CONTEXT, translationStore);
 
 	export let targetResultCardsContainerSelector: string = '';
