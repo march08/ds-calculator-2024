@@ -76,8 +76,8 @@ export const getTopTwoTotals = (
 			...item,
 			fullText: `${item.displayValue} ${item.text}`
 		}))
-		.filter(isTruthy);
-	// .slice(0, 2);
+		.filter(isTruthy)
+		.slice(0, 2);
 
 	return arrayTotals;
 };
