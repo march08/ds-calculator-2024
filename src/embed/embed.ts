@@ -20,7 +20,7 @@ type Props = {
 				currency: langConfig.currency,
 				currencyDisplay: 'narrowSymbol'
 			},
-			lang: locale,
+			lang: langConfig.lang,
 			valueMultiplier: langConfig.valueMultiplier
 		};
 
