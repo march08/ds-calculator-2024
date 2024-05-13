@@ -76,35 +76,35 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '1000000',
-						label: '$1 million'
+						label: '£1 million'
 					},
 					{
 						key: '10000000',
-						label: '$10 million'
+						label: '£10 million'
 					},
 					{
 						key: '50000000',
-						label: '$50 million'
+						label: '£50 million'
 					},
 					{
 						key: '100000000',
-						label: '$100 million'
+						label: '£100 million'
 					},
 					{
 						key: '250000000',
-						label: '$250 million'
+						label: '£250 million'
 					},
 					{
 						key: '500000000',
-						label: '$500 million'
+						label: '£500 million'
 					},
 					{
 						key: '1000000000',
-						label: '$1 billion'
+						label: '£1 billion'
 					},
 					{
 						key: '5000000000',
-						label: '$5 billion'
+						label: '£5 billion'
 					}
 				]
 			}
@@ -346,35 +346,35 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '1000000',
-						label: '$1 million'
+						label: '£1 million'
 					},
 					{
 						key: '10000000',
-						label: '$10 million'
+						label: '£10 million'
 					},
 					{
 						key: '50000000',
-						label: '$50 million'
+						label: '£50 million'
 					},
 					{
 						key: '100000000',
-						label: '$100 million'
+						label: '£100 million'
 					},
 					{
 						key: '250000000',
-						label: '$250 million'
+						label: '£250 million'
 					},
 					{
 						key: '500000000',
-						label: '$500 million'
+						label: '£500 million'
 					},
 					{
 						key: '1000000000',
-						label: '$1 billion'
+						label: '£1 billion'
 					},
 					{
 						key: '5000000000',
-						label: '$5 billion'
+						label: '£5 billion'
 					}
 				]
 			}
@@ -484,35 +484,35 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '1000000',
-						label: '$1 million'
+						label: '£1 million'
 					},
 					{
 						key: '10000000',
-						label: '$10 million'
+						label: '£10 million'
 					},
 					{
 						key: '50000000',
-						label: '$50 million'
+						label: '£50 million'
 					},
 					{
 						key: '100000000',
-						label: '$100 million'
+						label: '£100 million'
 					},
 					{
 						key: '250000000',
-						label: '$250 million'
+						label: '£250 million'
 					},
 					{
 						key: '500000000',
-						label: '$500 million'
+						label: '£500 million'
 					},
 					{
 						key: '1000000000',
-						label: '$1 billion'
+						label: '£1 billion'
 					},
 					{
 						key: '5000000000',
-						label: '$5 billion'
+						label: '£5 billion'
 					}
 				]
 			}
