@@ -739,3 +739,5 @@ export const resultText = {
 
 export const currency = 'BRL';
 export const valueMultiplier = 5;
+
+export const lang = 'pt-br';

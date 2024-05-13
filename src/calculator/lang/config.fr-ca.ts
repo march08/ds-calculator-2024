@@ -742,3 +742,4 @@ export const resultText = {
 };
 
 export const currency = 'CAD';
+export const lang = 'fr-ca';

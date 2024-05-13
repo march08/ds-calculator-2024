@@ -738,3 +738,4 @@ export const resultText = {
 };
 
 export const currency = 'AUD';
+export const lang = 'en-au';

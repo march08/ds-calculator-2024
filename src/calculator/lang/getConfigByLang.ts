@@ -35,7 +35,7 @@ export const getTranslations = (lang: string): TranslationState => {
 		flowConfig: data.flowConfig,
 		resultTranslations: data.resultText,
 		currency: data.currency,
-		lang,
+		lang: data.lang,
 		valueMultiplier: 'valueMultiplier' in data ? data.valueMultiplier : 1
 	};
 };

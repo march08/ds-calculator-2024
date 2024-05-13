@@ -1,5 +1,7 @@
 import type { FlowConfig, LangTranslation } from '../types.js';
 
+export const lang = 'en-gb';
+
 export const flowConfig: FlowConfig = {
 	calcConfigStep1: [
 		{

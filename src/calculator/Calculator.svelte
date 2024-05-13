@@ -49,7 +49,7 @@
 				currency: $translationStore.currency,
 				currencyDisplay: 'narrowSymbol'
 			},
-			lang,
+			lang: $translationStore.lang,
 			valueMultiplier: $translationStore.valueMultiplier
 		});
 
