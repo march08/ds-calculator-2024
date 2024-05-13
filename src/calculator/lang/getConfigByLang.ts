@@ -3,6 +3,7 @@ import * as frca from './config.fr-ca.js';
 import * as gb from './config.en-gb.js';
 import * as enca from './config.en-ca.js';
 import * as enau from './config.en-au.js';
+import * as ptbr from './config.pt-br.js';
 import type { TranslationState } from '../types.js';
 
 const getTranslationData = (lang: string) => {
@@ -17,6 +18,8 @@ const getTranslationData = (lang: string) => {
 			return enca;
 		case 'en-au':
 			return enau;
+		case 'pt-br':
+			return ptbr;
 		default:
 			return en;
 	}
@@ -29,6 +32,7 @@ export const getTranslations = (lang: string): TranslationState => {
 		flowConfig: data.flowConfig,
 		resultTranslations: data.resultText,
 		currency: data.currency,
-		lang
+		lang,
+		valueMultiplier: 'valueMultiplier' in data ? data.valueMultiplier : 1
 	};
 };

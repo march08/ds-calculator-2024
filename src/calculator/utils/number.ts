@@ -31,19 +31,22 @@ export const getCurrencySymbol = () => {
 };
 
 export const formatCurrency = (value: number, options?: Intl.NumberFormatOptions) =>
-	Number(value).toLocaleString(windowWithLangOptions.langOptions.lang || undefined, {
-		style: 'currency',
-		currency: 'USD',
-		currencyDisplay: 'narrowSymbol',
-		maximumFractionDigits: 0,
-		...options,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		...windowWithLangOptions.langOptions.currencyFormatter
-	});
+	Number(value * (windowWithLangOptions?.langOptions?.valueMultiplier || 1)).toLocaleString(
+		windowWithLangOptions.langOptions.lang || undefined,
+		{
+			style: 'currency',
+			currency: 'USD',
+			currencyDisplay: 'narrowSymbol',
+			maximumFractionDigits: 0,
+			...options,
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			...windowWithLangOptions.langOptions.currencyFormatter
+		}
+	);
 
 export const nFormatter = (num: number) => {
 	return Intl.NumberFormat(windowWithLangOptions.langOptions.lang || undefined, {
 		compactDisplay: 'short',
 		notation: 'compact'
-	}).format(num);
+	}).format(num * (windowWithLangOptions?.langOptions?.valueMultiplier || 1));
 };

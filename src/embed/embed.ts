@@ -13,17 +13,15 @@ type Props = {
 		const localeFromPathname = location.pathname.split('/')[1];
 		const locale = localeProp || localeFromPathname || 'en';
 
-		console.log('locale', locale);
 		const langConfig = getTranslations(locale);
-
-		console.log('langConfig', langConfig);
 
 		(window as unknown as WindowWithOptions).langOptions = {
 			currencyFormatter: {
 				currency: langConfig.currency,
 				currencyDisplay: 'narrowSymbol'
 			},
-			lang: locale
+			lang: locale,
+			valueMultiplier: langConfig.valueMultiplier
 		};
 
 		return new Calculator({

@@ -49,7 +49,8 @@
 				currency: $translationStore.currency,
 				currencyDisplay: 'narrowSymbol'
 			},
-			lang
+			lang,
+			valueMultiplier: $translationStore.valueMultiplier
 		});
 
 	/**
