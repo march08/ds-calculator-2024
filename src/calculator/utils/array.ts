@@ -1,5 +1,4 @@
 import type { NumberRange } from '../types.js';
-import { isTruthy } from './isTruthy.js';
 import { formatNumber } from './number.js';
 
 type NumberFormatter = (n: number) => string;

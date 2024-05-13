@@ -687,7 +687,7 @@ export const langConfig: LangTranslation = {
 	confirm_selection: 'Confirmar seleção',
 	update_your_results: 'Atualizar resultados',
 	edit_your_assessment: 'Edite sua avaliação',
-	title_days: 'days'
+	title_days: 'dias'
 };
 
 export const resultText = {

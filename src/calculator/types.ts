@@ -42,6 +42,7 @@ export type SelectConfig = {
 		autoposition?: boolean;
 		options: Readonly<OptionOrDelimiter[]>;
 		multiselect?: true;
+		multiselectLimit?: number;
 		multiselectDelimiter?: string;
 		displayValueLowercase?: boolean;
 	};

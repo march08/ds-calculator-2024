@@ -9,6 +9,7 @@
 	import { getTranslationStoreContext } from '../stores/translationStore.js';
 
 	export let multiselect: boolean = false;
+	export let multiselectLimit: number | null = null;
 	export let value: string[] = [];
 	export let placeholder: string = 'placeholder';
 	export let options: Readonly<OptionOrDelimiter[]>;
@@ -52,6 +53,9 @@
 				internalState = internalState.filter((item) => item !== key);
 			} else {
 				internalState = [...internalState, key];
+				if (multiselectLimit && multiselectLimit < internalState.length) {
+					internalState.shift();
+				}
 			}
 		} else {
 			internalState = [key];
