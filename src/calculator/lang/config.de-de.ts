@@ -78,35 +78,35 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '1000000',
-						label: '1•Mio. € '
+						label: '1 Mio. € '
 					},
 					{
 						key: '10000000',
-						label: '10•Mio. € '
+						label: '10 Mio. € '
 					},
 					{
 						key: '50000000',
-						label: '50•Mio. € '
+						label: '50 Mio. € '
 					},
 					{
 						key: '100000000',
-						label: '100•Mio. € '
+						label: '100 Mio. € '
 					},
 					{
 						key: '250000000',
-						label: '250•Mio. € '
+						label: '250 Mio. € '
 					},
 					{
 						key: '500000000',
-						label: '500•Mio. € '
+						label: '500 Mio. € '
 					},
 					{
 						key: '1000000000',
-						label: '1•Mrd. € '
+						label: '1 Mrd. € '
 					},
 					{
 						key: '5000000000',
-						label: '5•Mrd. € '
+						label: '5 Mrd. € '
 					}
 				]
 			}
@@ -130,39 +130,39 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '1000',
-						label: '1,000•Verträge'
+						label: '1,000 Verträge'
 					},
 					{
 						key: '2500',
-						label: '2,500•Verträge'
+						label: '2,500 Verträge'
 					},
 					{
 						key: '5000',
-						label: '5,000•Verträge'
+						label: '5,000 Verträge'
 					},
 					{
 						key: '10000',
-						label: '10,000•Verträge'
+						label: '10,000 Verträge'
 					},
 					{
 						key: '25000',
-						label: '25,000•Verträge'
+						label: '25,000 Verträge'
 					},
 					{
 						key: '50000',
-						label: '50,000•Verträge'
+						label: '50,000 Verträge'
 					},
 					{
 						key: '100000',
-						label: '100,000•Verträge'
+						label: '100,000 Verträge'
 					},
 					{
 						key: '1000000',
-						label: '1,000,000•Verträge'
+						label: '1,000,000 Verträge'
 					},
 					{
 						key: '10000000',
-						label: '10,000,000•Verträge'
+						label: '10,000,000 Verträge'
 					}
 				]
 			}
@@ -213,35 +213,35 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '1000',
-						label: '1,000•Beschäftigte'
+						label: '1,000 Beschäftigte'
 					},
 					{
 						key: '2500',
-						label: '2,500•Beschäftigte'
+						label: '2,500 Beschäftigte'
 					},
 					{
 						key: '5000',
-						label: '5,000•Beschäftigte'
+						label: '5,000 Beschäftigte'
 					},
 					{
 						key: '10000',
-						label: '10,000•Beschäftigte'
+						label: '10,000 Beschäftigte'
 					},
 					{
 						key: '25000',
-						label: '25,000•Beschäftigte'
+						label: '25,000 Beschäftigte'
 					},
 					{
 						key: '50000',
-						label: '50,000•Beschäftigte'
+						label: '50,000 Beschäftigte'
 					},
 					{
 						key: '100000',
-						label: '100,000•Beschäftigte'
+						label: '100,000 Beschäftigte'
 					},
 					{
 						key: '1000000',
-						label: '1,000,000•Beschäftigte'
+						label: '1,000,000 Beschäftigte'
 					}
 				]
 			}
@@ -265,39 +265,39 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '1000',
-						label: '1,000•Verträge/Jahr'
+						label: '1,000 Verträge/Jahr'
 					},
 					{
 						key: '2500',
-						label: '2,500•Verträge/Jahr'
+						label: '2,500 Verträge/Jahr'
 					},
 					{
 						key: '5000',
-						label: '5,000•Verträge/Jahr'
+						label: '5,000 Verträge/Jahr'
 					},
 					{
 						key: '10000',
-						label: '10,000•Verträge/Jahr'
+						label: '10,000 Verträge/Jahr'
 					},
 					{
 						key: '25000',
-						label: '25,000•Verträge/Jahr'
+						label: '25,000 Verträge/Jahr'
 					},
 					{
 						key: '50000',
-						label: '50,000•Verträge/Jahr'
+						label: '50,000 Verträge/Jahr'
 					},
 					{
 						key: '100000',
-						label: '100,000•Verträge/Jahr'
+						label: '100,000 Verträge/Jahr'
 					},
 					{
 						key: '1000000',
-						label: '1,000,000•Verträge/Jahr'
+						label: '1,000,000 Verträge/Jahr'
 					},
 					{
 						key: '10000000',
-						label: '10,000,000•Verträge/Jahr'
+						label: '10,000,000 Verträge/Jahr'
 					}
 				]
 			}
@@ -325,7 +325,7 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: 'parttime',
-						label: 'Saison-/Teilzeitkräfte'
+						label: 'Saison/Teilzeitkräfte'
 					}
 				]
 			}
@@ -334,49 +334,49 @@ export const flowConfig: FlowConfig = {
 	calcConfigStep2procurement: [
 		{
 			type: 'text',
-			data: 'Every year, my organisation spends'
+			data: 'Jedes Jahr gibt meine Organisation Folgendes aus'
 		},
 		{
 			type: 'select',
 			data: {
 				key: 'PROC_annual_spend',
-				placeholder: 'Annual Spend',
+				placeholder: 'Jährliche Ausgaben',
 
 				options: [
 					{
-						title: 'Select your annual spend'
+						title: 'Wählen Sie Ihre jährlichen Ausgaben aus'
 					},
 					{
 						key: '1000000',
-						label: '1•Mio. € '
+						label: '1 Mio. € '
 					},
 					{
 						key: '10000000',
-						label: '10•Mio. € '
+						label: '10 Mio. € '
 					},
 					{
 						key: '50000000',
-						label: '50•Mio. € '
+						label: '50 Mio. € '
 					},
 					{
 						key: '100000000',
-						label: '100•Mio. € '
+						label: '100 Mio. € '
 					},
 					{
 						key: '250000000',
-						label: '250•Mio. € '
+						label: '250 Mio. € '
 					},
 					{
 						key: '500000000',
-						label: '500•Mio. € '
+						label: '500 Mio. € '
 					},
 					{
 						key: '1000000000',
-						label: '1•Mrd. € '
+						label: '1 Mrd. € '
 					},
 					{
 						key: '5000000000',
-						label: '5•Mrd. € '
+						label: '5 Mrd. € '
 					}
 				]
 			}
@@ -387,28 +387,28 @@ export const flowConfig: FlowConfig = {
 		},
 		{
 			type: 'text',
-			data: 'through'
+			data: 'durch'
 		},
 		{
 			type: 'select',
 			data: {
 				key: 'PROC_spend_type',
-				placeholder: 'Spend Type',
+				placeholder: 'Ausgabenart',
 				options: [
 					{
-						title: 'Select your spend type'
+						title: 'Wählen Sie die Art Ihrer Ausgaben aus'
 					},
 					{
 						key: 'direct',
-						label: 'Direct spend'
+						label: 'Direkte Ausgabe'
 					},
 					{
 						key: 'indirect',
-						label: 'Indirect spend'
+						label: 'Indirekte Ausgaben'
 					},
 					{
 						key: 'capex',
-						label: 'CapEx spend'
+						label: 'Investitionsausgaben'
 					}
 				]
 			}
@@ -419,52 +419,52 @@ export const flowConfig: FlowConfig = {
 		},
 		{
 			type: 'text',
-			data: 'and completes'
+			data: 'und schließt ab mit'
 		},
 		{
 			type: 'select',
 			data: {
 				key: 'PROC_agreement_volume',
-				placeholder: 'Agreement Volume',
+				placeholder: 'Vertragsvolumen',
 				options: [
 					{
-						title: 'Select your yearly procurement agreement volume'
+						title: 'Wählen Sie Ihr jährliches B2B-Vertragsvolumen'
 					},
 					{
 						key: '1000',
-						label: '1,000•Verträge'
+						label: '1,000 Verträge'
 					},
 					{
 						key: '2500',
-						label: '2,500•Verträge'
+						label: '2,500 Verträge'
 					},
 					{
 						key: '5000',
-						label: '5,000•Verträge'
+						label: '5,000 Verträge'
 					},
 					{
 						key: '10000',
-						label: '10,000•Verträge'
+						label: '10,000 Verträge'
 					},
 					{
 						key: '25000',
-						label: '25,000•Verträge'
+						label: '25,000 Verträge'
 					},
 					{
 						key: '50000',
-						label: '50,000•Verträge'
+						label: '50,000 Verträge'
 					},
 					{
 						key: '100000',
-						label: '100,000•Verträge'
+						label: '100,000 Verträge'
 					},
 					{
 						key: '1000000',
-						label: '1,000,000•Verträge'
+						label: '1,000,000 Verträge'
 					},
 					{
 						key: '10000000',
-						label: '10,000,000•Verträge'
+						label: '10,000,000 Verträge'
 					}
 				]
 			}
@@ -473,48 +473,48 @@ export const flowConfig: FlowConfig = {
 	calcConfigStep2b2c: [
 		{
 			type: 'text',
-			data: 'Every year, my organisation collects'
+			data: 'Meine Organisation erzielt jedes Jahr'
 		},
 		{
 			type: 'select',
 			data: {
 				key: 'B2C_revenue',
-				placeholder: 'Revenue',
+				placeholder: 'Umsatz',
 				options: [
 					{
-						title: 'Select your annual B2C revenue'
+						title: 'Wählen Sie Ihren jährlichen B2B-Umsatz aus'
 					},
 					{
 						key: '1000000',
-						label: '1•Mio. € '
+						label: '1 Mio. € '
 					},
 					{
 						key: '10000000',
-						label: '10•Mio. € '
+						label: '10 Mio. € '
 					},
 					{
 						key: '50000000',
-						label: '50•Mio. € '
+						label: '50 Mio. € '
 					},
 					{
 						key: '100000000',
-						label: '100•Mio. € '
+						label: '100 Mio. € '
 					},
 					{
 						key: '250000000',
-						label: '250•Mio. € '
+						label: '250 Mio. € '
 					},
 					{
 						key: '500000000',
-						label: '500•Mio. € '
+						label: '500 Mio. € '
 					},
 					{
 						key: '1000000000',
-						label: '1•Mrd. € '
+						label: '1 Mrd. € '
 					},
 					{
 						key: '5000000000',
-						label: '5•Mrd. € '
+						label: '5 Mrd. € '
 					}
 				]
 			}
@@ -525,52 +525,52 @@ export const flowConfig: FlowConfig = {
 		},
 		{
 			type: 'text',
-			data: 'and processes'
+			data: 'und Prozesse'
 		},
 		{
 			type: 'select',
 			data: {
 				key: 'B2C_agreement_volume',
-				placeholder: 'Agreement Volume',
+				placeholder: 'Vertragsvolumen',
 				options: [
 					{
-						title: 'Select your yearly B2C agreement volume'
+						title: 'Wählen Sie Ihr jährliches B2B-Vertragsvolumen aus'
 					},
 					{
 						key: '1000',
-						label: '1,000•Verträge'
+						label: '1,000 Verträge'
 					},
 					{
 						key: '2500',
-						label: '2,500•Verträge'
+						label: '2,500 Verträge'
 					},
 					{
 						key: '5000',
-						label: '5,000•Verträge'
+						label: '5,000 Verträge'
 					},
 					{
 						key: '10000',
-						label: '10,000•Verträge'
+						label: '10,000 Verträge'
 					},
 					{
 						key: '25000',
-						label: '25,000•Verträge'
+						label: '25,000 Verträge'
 					},
 					{
 						key: '50000',
-						label: '50,000•Verträge'
+						label: '50,000 Verträge'
 					},
 					{
 						key: '100000',
-						label: '100,000•Verträge'
+						label: '100,000 Verträge'
 					},
 					{
 						key: '1000000',
-						label: '1,000,000•Verträge'
+						label: '1,000,000 Verträge'
 					},
 					{
 						key: '10000000',
-						label: '10,000,000•Verträge'
+						label: '10,000,000 Verträge'
 					}
 				]
 			}
@@ -581,24 +581,24 @@ export const flowConfig: FlowConfig = {
 		},
 		{
 			type: 'text',
-			data: 'primarily collecting'
+			data: 'und erfasst vorwiegend'
 		},
 		{
 			type: 'select',
 			data: {
 				key: 'B2C_customer_information',
-				placeholder: 'Customer Information',
+				placeholder: 'Kundeninformationen',
 				options: [
 					{
-						title: 'Select most common information collected'
+						title: 'Wählen Sie die am häufigsten erfassten Informationen aus'
 					},
 					{
 						key: 'signature',
-						label: 'Customer signature/consent'
+						label: 'Signatur/Zustimmung des Kunden'
 					},
 					{
 						key: 'identity',
-						label: 'Customer data and/or verify identity'
+						label: 'Kundendaten und/oder Identitätsprüfung'
 					}
 				]
 			}
@@ -635,23 +635,23 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: 'PROC',
-						title: 'Select your priorities for procurement'
+						title: 'Wählen Sie Ihre Prioritäten für Beschaffung aus'
 					},
 					{
 						key: 'PROC_1_onboard_vendors',
-						label: 'Onboard vendors faster to access goods and services sooner'
+						label: 'Schnelleres Onboarding von Anbietern, damit mein Team produktiver arbeiten kann'
 					},
 					{
 						key: 'PROC_2_improved_productivity',
-						label: 'Improve operational efficiency to increase capacity'
+						label: 'Verbesserung der betrieblichen Effizienz zur Erhöhung der Kapazität'
 					},
 					{
 						key: 'PROC_3_reduce_risk',
-						label: 'Reduce risk exposure by•Mitigating risky clauses'
+						label: 'Risiken durch Minderung riskanter Klauseln reduzieren'
 					},
 					{
 						key: 'PROC_4_max_value',
-						label: 'Maximise value from spend and receive full benefits'
+						label: 'Ausgabenwert maximieren und von zusätzlichen Leistungen profitieren'
 					},
 					{
 						key: 'HR',
@@ -668,16 +668,17 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: 'B2C',
-						title: 'Select your priorities for B2C sales'
+						title: 'Wählen Sie Ihre Prioritäten für den B2C-Vertrieb aus'
 					},
 					{
 						key: 'B2C_1_onboard_customers',
-						label: 'Onboard customers faster and easier'
+						label: 'Schnelleres und einfacheres Onboarding von Kunden'
 					},
-					{ key: 'B2C_2_attract_retain', label: 'Attract and retain more customers' },
+					{ key: 'B2C_2_attract_retain', label: 'Mehr Kunden gewinnen und binden' },
 					{
 						key: 'B2C_3_boost_productivity',
-						label: 'Boost staff productivity to improve speed and capacity'
+						label:
+							'Produktivität der Beschäftigten steigern, um Geschwindigkeit und Kapazität zu verbessern'
 					}
 				] as const
 			}
@@ -687,56 +688,56 @@ export const flowConfig: FlowConfig = {
 
 export const langConfig: LangTranslation = {
 	confirm_selection: 'Bestätigen Sie die Auswahl',
-	update_your_results: 'Update Your Results',
-	edit_your_assessment: 'Edit Your assessment',
-	title_days: 'days'
+	update_your_results: 'Aktualisieren Sie Ihre Ergebnisse',
+	edit_your_assessment: 'Bearbeiten Sie Ihre Einstufung',
+	title_days: 'tage'
 };
 
 export const resultText = {
 	b2b_1:
-		'{X} faster deals, with the potential to reduce the sales cycle from weeks to just {Y} days.',
+		'{X} schnellere Abschlüsse, mit dem Potenzial, den Vertriebszyklus von Wochen auf nur {Y} Tage zu verkürzen.',
 	b2b_2:
-		'{X} more productive sellers, which frees up {Y} annual hours to accelerate pipeline development, close more deals, defend price points, etc.',
+		'{X} produktivere Verkäuferinnen und Verkäufer schaffen zusätzliche {Y} Stunden jährlich zur Beschleunigung der Pipeline-Entwicklung, Mehr Geschäftsabschlüsse, wettbewerbsfähiger werden usw.',
 	b2b_3:
-		'Up to {X} of B2B sales•Verträg completed without legal intervention by establishing a self-service process with smart guardrails.',
+		'Bis zu {X} der B2B-Kaufverträge können ohne die Rechtsabteilung abgeschlossen werden, da eine intelligente Selbsthilfe-Absicherung eingerichtet wird.',
 	b2b_4:
-		'Up to {X} faster legal review and approvals for B2B sales•Verträg, freeing up {Y} annual hours to focus on more strategic negotiations, audits, etc.',
+		'Bis zu {X} schnellere rechtliche Überprüfung und Genehmigung von Kaufverträgen schaffen jährlich zusätzlich {Y} freie Stunden, um den Fokus auf strategisch wichtigere Verhandlungen, Audits usw. zu richten.',
 	b2b_5:
-		'{X} estimated risk exposure reduction by ensuring B2B sales•Verträg only contain standard, pre approved clauses unless there’s a legal-approved exception.',
+		'{X} geschätzte Risikoreduzierung, indem sichergestellt wird, dass B2B-Kaufverträge nur vorab genehmigte Standardklauseln enthalten, sofern keine gesetzlich genehmigte Ausnahme vorliegt.',
 	b2b_6:
-		'{X} estimated reduction in revenue leakage by ensuring obligations are enforced, fees are collected, and renewal events are maximised.',
-	proc_1: '{X} faster vendor onboarding, going from weeks to just {Y} days.',
+		'{X} bis {X} geschätzte Verringerung von Umsatzeinbußen, indem sichergestellt wird, dass Verpflichtungen durchgesetzt, Gebühren eingezogen und Verlängerungsvorkommnisse maximiert werden.',
+	proc_1: '{X} schnelleres Anbieter-Onboarding in nur {Y} Tagen anstatt von Wochen.',
 	proc_2:
-		'{X} improvement in procurement staff productivity, freeing up {Y} annual hours to focus on priorities like vendor management and innovation.',
+		'{X} Verbesserung der Produktivität des Beschaffungspersonals schafft jährlich zusätzlich {Y} freie Stunden, um den Fokus auf Prioritäten wie Anbietermanagement und Innovation zu richten.',
 	proc_3:
-		'Up to {X} of vendor•Verträg completed without legal intervention by establishing a self-service process with smart guardrails.',
+		'Abschluss von {X} Anbieterverträgen ohne Einschaltung der Rechtsabteilung, da eine intelligente Selbsthilfe-Absicherung eingerichtet wird.',
 	proc_4:
-		'Up to {X} faster legal review and approvals for vendor•Verträg, freeing up {Y} annual hours to focus on more strategic negotiations, audits, etc.',
+		'Bis zu {X} schnellere rechtliche Überprüfung und Genehmigung von Anbieterverträgen schaffen jährlich zusätzlich {Y} freie Stunden, um den Fokus auf strategisch wichtigere Verhandlungen, Audits usw. zu richten.',
 	proc_5:
-		"{X} estimated risk exposure reduction by ensuring vendor•Verträg only contain standard, pre approved clauses unless there's a legal-approved exception.",
+		'{X} geschätzte Risikoreduzierung, indem sichergestellt wird, dass Kaufverträge nur vorab genehmigte Standardklauseln enthalten, sofern keine gesetzlich genehmigte Ausnahme vorliegt.',
 	proc_6:
-		'{X} estimated reduction in savings leakage by ensuring obligations are enforced, rebates/penalties are collected, and renewals are maximised.',
-	hr_1: '{X} faster candidate onboarding, going from weeks to just {Y} days.',
-	hr_2: '{X} increase in conversion rates by reducing abandonment in the agreement process. Onboard {Y} additional candidates annually.',
-	hr_3: '{X} improvement in staff productivity, freeing up {Y} annual hours for higher-value HR activities.',
+		'{X} geschätzte Kosteneinsparung, indem sichergestellt wird, dass Verpflichtungen durchgesetzt, Preisnachlassungen/Geldstrafen eingehalten und Vertragserneuerungen maximiert werden.',
+	hr_1: '{X} schnelleres Onboarding von Kandidaten in nur {Y} Tagen anstatt Wochen.',
+	hr_2: '{X} Steigerung der Konversionsraten durch Reduzierung der Abbrüche im Vertragsabschlussprozess. Onboarding von {Y} weiteren Kandidaten jährlich.',
+	hr_3: '{X} Verbesserung der Produktivität der Beschäftigten schafft {Y} freie Stunden pro Jahr, um den Fokus auf Aktivitäten in der Personalabteilung mit größerem Mehrwert zu richten.',
 	b2c_1:
-		'{X} faster deals, with the potential to reduce the sales cycle from weeks to just {Y} days.',
+		'{X} schnellere Abschlüsse, mit dem Potenzial, den Vertriebszyklus auf nur {Y} Tage anstatt Wochen zu verkürzen.',
 	b2c_2:
-		'{X} increase in conversion rates by reducing customer abandonment during the agreement process.',
+		'{X} Steigerung der Konversionsraten durch Reduzierung des Ausstiegs von Kunden im Vertragsabschlussprozess.',
 	b2c_3:
-		'{X} improvement in staff productivity, freeing up {Y} annual hours for higher-value activities.',
-	up_to_1_1: 'Up to {X}',
-	up_to_1_2: 'Dollars/Year',
-	up_to_2_1: 'Up to {X}',
-	up_to_2_2: 'Employee Hours/Year',
-	up_to_3_1: 'Up to {X}',
-	up_to_3_2: 'Onboarding Days/Vendor',
-	up_to_4_1: 'Up to {X}',
-	up_to_4_2: 'Onboarding Days/Candidate',
-	up_to_5_1: 'Up to {X}',
-	up_to_5_2: 'Onboarding Days/Customer',
-	up_to_6_1: 'Up to {X}',
-	up_to_6_2: 'Candidates/Year'
+		'{X} Verbesserung der Produktivität der Beschäftigen schafft zusätzliche {Y} Stunden pro Jahr für höherwertige Aktivitäten.',
+	up_to_1_1: 'Bis zu {X}',
+	up_to_1_2: 'Euro/Jahr',
+	up_to_2_1: 'Bis zu {X}',
+	up_to_2_2: 'Arbeitsstunden/Jahr',
+	up_to_3_1: 'Bis zu {X}',
+	up_to_3_2: 'Onboarding-Tage/Anbieter',
+	up_to_4_1: 'Bis zu {X}',
+	up_to_4_2: 'Onboarding-Tage/Kandidaten',
+	up_to_5_1: 'Bis zu {X}',
+	up_to_5_2: 'Onboarding-Tage/Kunde',
+	up_to_6_1: 'Bis zu {X}',
+	up_to_6_2: 'Kandidaten/Jahr'
 };
 
-export const currency = 'GBP';
+export const currency = 'EUR';
