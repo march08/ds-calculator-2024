@@ -696,22 +696,22 @@ export const resultText = {
 	b2b_2:
 		'Vendedores {X} mais produtivos, o que libera {Y} horas anuais para acelerar o desenvolvimento do pipeline, fechar mais negócios, segurar pontos de preço etc.',
 	b2b_3:
-		'Até ${X} dos acordos de vendas B2B concluídos sem intervenção jurídica ao se estabelecer um processo de autoatendimento com medidas de segurança inteligentes',
+		'Até {X} dos acordos de vendas B2B concluídos sem intervenção jurídica ao se estabelecer um processo de autoatendimento com medidas de segurança inteligentes',
 	b2b_4:
-		'Análises e aprovações jurídicas até ${X} mais rápidas nos acordos de vendas B2B, liberando {Y} horas anuais para negociações mais estratégicas, auditorias etc.',
+		'Análises e aprovações jurídicas até {X} mais rápidas nos acordos de vendas B2B, liberando {Y} horas anuais para negociações mais estratégicas, auditorias etc.',
 	b2b_5:
-		'Redução de ${X} na exposição ao risco estimado ao assegurar que os acordos de vendas B2B incluam apenas cláusulas padrão pré-aprovadas, salvo exceção em lei.',
+		'Redução de {X} na exposição ao risco estimado ao assegurar que os acordos de vendas B2B incluam apenas cláusulas padrão pré-aprovadas, salvo exceção em lei.',
 	b2b_6:
 		'Redução estimada de {X1} a {X2} no vazamento de receitas ao garantir o cumprimento das obrigações, a cobrança das taxas e a maximização dos eventos de renovação.',
 	proc_1: 'Integração {X} mais rápida dos fornecedores, passando de semanas para apenas {Y} dias.',
 	proc_2:
 		'Melhoria de {X1} a {X2} na produtividade da equipe de compras, liberando {Y} horas anuais para prioridades como gestão de fornecedores e inovação.',
 	proc_3:
-		'Até ${X} dos acordos com fornecedores concluídos sem intervenção jurídica ao se estabelecer um processo de autoatendimento com medidas de segurança inteligentes.',
+		'Até {X} dos acordos com fornecedores concluídos sem intervenção jurídica ao se estabelecer um processo de autoatendimento com medidas de segurança inteligentes.',
 	proc_4:
-		'Análises e aprovações jurídicas até ${X} mais rápidas nos acordos com fornecedores, liberando {Y} horas anuais para negociações mais estratégicas, auditorias etc.',
+		'Análises e aprovações jurídicas até {X} mais rápidas nos acordos com fornecedores, liberando {Y} horas anuais para negociações mais estratégicas, auditorias etc.',
 	proc_5:
-		'Redução de ${X} na exposição ao risco estimado ao assegurar que os acordos com fornecedores incluam apenas cláusulas padrão pré-aprovadas, salvo exceção em lei.',
+		'Redução de {X} na exposição ao risco estimado ao assegurar que os acordos com fornecedores incluam apenas cláusulas padrão pré-aprovadas, salvo exceção em lei.',
 	proc_6:
 		'Redução estimada de {X1} a {X2} no vazamento de economias ao garantir o cumprimento das obrigações, o recolhimento dos abatimentos e multas e a maximização das renovações.',
 	hr_1: 'Integração {X} mais rápida dos candidatos, passando de semanas para apenas {Y} dias.',

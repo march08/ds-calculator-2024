@@ -1,5 +1,6 @@
 import * as en from './config.js';
 import * as frca from './config.fr-ca.js';
+import * as frfr from './config.fr-fr.js';
 import * as gb from './config.en-gb.js';
 import * as enca from './config.en-ca.js';
 import * as enau from './config.en-au.js';
@@ -14,6 +15,8 @@ const getTranslationData = (lang: string) => {
 	switch (langLowercase) {
 		case 'fr-ca':
 			return frca;
+		case 'fr-fr':
+			return frfr;
 		case 'en-gb':
 			return gb;
 		case 'en-ca':

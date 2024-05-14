@@ -705,7 +705,7 @@ export const resultText = {
 	b2b_5:
 		'{X} geschätzte Risikoreduzierung, indem sichergestellt wird, dass B2B-Kaufverträge nur vorab genehmigte Standardklauseln enthalten, sofern keine gesetzlich genehmigte Ausnahme vorliegt.',
 	b2b_6:
-		'{X} bis {X} geschätzte Verringerung von Umsatzeinbußen, indem sichergestellt wird, dass Verpflichtungen durchgesetzt, Gebühren eingezogen und Verlängerungsvorkommnisse maximiert werden.',
+		'{X1} bis {X2} geschätzte Verringerung von Umsatzeinbußen, indem sichergestellt wird, dass Verpflichtungen durchgesetzt, Gebühren eingezogen und Verlängerungsvorkommnisse maximiert werden.',
 	proc_1: '{X} schnelleres Anbieter-Onboarding in nur {Y} Tagen anstatt von Wochen.',
 	proc_2:
 		'{X} Verbesserung der Produktivität des Beschaffungspersonals schafft jährlich zusätzlich {Y} freie Stunden, um den Fokus auf Prioritäten wie Anbietermanagement und Innovation zu richten.',

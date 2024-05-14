@@ -83,7 +83,7 @@ const calcHrConversionRate = tryCalcWrap((employment: string, agreementVolume: s
 		})
 	);
 	const XText = XRaw.map((x) =>
-		formatPercent(x, { maximumFractionDigits: 2, minimumFractionDigits: 1 })
+		formatPercent(x, { maximumFractionDigits: 2, minimumFractionDigits: 0 })
 	);
 
 	const calcYRange = (index: 0 | 1) => improvement[employment][volume][index] * volume;

@@ -135,8 +135,12 @@ const calcB2cConversionRate = tryCalcWrap((customerInformation: string, amount: 
 		improvement[customerInformation][financial][0],
 		improvement[customerInformation][financial][1]
 	];
-	const X = numberRangeToText(XRaw, (n) => formatPercent(n, { maximumFractionDigits: 1 }));
-	const XText = XRaw.map((x) => formatPercent(x, { maximumFractionDigits: 1 }));
+	const X = numberRangeToText(XRaw, (n) =>
+		formatPercent(n, { maximumFractionDigits: 1, minimumFractionDigits: 0 })
+	);
+	const XText = XRaw.map((x) =>
+		formatPercent(x, { maximumFractionDigits: 1, minimumFractionDigits: 0 })
+	);
 
 	const calcZRange = (index: 0 | 1) =>
 		improvement[customerInformation][financial][index] * financial;
