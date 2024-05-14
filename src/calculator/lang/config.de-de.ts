@@ -14,6 +14,7 @@ export const flowConfig: FlowConfig = {
 				key: 'businessArea',
 				placeholder: 'Ihr Bereich',
 				multiselect: true,
+				multiselectLimit: 2,
 				displayValueLowercase: false,
 				options: [
 					{

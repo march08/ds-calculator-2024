@@ -12,6 +12,7 @@ export const flowConfig: FlowConfig = {
 				key: 'businessArea',
 				placeholder: 'Sua área',
 				multiselect: true,
+				multiselectLimit: 2,
 				displayValueLowercase: false,
 				options: [
 					{
