@@ -71,6 +71,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'B2B_revenue',
+				displayValueLowercase: false,
 				placeholder: 'Revenue',
 				options: [
 					{
@@ -340,6 +341,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'PROC_annual_spend',
+				displayValueLowercase: false,
 				placeholder: 'Annual Spend',
 
 				options: [
@@ -479,6 +481,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'B2C_revenue',
+				displayValueLowercase: false,
 				placeholder: 'Revenue',
 				options: [
 					{

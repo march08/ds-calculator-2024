@@ -47,7 +47,8 @@
 		((window as unknown as WindowWithOptions).langOptions = {
 			currencyFormatter: {
 				currency: $translationStore.currency,
-				currencyDisplay: 'narrowSymbol'
+				currencyDisplay: $translationStore.currencySymbol,
+				currencyLocale: $translationStore.currencyLocale
 			},
 			lang: $translationStore.lang,
 			valueMultiplier: $translationStore.valueMultiplier

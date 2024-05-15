@@ -31,6 +31,8 @@ export type TranslationState = {
 	resultTranslations: ResultTranslation;
 	flowConfig: FlowConfig;
 	currency: string;
+	currencySymbol: string;
+	currencyLocale: string;
 	valueMultiplier: number;
 };
 

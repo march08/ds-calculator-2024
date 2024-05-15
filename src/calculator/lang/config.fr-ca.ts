@@ -70,6 +70,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'B2B_revenue',
+				displayValueLowercase: false,
 				placeholder: "Chiffre d'affaires",
 				options: [
 					{
@@ -339,6 +340,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'PROC_annual_spend',
+				displayValueLowercase: false,
 				placeholder: 'Dépenses annuelles',
 
 				options: [
@@ -478,6 +480,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'B2C_revenue',
+				displayValueLowercase: false,
 				placeholder: "Chiffre d'affaires",
 				options: [
 					{
@@ -743,4 +746,6 @@ export const resultText = {
 };
 
 export const currency = 'CAD';
+export const currencySymbol = 'symbol';
+export const currencyLocale = 'en-US'; // while currencySymbol is symbol, it won't show CA$ unless different than CA locale
 export const lang = 'fr-ca';

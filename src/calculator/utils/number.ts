@@ -21,18 +21,25 @@ export const formatNumber = (value: number, options?: Intl.NumberFormatOptions) 
 	});
 
 export const getCurrencySymbol = () => {
-	return Intl.NumberFormat(windowWithLangOptions.langOptions.lang || undefined, {
-		style: 'currency',
-		maximumFractionDigits: 0,
-		...windowWithLangOptions.langOptions.currencyFormatter
-	})
+	return Intl.NumberFormat(
+		windowWithLangOptions.langOptions.currencyFormatter.currencyLocale ||
+			windowWithLangOptions.langOptions.lang ||
+			undefined,
+		{
+			style: 'currency',
+			maximumFractionDigits: 0,
+			...windowWithLangOptions.langOptions.currencyFormatter
+		}
+	)
 		.format(0)
 		.replace('0', '');
 };
 
 export const formatCurrency = (value: number, options?: Intl.NumberFormatOptions) =>
 	Number(value * (windowWithLangOptions?.langOptions?.valueMultiplier || 1)).toLocaleString(
-		windowWithLangOptions.langOptions.lang || undefined,
+		windowWithLangOptions.langOptions.currencyFormatter.currencyLocale ||
+			windowWithLangOptions.langOptions.lang ||
+			undefined,
 		{
 			style: 'currency',
 			currency: 'USD',

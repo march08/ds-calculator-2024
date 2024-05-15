@@ -72,6 +72,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'B2B_revenue',
+				displayValueLowercase: false,
 				placeholder: 'Umsatz',
 				options: [
 					{
@@ -341,6 +342,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'PROC_annual_spend',
+				displayValueLowercase: false,
 				placeholder: 'Jährliche Ausgaben',
 
 				options: [
@@ -480,6 +482,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'B2C_revenue',
+				displayValueLowercase: false,
 				placeholder: 'Umsatz',
 				options: [
 					{

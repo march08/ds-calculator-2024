@@ -18,7 +18,8 @@ type Props = {
 		(window as unknown as WindowWithOptions).langOptions = {
 			currencyFormatter: {
 				currency: langConfig.currency,
-				currencyDisplay: 'narrowSymbol'
+				currencyDisplay: langConfig.currencySymbol,
+				currencyLocale: langConfig.currencyLocale
 			},
 			lang: langConfig.lang,
 			valueMultiplier: langConfig.valueMultiplier

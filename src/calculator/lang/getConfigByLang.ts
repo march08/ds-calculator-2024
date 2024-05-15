@@ -42,6 +42,8 @@ export const getTranslations = (lang: string): TranslationState => {
 		resultTranslations: data.resultText,
 		currency: data.currency,
 		lang: data.lang,
-		valueMultiplier: 'valueMultiplier' in data ? data.valueMultiplier : 1
+		valueMultiplier: 'valueMultiplier' in data ? data.valueMultiplier : 1,
+		currencySymbol: 'currencySymbol' in data ? data.currencySymbol : 'narrowSymbol',
+		currencyLocale: 'currencyLocale' in data ? data.currencyLocale : data.lang
 	};
 };

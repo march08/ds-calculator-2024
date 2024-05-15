@@ -69,6 +69,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'B2B_revenue',
+				displayValueLowercase: false,
 				placeholder: 'Revenue',
 				options: [
 					{
@@ -338,6 +339,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'PROC_annual_spend',
+				displayValueLowercase: false,
 				placeholder: 'Annual Spend',
 
 				options: [
@@ -477,6 +479,7 @@ export const flowConfig: FlowConfig = {
 			type: 'select',
 			data: {
 				key: 'B2C_revenue',
+				displayValueLowercase: false,
 				placeholder: 'Revenue',
 				options: [
 					{
@@ -739,3 +742,6 @@ export const resultText = {
 
 export const currency = 'AUD';
 export const lang = 'en-au';
+
+export const currencySymbol = 'symbol';
+export const currencyLocale = 'en-US'; // so we actually display AU$
