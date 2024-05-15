@@ -48,7 +48,8 @@
 			currencyFormatter: {
 				currency: $translationStore.currency,
 				currencyDisplay: $translationStore.currencySymbol,
-				currencyLocale: $translationStore.currencyLocale
+				currencyLocale: $translationStore.currencyLocale,
+				currencySymbolFormatter: $translationStore.currencySymbolFormatter
 			},
 			lang: $translationStore.lang,
 			valueMultiplier: $translationStore.valueMultiplier

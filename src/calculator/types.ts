@@ -34,6 +34,7 @@ export type TranslationState = {
 	currencySymbol: string;
 	currencyLocale: string;
 	valueMultiplier: number;
+	currencySymbolFormatter: (value: string) => string;
 };
 
 export type SelectConfig = {

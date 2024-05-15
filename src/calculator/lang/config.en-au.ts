@@ -77,35 +77,35 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '1000000',
-						label: '$1 million'
+						label: 'AU$1 million'
 					},
 					{
 						key: '10000000',
-						label: '$10 million'
+						label: 'AU$10 million'
 					},
 					{
 						key: '50000000',
-						label: '$50 million'
+						label: 'AU$50 million'
 					},
 					{
 						key: '100000000',
-						label: '$100 million'
+						label: 'AU$100 million'
 					},
 					{
 						key: '250000000',
-						label: '$250 million'
+						label: 'AU$250 million'
 					},
 					{
 						key: '500000000',
-						label: '$500 million'
+						label: 'AU$500 million'
 					},
 					{
 						key: '1000000000',
-						label: '$1 billion'
+						label: 'AU$1 billion'
 					},
 					{
 						key: '5000000000',
-						label: '$5 billion'
+						label: 'AU$5 billion'
 					}
 				]
 			}
@@ -348,35 +348,35 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '1000000',
-						label: '$1 million'
+						label: 'AU$1 million'
 					},
 					{
 						key: '10000000',
-						label: '$10 million'
+						label: 'AU$10 million'
 					},
 					{
 						key: '50000000',
-						label: '$50 million'
+						label: 'AU$50 million'
 					},
 					{
 						key: '100000000',
-						label: '$100 million'
+						label: 'AU$100 million'
 					},
 					{
 						key: '250000000',
-						label: '$250 million'
+						label: 'AU$250 million'
 					},
 					{
 						key: '500000000',
-						label: '$500 million'
+						label: 'AU$500 million'
 					},
 					{
 						key: '1000000000',
-						label: '$1 billion'
+						label: 'AU$1 billion'
 					},
 					{
 						key: '5000000000',
-						label: '$5 billion'
+						label: 'AU$5 billion'
 					}
 				]
 			}
@@ -487,35 +487,35 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '1000000',
-						label: '$1 million'
+						label: 'AU$1 million'
 					},
 					{
 						key: '10000000',
-						label: '$10 million'
+						label: 'AU$10 million'
 					},
 					{
 						key: '50000000',
-						label: '$50 million'
+						label: 'AU$50 million'
 					},
 					{
 						key: '100000000',
-						label: '$100 million'
+						label: 'AU$100 million'
 					},
 					{
 						key: '250000000',
-						label: '$250 million'
+						label: 'AU$250 million'
 					},
 					{
 						key: '500000000',
-						label: '$500 million'
+						label: 'AU$500 million'
 					},
 					{
 						key: '1000000000',
-						label: '$1 billion'
+						label: 'AU$1 billion'
 					},
 					{
 						key: '5000000000',
-						label: '$5 billion'
+						label: 'AU$5 billion'
 					}
 				]
 			}
@@ -744,4 +744,5 @@ export const currency = 'AUD';
 export const lang = 'en-au';
 
 export const currencySymbol = 'symbol';
-export const currencyLocale = 'en-US'; // so we actually display AU$
+export const currencyLocale = 'en-US'; // so we actually display A$
+export const currencySymbolFormatter = (value: string) => value.replace('A$', 'AU$'); // AUD automatically displayed as A$, we need AU$...

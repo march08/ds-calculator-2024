@@ -1,6 +1,11 @@
 export type WindowWithOptions = Window & {
 	langOptions: {
-		currencyFormatter: Record<string, string>;
+		currencyFormatter: {
+			currency: string;
+			currencyDisplay: string;
+			currencyLocale: string;
+			currencySymbolFormatter: (val: string) => string;
+		};
 		lang?: string;
 		valueMultiplier?: number;
 	};

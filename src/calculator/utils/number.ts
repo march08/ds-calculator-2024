@@ -21,7 +21,7 @@ export const formatNumber = (value: number, options?: Intl.NumberFormatOptions) 
 	});
 
 export const getCurrencySymbol = () => {
-	return Intl.NumberFormat(
+	const plainRes = Intl.NumberFormat(
 		windowWithLangOptions.langOptions.currencyFormatter.currencyLocale ||
 			windowWithLangOptions.langOptions.lang ||
 			undefined,
@@ -33,17 +33,19 @@ export const getCurrencySymbol = () => {
 	)
 		.format(0)
 		.replace('0', '');
+
+	return windowWithLangOptions.langOptions.currencyFormatter.currencySymbolFormatter(plainRes);
 };
 
-export const formatCurrency = (value: number, options?: Intl.NumberFormatOptions) =>
-	Number(value * (windowWithLangOptions?.langOptions?.valueMultiplier || 1)).toLocaleString(
+export const formatCurrency = (value: number, options?: Intl.NumberFormatOptions) => {
+	const plainRes = Number(
+		value * (windowWithLangOptions?.langOptions?.valueMultiplier || 1)
+	).toLocaleString(
 		windowWithLangOptions.langOptions.currencyFormatter.currencyLocale ||
 			windowWithLangOptions.langOptions.lang ||
 			undefined,
 		{
 			style: 'currency',
-			currency: 'USD',
-			currencyDisplay: 'narrowSymbol',
 			maximumFractionDigits: 0,
 			...options,
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,9 +53,13 @@ export const formatCurrency = (value: number, options?: Intl.NumberFormatOptions
 		}
 	);
 
+	return windowWithLangOptions.langOptions.currencyFormatter.currencySymbolFormatter(plainRes);
+};
+
 export const nFormatter = (num: number) => {
-	return Intl.NumberFormat(windowWithLangOptions.langOptions.lang || undefined, {
+	const plainRes = Intl.NumberFormat(windowWithLangOptions.langOptions.lang || undefined, {
 		compactDisplay: 'short',
 		notation: 'compact'
 	}).format(num * (windowWithLangOptions?.langOptions?.valueMultiplier || 1));
+	return plainRes;
 };

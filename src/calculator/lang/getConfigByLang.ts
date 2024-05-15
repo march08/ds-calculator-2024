@@ -44,6 +44,8 @@ export const getTranslations = (lang: string): TranslationState => {
 		lang: data.lang,
 		valueMultiplier: 'valueMultiplier' in data ? data.valueMultiplier : 1,
 		currencySymbol: 'currencySymbol' in data ? data.currencySymbol : 'narrowSymbol',
-		currencyLocale: 'currencyLocale' in data ? data.currencyLocale : data.lang
+		currencyLocale: 'currencyLocale' in data ? data.currencyLocale : data.lang,
+		currencySymbolFormatter:
+			'currencySymbolFormatter' in data ? data.currencySymbolFormatter : (value: string) => value
 	};
 };
