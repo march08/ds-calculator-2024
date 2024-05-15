@@ -746,6 +746,5 @@ export const resultText = {
 };
 
 export const currency = 'CAD';
-export const currencySymbol = 'symbol';
-export const currencyLocale = 'en-US'; // while currencySymbol is symbol, it won't show CA$ unless different than CA locale
+export const currencySymbol = 'narrowSymbol';
 export const lang = 'fr-ca';
