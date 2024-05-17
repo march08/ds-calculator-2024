@@ -60,7 +60,7 @@ export const nFormatter = (num: number) => {
 	const plainRes = Intl.NumberFormat(windowWithLangOptions.langOptions.lang || undefined, {
 		compactDisplay: 'short',
 		notation: 'compact'
-	}).format(num * (windowWithLangOptions?.langOptions?.valueMultiplier || 1));
+	}).format(num);
 	return plainRes;
 };
 export const nFormatterAmount = (num: number) => {
