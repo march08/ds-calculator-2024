@@ -1,7 +1,7 @@
 import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
-import { formatPercent, nFormatter } from '../utils/number.js';
+import { formatPercent, nFormatterAmount } from '../utils/number.js';
 import { getRange, tryCalcWrap } from './utils.js';
 
 const calcPROCtat = tryCalcWrap((spendType: string) => {
@@ -91,7 +91,7 @@ const calcPROCEfficiencyToIncreaseCapacity = tryCalcWrap(
 			Y,
 			dollarsYear: [calcZ(0), calcZ(1)],
 			employeeHoursYear,
-			cardMainValue: nFormatter(ZRaw[1]),
+			cardMainValue: nFormatterAmount(ZRaw[1]),
 			cardMainValueDollars: true,
 			onboardingDaysCustomer: null,
 			onboardingDaysCandidate: null,
@@ -170,7 +170,7 @@ const calcPROCLegalProductivity = tryCalcWrap((spendType: string, agreementVolum
 		Y,
 		dollarsYear: ZRaw,
 		employeeHoursYear,
-		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValue: nFormatterAmount(ZRaw[1]),
 		cardMainValueDollars: true,
 		onboardingDaysCustomer: null,
 		onboardingDaysCandidate: null,
@@ -229,7 +229,7 @@ const calcPROCReduceRisk = tryCalcWrap((spendType: string, agreementVolume: stri
 		Y: null,
 		dollarsYear: ZRaw,
 		employeeHoursYear: null,
-		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValue: nFormatterAmount(ZRaw[1]),
 		cardMainValueDollars: true,
 		onboardingDaysCustomer: null,
 		onboardingDaysCandidate: null,
@@ -298,7 +298,7 @@ const calcPROCReduceSavingsLeakage = tryCalcWrap((spendType: string, spendAmount
 		Y: null,
 		dollarsYear: ZRaw,
 		employeeHoursYear: null,
-		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValue: nFormatterAmount(ZRaw[1]),
 		cardMainValueDollars: true,
 		onboardingDaysCustomer: null,
 		onboardingDaysCandidate: null,

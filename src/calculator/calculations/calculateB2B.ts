@@ -1,7 +1,7 @@
 import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
-import { formatPercent, nFormatter } from '../utils/number.js';
+import { formatPercent, nFormatterAmount } from '../utils/number.js';
 import { getRange, tryCalcWrap } from './utils.js';
 
 const calcB2bTat = tryCalcWrap((complexity: string) => {
@@ -100,7 +100,7 @@ const calcB2bSellerProductivity = tryCalcWrap((complexity: string, agreementVolu
 		Y,
 		dollarsYear: [calcZRange(0), calcZRange(1)],
 		employeeHoursYear,
-		cardMainValue: nFormatter(calcZRange(1)),
+		cardMainValue: nFormatterAmount(calcZRange(1)),
 		cardMainValueDollars: true,
 		onboardingDaysCustomer: null,
 		onboardingDaysCandidate: null,
@@ -177,7 +177,7 @@ const calcB2bReducedLegalProductivity = tryCalcWrap(
 			Y,
 			dollarsYear: [calcZRange(0), calcZRange(1)],
 			employeeHoursYear,
-			cardMainValue: nFormatter(ZRaw[1]),
+			cardMainValue: nFormatterAmount(ZRaw[1]),
 			cardMainValueDollars: true,
 			onboardingDaysCustomer: null,
 			onboardingDaysCandidate: null,
@@ -219,7 +219,7 @@ const calcB2bReducedRiskExposure = tryCalcWrap((complexity: string, agreementVol
 		Y: null,
 		dollarsYear: ZRaw,
 		employeeHoursYear: null,
-		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValue: nFormatterAmount(ZRaw[1]),
 		cardMainValueDollars: true,
 		onboardingDaysCustomer: null,
 		onboardingDaysCandidate: null,
@@ -274,7 +274,7 @@ const calcB2bReducedRevenueLeakage = tryCalcWrap((complexity: string, rev: strin
 		Y: null,
 		dollarsYear: ZRaw,
 		employeeHoursYear: null,
-		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValue: nFormatterAmount(ZRaw[1]),
 		cardMainValueDollars: true,
 		onboardingDaysCustomer: null,
 		onboardingDaysCandidate: null,

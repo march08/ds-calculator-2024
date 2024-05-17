@@ -1,7 +1,7 @@
 import type { NumberRange } from '../types.js';
 import { numberRangeToText } from '../utils/array.js';
 import { isTruthy } from '../utils/isTruthy.js';
-import { formatNumber, formatPercent, nFormatter } from '../utils/number.js';
+import { formatNumber, formatPercent, nFormatter, nFormatterAmount } from '../utils/number.js';
 import { getRange, tryCalcWrap } from './utils.js';
 
 const calcHrTat = tryCalcWrap((employment: string) => {
@@ -143,7 +143,7 @@ const calcHrProductivity = tryCalcWrap((employment: string, agreementVolume: str
 		Y,
 		dollarsYear: ZRaw,
 		employeeHoursYear,
-		cardMainValue: nFormatter(ZRaw[1]),
+		cardMainValue: nFormatterAmount(ZRaw[1]),
 		cardMainValueDollars: true,
 		candidatesYear: null,
 		onboardingDaysCustomer: null,

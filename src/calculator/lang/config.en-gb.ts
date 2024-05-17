@@ -729,7 +729,7 @@ export const resultText = {
 	b2c_3:
 		'{X} improvement in staff productivity, freeing up {Y} annual hours for higher-value activities.',
 	up_to_1_1: 'Up to {X}',
-	up_to_1_2: 'Dollars/Year',
+	up_to_1_2: 'Pounds/Year',
 	up_to_2_1: 'Up to {X}',
 	up_to_2_2: 'Employee Hours/Year',
 	up_to_3_1: 'Up to {X}',

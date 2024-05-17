@@ -63,3 +63,10 @@ export const nFormatter = (num: number) => {
 	}).format(num * (windowWithLangOptions?.langOptions?.valueMultiplier || 1));
 	return plainRes;
 };
+export const nFormatterAmount = (num: number) => {
+	const plainRes = Intl.NumberFormat(windowWithLangOptions.langOptions.lang || undefined, {
+		compactDisplay: 'short',
+		notation: 'compact'
+	}).format(num * (windowWithLangOptions?.langOptions?.valueMultiplier || 1));
+	return plainRes;
+};
