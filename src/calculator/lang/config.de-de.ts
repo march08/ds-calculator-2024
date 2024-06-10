@@ -120,7 +120,7 @@ export const flowConfig: FlowConfig = {
 		},
 		{
 			type: 'text',
-			data: 'und Prozesse'
+			data: 'und verarbeitet'
 		},
 		{
 			type: 'select',
