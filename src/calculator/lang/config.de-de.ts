@@ -701,7 +701,7 @@ export const resultText = {
 	b2b_1:
 		'{X} schnellere Abschlüsse, mit dem Potenzial, den Vertriebszyklus von Wochen auf nur {Y} Tage zu verkürzen.',
 	b2b_2:
-		'{X} produktivere Verkäuferinnen und Verkäufer schaffen zusätzliche {Y} Stunden jährlich zur Beschleunigung der Pipeline-Entwicklung, Mehr Geschäftsabschlüsse, wettbewerbsfähiger werden usw.',
+		'{X} produktivere Verkäuferinnen und Verkäufer schaffen zusätzliche {Y} Stunden jährlich zur Beschleunigung der Pipeline-Entwicklung, mehr Geschäftsabschlüsse, wettbewerbsfähiger werden usw.',
 	b2b_3:
 		'Bis zu {X} der B2B-Kaufverträge können ohne die Rechtsabteilung abgeschlossen werden, da eine intelligente Selbsthilfe-Absicherung eingerichtet wird.',
 	b2b_4:

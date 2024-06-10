@@ -134,7 +134,7 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '2500',
-						label: '2,500 accords'
+						label: '2 500 accords'
 					},
 					{
 						key: '5000',
@@ -269,7 +269,7 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '2500',
-						label: '2,500 accords par an'
+						label: '2 500 accords par an'
 					},
 					{
 						key: '5000',
@@ -437,7 +437,7 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '2500',
-						label: '2,500 accords'
+						label: '2 500 accords'
 					},
 					{
 						key: '5000',
@@ -544,7 +544,7 @@ export const flowConfig: FlowConfig = {
 					},
 					{
 						key: '2500',
-						label: '2,500 accords'
+						label: '2 500 accords'
 					},
 					{
 						key: '5000',
