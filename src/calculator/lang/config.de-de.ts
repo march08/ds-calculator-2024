@@ -36,6 +36,7 @@ export const flowConfig: FlowConfig = {
 			data: {
 				key: 'industry',
 				placeholder: 'Ihre Branche',
+				displayValueLowercase: false,
 				options: [
 					{
 						title: 'Wählen Sie Ihre Branche aus'
@@ -210,6 +211,7 @@ export const flowConfig: FlowConfig = {
 			data: {
 				key: 'HR_employee_count',
 				placeholder: 'Anzahl Beschäftigte',
+				displayValueLowercase: false,
 				options: [
 					{
 						title: 'Wählen Sie die Anzahl Ihrer Beschäftigten aus'
@@ -262,6 +264,7 @@ export const flowConfig: FlowConfig = {
 			data: {
 				key: 'HR_agreement_volume',
 				placeholder: 'Vertragsvolumen Beschäftigte',
+				displayValueLowercase: false,
 				options: [
 					{
 						title: 'Wählen Sie das jährliche Vertragsvolument für Beschäftigte aus'
@@ -318,6 +321,7 @@ export const flowConfig: FlowConfig = {
 			data: {
 				key: 'HR_employee_type',
 				placeholder: 'Art der Beschäftigung',
+				displayValueLowercase: false,
 				options: [
 					{
 						title: 'Wählen Sie die häufigste Art der Beschäftigung aus '
@@ -398,6 +402,7 @@ export const flowConfig: FlowConfig = {
 			data: {
 				key: 'PROC_spend_type',
 				placeholder: 'Ausgabenart',
+				displayValueLowercase: false,
 				options: [
 					{
 						title: 'Wählen Sie die Art Ihrer Ausgaben aus'
@@ -430,6 +435,7 @@ export const flowConfig: FlowConfig = {
 			data: {
 				key: 'PROC_agreement_volume',
 				placeholder: 'Vertragsvolumen',
+				displayValueLowercase: false,
 				options: [
 					{
 						title: 'Wählen Sie Ihr jährliches B2B-Vertragsvolumen'
@@ -537,6 +543,7 @@ export const flowConfig: FlowConfig = {
 			data: {
 				key: 'B2C_agreement_volume',
 				placeholder: 'Vertragsvolumen',
+				displayValueLowercase: false,
 				options: [
 					{
 						title: 'Wählen Sie Ihr jährliches B2B-Vertragsvolumen aus'
@@ -593,6 +600,7 @@ export const flowConfig: FlowConfig = {
 			data: {
 				key: 'B2C_customer_information',
 				placeholder: 'Kundeninformationen',
+				displayValueLowercase: false,
 				options: [
 					{
 						title: 'Wählen Sie die am häufigsten erfassten Informationen aus'
@@ -621,6 +629,7 @@ export const flowConfig: FlowConfig = {
 				placeholder: 'Prioritäten hinzufügen',
 				multiselect: true,
 				multiselectDelimiter: '; ',
+				displayValueLowercase: false,
 				options: [
 					{
 						key: 'B2B',
