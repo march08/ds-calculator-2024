@@ -734,7 +734,7 @@ export const resultText = {
 	b2c_3:
 		'Amélioration de la productivité du personnel de {X1} à {X2}, ce qui libère tous les ans entre {Y} heures qui peuvent être consacrées à des activités à plus forte valeur ajoutée.',
 	up_to_1_1: 'Entre {X}',
-	up_to_1_2: 'dollars/an',
+	up_to_1_2: 'Euros/ans',
 	up_to_2_1: 'Entre {X}',
 	up_to_2_2: 'heures-employés par an',
 	up_to_3_1: 'Entre {X}',

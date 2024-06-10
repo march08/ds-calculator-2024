@@ -126,6 +126,7 @@ export const flowConfig: FlowConfig = {
 			data: {
 				key: 'B2B_agreement_volume',
 				placeholder: 'Vertragsvolumen',
+				displayValueLowercase: false,
 				options: [
 					{
 						title: 'Wählen Sie Ihr jährliches B2B-Vertragsvolumen'
@@ -178,7 +179,7 @@ export const flowConfig: FlowConfig = {
 			data: {
 				key: 'B2B_process_complexity',
 				placeholder: 'Prozesskomplexität',
-
+				displayValueLowercase: false,
 				options: [
 					{
 						title: 'Wählen Sie die Komplexität des Vertragsprozesses aus'
@@ -694,7 +695,7 @@ export const langConfig: LangTranslation = {
 	confirm_selection: 'Bestätigen Sie die Auswahl',
 	update_your_results: 'Aktualisieren Sie Ihre Ergebnisse',
 	edit_your_assessment: 'Bearbeiten Sie Ihre Einstufung',
-	title_days: 'tage'
+	title_days: 'Tage'
 };
 
 export const resultText = {
